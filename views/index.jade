@@ -5,6 +5,7 @@ block content
   p Welcome to #{title} card search
   ul
     li Id carte : #{card.id}
-    li Nom : 
-       a(href='http://www.wowhead.com/hearthstone/card='+card.id+'&premium')#{card.name}
+    li Nom :
+       a(href='http://www.wowhead.com/hearthstone/card=#{card.id}&premium').
+           #{card.name}
     li Description : #{card.description}
