@@ -3,9 +3,20 @@ extends layout
 block content
   h1= title
   p Welcome to #{title} card search
-  ul
-    li Id carte : #{card.id}
-    li Nom :
-       a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
-           #{card.name}
-    li Description : #{card.description}
+  div(class='decklist-top')
+  
+  div(class='decklist-content').
+      ul
+        li.
+           p(class='card-mana').
+              #{card.cost}
+           p(class='card-name').
+               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+                   #{card.name}
+           p(class='card-health').
+              #{card.health}
+           p(class='card-attack').
+              #{card.attack}
+  
+  div(class='decklist-bottom')
+  
