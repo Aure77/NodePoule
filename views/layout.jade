@@ -3,9 +3,14 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+<<<<<<< HEAD
     link(rel='stylesheet', href='/stylesheets/decklist.css')
+=======
+    script(type='text/javascript', src='//code.jquery.com/jquery-1.11.0.min.js')
+>>>>>>> origin/master
     script(type='text/javascript', src='http://static.wowhead.com/widgets/power.js')
     script(type='text/javascript').
        var wowhead_tooltips = { "colorlinks": false, "iconizelinks": true, "renamelinks": true }
   body
-    block content
+    div(class='layout-main')
+        block content

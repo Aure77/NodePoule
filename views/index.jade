@@ -3,6 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title} card search
+<<<<<<< HEAD
   div(class='decklist-top')
   
   div(class='decklist-content').
@@ -20,3 +21,11 @@ block content
   
   div(class='decklist-bottom')
   
+=======
+  ul
+    li Id carte : #{card.id}
+    li Nom : 
+       a(href='http://www.wowhead.com/hearthstone/card=#{card.id}&premium').
+           #{card.name}
+    li Description : #{card.description}
+>>>>>>> origin/master
