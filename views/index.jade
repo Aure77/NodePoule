@@ -1,31 +1,47 @@
 extends layout
 
 block content
+  link(rel='stylesheet', href='/stylesheets/decklist.css')
+  script(type='text/javascript', src='http://static.wowhead.com/widgets/power.js')
+  script(type='text/javascript').
+    var wowhead_tooltips = { "colorlinks": false, "iconizelinks": false, "renamelinks": true }
   h1= title
   p Welcome to #{title} card search
-<<<<<<< HEAD
   div(class='decklist-top')
-  
-  div(class='decklist-content').
+    img(src='../decklist/img/decklist/decklist_top.png')
+
+  div(class='decklist-content')
       ul
-        li.
+        li(class='minion')
            p(class='card-mana').
               #{card.cost}
-           p(class='card-name').
+           p(class='card-name')
                a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
                    #{card.name}
            p(class='card-health').
               #{card.health}
            p(class='card-attack').
               #{card.attack}
-  
+        li(class='weapon')
+           p(class='card-mana').
+              #{card.cost}
+           p(class='card-name')
+               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+                   #{card.name}
+           p(class='card-health').
+              #{card.health}
+           p(class='card-attack').
+              #{card.attack}
+        li
+           p(class='card-mana').
+              #{card.cost}
+           p(class='card-name')
+               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+                   #{card.name}
+           p(class='card-health').
+              #{card.health}
+           p(class='card-attack').
+              #{card.attack}
+
   div(class='decklist-bottom')
-  
-=======
-  ul
-    li Id carte : #{card.id}
-    li Nom : 
-       a(href='http://www.wowhead.com/hearthstone/card=#{card.id}&premium').
-           #{card.name}
-    li Description : #{card.description}
->>>>>>> origin/master
+    img(src='../decklist/img/decklist/decklist_bottom.png')
