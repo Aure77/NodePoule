@@ -1,5 +1,5 @@
 extends layout
-
+    
 block content
   link(rel='stylesheet', href='/stylesheets/decklist.css')
   script(type='text/javascript').
@@ -29,9 +29,9 @@ block content
       ul
         li(class='minion')
            div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
                 p(class='decklist-desc').
-                    #{card.description}
+                    #{card.flavor}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
@@ -43,9 +43,9 @@ block content
               #{card.attack}
         li(class='weapon')
            div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
                 p(class='decklist-desc').
-                    #{card.description}
+                    #{card.flavor}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
@@ -57,9 +57,9 @@ block content
               #{card.attack}
         li
            div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
                 p(class='decklist-desc').
-                    #{card.description}
+                    #{card.flavor}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
