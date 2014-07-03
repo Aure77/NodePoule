@@ -2,9 +2,24 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/decklist.css')
-  script(type='text/javascript', src='http://static.wowhead.com/widgets/power.js')
   script(type='text/javascript').
-    var wowhead_tooltips = { "colorlinks": false, "iconizelinks": false, "renamelinks": true }
+    $(document).ready(function() {
+        $('.decklist-content li .card-name a').hover(
+                function(e) {
+                    $(this).closest('li').find('.decklist-popup').offset({top:posY,left:posX});
+                    $(this).closest('li').find('.decklist-popup').show();
+                }, function() {
+                    $(this).closest('li').find('.decklist-popup').offset({top:0,left:0});
+                    $(this).closest('li').find('.decklist-popup').hide();
+                }
+        );
+    });
+    
+    var posX=0,posY=0;
+    $(document).mousemove(function( event ) {
+        posX= event.pageX;
+        posY =event.pageY;
+    });
   h1= title
   p Welcome to #{title} card search
   div(class='decklist-top')
@@ -13,30 +28,42 @@ block content
   div(class='decklist-content')
       ul
         li(class='minion')
+           div(class='decklist-popup')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                p(class='decklist-desc').
+                    #{card.description}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
-               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+               a(href='#').
                    #{card.name}
            p(class='card-health').
               #{card.health}
            p(class='card-attack').
               #{card.attack}
         li(class='weapon')
+           div(class='decklist-popup')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                p(class='decklist-desc').
+                    #{card.description}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
-               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+               a(href='#').
                    #{card.name}
            p(class='card-health').
               #{card.health}
            p(class='card-attack').
               #{card.attack}
         li
+           div(class='decklist-popup')
+                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
+                p(class='decklist-desc').
+                    #{card.description}
            p(class='card-mana').
               #{card.cost}
            p(class='card-name')
-               a(href='http://fr.wowhead.com/hearthstone/card=#{card.id}&premium').
+               a(href='#').
                    #{card.name}
            p(class='card-health').
               #{card.health}

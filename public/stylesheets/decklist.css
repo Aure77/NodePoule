@@ -62,3 +62,23 @@
     width: 450px;
     height: 37px;
 }
+.decklist-desc{
+	width:200px;
+	font-family:Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-style:italic;
+	color:#ffd100;
+	font-size:12px;
+	line-height:17px;
+	background:url('../img/decklist/tooltip.png') repeat;
+	padding:5px;
+	margin:5px;
+	border:1px #fff solid;
+	border-radius : 5px;
+}
+.decklist-popup{
+	display:none;
+	position:absolute;
+}
+.decklist-popup img{
+	display:block;
+}
