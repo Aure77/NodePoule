@@ -2,6 +2,8 @@ extends layout
     
 block content
   link(rel='stylesheet', href='/stylesheets/decklist.css')
+  link(rel='stylesheet', href='/stylesheets/chosen.css')
+  script(type='text/javascript', src='/javascripts/chosen.jquery.min.js')
   script(type='text/javascript').
     $(document).ready(function() {
         $('.decklist-content li .card-name a').hover(
@@ -13,6 +15,71 @@ block content
                     $(this).closest('li').find('.decklist-popup').hide();
                 }
         );
+        
+        var cards = !{JSON.stringify(cards)};
+        for (var i in cards) {
+            $('<option>')
+            .data('card-item', cards[i])
+            .val(cards[i].id)
+            .html(cards[i].name)
+            .appendTo("#deck-search");
+        }
+        
+        $("#deck-search").chosen({no_results_text: "Oups, pas de carte trouvée!", max_selected_options: 30}).on('change', function(evt, params) {         
+            if(params.selected) {             
+                var card = $("#deck-search").find('option[value="'+params.selected+'"]').data('card-item');
+                
+                var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
+                var popup = $('<div>', { class: 'decklist-popup' });
+                $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/enus/medium/' + card.id + '.png' }).appendTo(popup)
+                $('<p>', { class: 'decklist-desc' }).html(card.flavor).appendTo(popup);
+                popup.appendTo(li);
+                $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(li);
+                var cardName = $('<p>', { class: 'card-name' });
+                $('<a>').html(card.name).appendTo(cardName);
+                cardName.appendTo(li);
+                $('<p>', { class: 'card-health' }).html(card.health).appendTo(li);
+                $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(li);
+                li.appendTo(".decklist-content ul");
+            }
+            if(params.deselected) {
+                var card = $("#deck-search").find('option[value="'+params.deselected+'"]').data('card-item');
+                $('li#' + card.id).remove();
+            }
+        }); 
+        
+        /*$("#deck-search").autocomplete({
+          minLength: 0,
+          source: !{JSON.stringify(cards)},
+          focus: function(event, ui) {
+            console.log("focus");
+            $("#deck-search").val( ui.item.name );
+            return false;
+          },
+          select: function(event, ui) {       
+            console.log("select");
+            $("#deck-search").val( ui.item.name );
+            var li = $('<li>', { class: ui.item.type.toLowerCase() });
+            var popup = $('<div>', { class: 'decklist-popup' });
+            $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/enus/medium/' + ui.item.id + '.png' }).appendTo(popup)
+            $('<p>', { class: 'decklist-desc' }).html(ui.item.flavor).appendTo(popup);
+            popup.appendTo(li);
+            $('<p>', { class: 'card-mana' }).html(ui.item.cost).appendTo(li);
+            var cardName = $('<p>', { class: 'card-name' });
+            $('<a>').html(ui.item.name).appendTo(cardName);
+            cardName.appendTo(li);
+            $('<p>', { class: 'card-health' }).html(ui.item.health).appendTo(li);
+            $('<p>', { class: 'card-attack' }).html(ui.item.attack).appendTo(li);
+            li.appendTo(".decklist-content ul");
+            return false;
+          }
+        }).data("uiAutocomplete")._renderItem = function(ul, item) {
+          console.log("_renderItem");
+          return $("<li>")
+          .data("ui-autocomplete-item", item)
+          .append("<a>" + item.name + "</a>")
+          .appendTo(ul);
+        };*/        
     });
     
     var posX=0,posY=0;
@@ -22,53 +89,15 @@ block content
     });
   h1= title
   p Welcome to #{title} card search
+  
+  p
+    select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:450px;")
+  
   div(class='decklist-top')
     img(src='/img/decklist/decklist_top.png')
-
+  
   div(class='decklist-content')
-      ul
-        li(class='minion')
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
-                p(class='decklist-desc').
-                    #{card.flavor}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
-        li(class='weapon')
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
-                p(class='decklist-desc').
-                    #{card.flavor}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
-        li
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/#{card.id}.png')
-                p(class='decklist-desc').
-                    #{card.flavor}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
+    ul
 
   div(class='decklist-bottom')
     img(src='/img/decklist/decklist_bottom.jpg')
