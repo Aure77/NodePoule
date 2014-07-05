@@ -6,10 +6,6 @@ var router = express.Router();
 router.get('/', function(req, res) {
   hearthstonejson.findAllCards(function(cards) {
     console.log("cards="+cards.length);
-    var d = [];
-    for(i=0;i<6;i++) {
-        d.push({id: i, name: "Test"+i});
-    }
     res.render('hearthstone-decks', { title: 'Cartes', cards: cards});
   });
 });
