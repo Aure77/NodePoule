@@ -36,7 +36,7 @@ block head
                 
                 var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
                 var popup = $('<div>', { class: 'decklist-popup' });
-                $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/enus/medium/' + card.id + '.png' }).appendTo(popup)
+                $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/frfr/medium/' + card.id + '.png' }).appendTo(popup)
                 $('<p>', { class: 'decklist-desc' }).html(card.flavor).appendTo(popup);
                 popup.appendTo(li);
                 $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(li);
@@ -66,7 +66,7 @@ block head
             $("#deck-search").val( ui.item.name );
             var li = $('<li>', { class: ui.item.type.toLowerCase() });
             var popup = $('<div>', { class: 'decklist-popup' });
-            $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/enus/medium/' + ui.item.id + '.png' }).appendTo(popup)
+            $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/frfr/medium/' + ui.item.id + '.png' }).appendTo(popup)
             $('<p>', { class: 'decklist-desc' }).html(ui.item.flavor).appendTo(popup);
             popup.appendTo(li);
             $('<p>', { class: 'card-mana' }).html(ui.item.cost).appendTo(li);
