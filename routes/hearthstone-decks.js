@@ -6,23 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res) {
   hearthstonejson.findAllCards(function(cards) {
     console.log("cards="+cards.length);
-    res.render('hearthstone-decks', { title: 'Cartes', cards: cards});
-  });
-});
-
-/* GET search by name */
-router.get('/search/name/:cardName', function(req, res) {
-  hearthstonejson.findCardByName(req.params.cardName, function(card) {
-    console.log(card);
-    res.render('hearthstone-decks', { title: 'Carte', card: card});
-  });
-});
-
-/* GET search by id */
-router.get('/search/id/:cardId', function(req, res) {
-  hearthstonejson.findCardById(req.params.cardId, function(card) {
-    console.log(card);
-    res.render('hearthstone-decks', { title: 'Carte', card: card});
+    res.render('hearthstone-decks', { title: 'Création de decks', cards: cards});
   });
 });
 

@@ -1,20 +1,25 @@
 extends layout
     
-block content
+block head
   link(rel='stylesheet', href='/stylesheets/decklist.css')
   link(rel='stylesheet', href='/stylesheets/chosen.css')
   script(type='text/javascript', src='/javascripts/chosen.jquery.min.js')
   script(type='text/javascript').
     $(document).ready(function() {
-        $('.decklist-content li .card-name a').hover(
-                function(e) {
-                    $(this).closest('li').find('.decklist-popup').offset({top: posY, left: posX});
-                    $(this).closest('li').find('.decklist-popup').show();
-                }, function() {
-                    $(this).closest('li').find('.decklist-popup').offset({top: 0, left: 0});
-                    $(this).closest('li').find('.decklist-popup').hide();
-                }
-        );
+        var posX=0,posY=0;
+        $(document).on('mousemove', function(event) {
+            posX = event.pageX;
+            posY = event.pageY;
+        });
+    
+        $(document).on('mouseenter', '.decklist-content li .card-name a',  function(e) {
+          console.log("mouseenter");
+          $(this).closest('li').find('.decklist-popup').offset({top: posY, left: posX});
+          $(this).closest('li').find('.decklist-popup').show();
+        }).on("mouseleave", '.decklist-content li .card-name a', function() {
+          $(this).closest('li').find('.decklist-popup').offset({top: 0, left: 0});
+          $(this).closest('li').find('.decklist-popup').hide();
+        });
         
         var cards = !{JSON.stringify(cards)};
         for (var i in cards) {
@@ -82,15 +87,8 @@ block content
         };*/        
     });
     
-    var posX=0,posY=0;
-    $(document).mousemove(function(event) {
-        posX = event.pageX;
-        posY = event.pageY;
-    });
-  h1= title
-  p Welcome to #{title} card search
-  
-  p
+block content
+  div
     select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:450px;")
   
   div(class='decklist-top')

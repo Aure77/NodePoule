@@ -2,6 +2,7 @@ doctype html
 html
   head
     title= title
+    meta(charset="utf-8")
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
     link(rel='stylesheet', href='/stylesheets/template/reset.css' type='text/css', media='screen')
     link(rel='stylesheet', href='/stylesheets/template/style.css' type='text/css', media='screen')
@@ -11,7 +12,144 @@ html
     script(type='text/javascript', src='//code.jquery.com/jquery-1.11.0.min.js')
     script(type='text/javascript', src='/javascripts/css3-mediaqueries.js')
     script(type='text/javascript', src='/javascripts/jquery.easing.1.3.js')
+    script(type='text/javascript', src='/javascripts/jcarousellite_1.0.1.js')
+    script(type='text/javascript', src='/javascripts/responsiveslides.js')
+    script(type='text/javascript').
+      $(function () {
+        $("#slider").responsiveSlides({
+          auto: true,
+          pager: false,
+          nav: true,
+          speed: 500,
+          maxwidth: 940,
+          namespace: "centered-btns"
+        });
+      });
+      $(document).ready(function() { 
+          $('.carousel .jCarouselLite').jCarouselLite({ 
+              btnNext: '.carousel .next',
+              btnPrev: '.carousel .prev',
+              speed: 600,
+              easing: 'easeOutQuart',
+              vertical: false,
+              circular: true,
+              visible: 4,
+              start: 0,
+              scroll: 1
+          }); 
+      });
+    block head
   body
-    div(class='layout-main')
-        block content
- 
+    header
+      .menu-row
+          .main.zerogrid
+            nav.wrapper
+              ul.menu
+                li
+                  a.active(href='/index.html') Accueil
+                li
+                  a(href='/about.html') Competitions
+                li
+                  a(href='http://forum.mohye.eu/') Forum
+                li
+                  a(href='/contacts.html') Contacts
+                li
+                  a(href='#') Mon Profil
+        .row-bot
+          .row-bot-bg
+            .main.zerogrid
+              .wrapper.p6
+                h1
+                  a(href='index.html')
+                    img(src='/img/logo.png', alt='logo')
+              .main.zerogrid
+                h2 #{title}
+              block content
+
+    aside
+      .carousel
+          a.prev
+          a.next
+          .carousel-container
+            h3 A voir
+            .jCarouselLite
+              ul.carousel-list
+                li
+                  .img-border
+                    a(href='#')
+                      img(src='/img/page1-img2.jpg', alt='carousel2')
+                li
+                  .img-border
+                    a(href='#')
+                      img(src='/img/page1-img3.jpg', alt='carousel3')
+                li
+                  .img-border
+                    a(href='#')
+                      img(src='/img/page1-img4.jpg', alt='carousel4')
+                li
+                  .img-border
+                    a(href='#')
+                      img(src='/img/page1-img5.jpg', alt='carousel5')
+                li
+                  .img-border
+                    a(href='#')
+                      img(src='/img/page1-img6.jpg', alt='carousel6')
+
+    section#content
+      .main.zerogrid
+        .wrapper
+          article.col-1-3
+            .wrap-col
+              h3.prev-indent-bot Shortly About Us
+              h6.p1 Sed ut perspiciatis unde omnis
+              p.img-indent-bot
+                | PSD source files are available for free for the registered members of TemplatesMonster. The basic package is available for anyone without registration. This website template has several pages:
+                a.link(href='index.html') Home Page
+                | ,
+                a.link(href='#') Company
+                | ,
+                a.link(href='services.html') Services
+                | ,
+                a.link(href='#') Clients
+                | ,
+                a.link(href='contacts.html') Contacts
+                | (note that contact us form - doesn't work).
+              a.button(href='#')
+                span read more
+          article.col-1-3
+            .wrap-col
+              .indent-left
+                h3.p1 Derniers posts
+                ul.list-1
+                  li
+                    a(href='#') Liste natus error sit voluptatem
+                  li
+                    a(href='#') Accusantium doloremque laudantium
+                  li
+                    a(href='#') Totam rem aperiam, eaque ipsa quae ab illo
+                  li
+                    a(href='#') Inventore veritatis et quasi
+                  li
+                    a(href='#') Architecto beatae vitae dicta sunt
+                  li
+                    a(href='#') Nemo enim ipsam voluptatem
+                  li
+                    a(href='#') Quia voluptas sit aspernatur aut odit aut
+                  li
+                    a(href='#') Sed quia consequuntur magni dolores
+                  li
+                    a(href='#') Eos qui ratione voluptatem sequi nesciunt
+          article.col-1-3
+            .wrap-col
+              .indent-left2
+                h3 Our Locations
+                figure.prev-indent-bot
+                  img(src='/img/page1-img10.jpg', alt='')
+                a.link-2(href='#')
+                  | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia.
+
+    footer
+      .main.zerogrid
+        .aligncenter
+          p.p0 Exterior Design Â© 2013 
+          a(href='http://www.zerotheme.com', target='_blank') Free Html5 Templates | by TemplateMonster.com | Zerotheme.com

@@ -78,6 +78,7 @@
 .decklist-popup{
 	display:none;
 	position:absolute;
+  z-index: 1000;
 }
 .decklist-popup img{
 	display:block;
