@@ -2,73 +2,99 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/decklist.css')
+  script(type='text/javascript' src='/javascripts/jcarousellite_1.0.1.js')
   script(type='text/javascript').
-    $(document).ready(function() {
-        $('.decklist-content li .card-name a').hover(
-                function(e) {
-                    $(this).closest('li').find('.decklist-popup').offset({top: posY, left: posX});
-                    $(this).closest('li').find('.decklist-popup').show();
-                }, function() {
-                    $(this).closest('li').find('.decklist-popup').offset({top: 0, left: 0});
-                    $(this).closest('li').find('.decklist-popup').hide();
-                }
-        );
+    $(function () {
+      $("#slider").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: true,
+        speed: 500,
+        maxwidth: 940,
+        namespace: "centered-btns"
+      });
     });
-    
-    var posX=0,posY=0;
-    $(document).mousemove(function(event) {
-        posX = event.pageX;
-        posY = event.pageY;
-    });
-  h1= title
-  p Welcome to #{title} card search
-  div(class='decklist-top')
-    img(src='/img/decklist/decklist_top.png')
 
-  div(class='decklist-content')
-      ul
-        li(class='minion')
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
-                p(class='decklist-desc').
-                    #{card.description}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
-        li(class='weapon')
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
-                p(class='decklist-desc').
-                    #{card.description}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
-        li
-           div(class='decklist-popup')
-                img(src='http://wow.zamimg.com/images/hearthstone/cards/enus/medium/EX1_112.png')
-                p(class='decklist-desc').
-                    #{card.description}
-           p(class='card-mana').
-              #{card.cost}
-           p(class='card-name')
-               a(href='#').
-                   #{card.name}
-           p(class='card-health').
-              #{card.health}
-           p(class='card-attack').
-              #{card.attack}
+    $(document).ready(function() { 
+        $('.carousel .jCarouselLite').jCarouselLite({ 
+            btnNext: '.carousel .next',
+            btnPrev: '.carousel .prev',
+            speed: 600,
+            easing: 'easeOutQuart',
+            vertical: false,
+            circular: true,
+            visible: 4,
+            start: 0,
+            scroll: 1
+        }); 
+    }); 
 
-  div(class='decklist-bottom')
-    img(src='/img/decklist/decklist_bottom.jpg')
+//==============================header=================================
+  header
+    .menu-row
+        .main.zerogrid
+          nav.wrapper
+            ul.menu
+              li
+                a.active(href='index.html') Accueil
+              li
+                a(href='about.html') Competitions
+              li
+                a(href='services.html') Forum
+              li
+                a(href='contacts.html') Contacts
+              li
+                a(href='#') Mon Profil
+      .row-bot
+        .row-bot-bg
+          .main.zerogrid
+            .wrapper.p6
+              h1
+                a(href='index.html')
+                  img(src='/img/logo.png')
+            .main.zerogrid
+              h2 Derniers tournois
+            .slider-wrapper
+              .rslides_container
+                ul#slider.rslides
+                  li
+                    img(src='/img/slider-img1.jpg', alt='')
+            .wrapper
+              figure.img-indent2
+                img(src='/img/page1-img1.png', alt='')
+              .extra-wrap
+                strong.text-1
+                  | Exterior Design is one of
+                  a.link-1(href='http://www.zerotheme.com', target='_blank') free html5 templates
+                  | created by TemplateMonster.com and Zerotheme.com team. This template is optimized for 1280X1024 resolution and HTML5 & CSS3 valid. This
+                  a.link-1(target='_blank', href='http://blog.templatemonster.com/2012/01/16/free-website-template-exterior-design-jquery-slider/ ') Exterior Design Template
+                  | goes with two packages – with PSD source files and without them.
+//==============================aside================================
+  aside
+    .carousel
+        a.prev
+        a.next
+        .carousel-container
+          h3 A voir
+          .jCarouselLite
+            ul.carousel-list
+              li
+                .img-border
+                  a(href='#')
+                    img(src='/img/page1-img2.jpg', alt='')
+              li
+                .img-border
+                  a(href='#')
+                    img(src='/img/page1-img3.jpg', alt='')
+              li
+                .img-border
+                  a(href='#')
+                    img(src='/img/page1-img4.jpg', alt='')
+              li
+                .img-border
+                  a(href='#')
+                    img(src='/img/page1-img5.jpg', alt='')
+              li
+                .img-border
+                  a(href='#')
+                    img(src='/img/page1-img6.jpg', alt='')

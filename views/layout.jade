@@ -2,8 +2,15 @@ doctype html
 html
   head
     title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/template/reset.css' type='text/css', media='screen')
+    link(rel='stylesheet', href='/stylesheets/template/style.css' type='text/css', media='screen')
+    link(rel='stylesheet', href='/stylesheets/template/zerogrid.css' type='text/css', media='all')
+    link(rel='stylesheet', href='/stylesheets/template/responsive.css' type='text/css', media='all')
     script(type='text/javascript', src='//code.jquery.com/jquery-1.11.0.min.js')
+    script(type='text/javascript', src='/javascripts/css3-mediaqueries.js')
+    script(type='text/javascript', src='/javascripts/jquery.easing.1.3.js')
   body
     div(class='layout-main')
         block content
