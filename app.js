@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
+var	path = require('path');
+var nconf = require('nconf');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -10,6 +12,7 @@ var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 
+loadConfig();
 var app = express();
 
 // view engine setup
@@ -20,8 +23,12 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser(nconf.get('secret')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+if(nconf.get('database') === 'mongo') {
+  app.use(require('./middlewares/mongo-session-store')());
+}
 
 app.use('/', routes);
 app.use('/users', users);
@@ -59,5 +66,14 @@ app.use(function(err, req, res, next) {
     });
 });
 
+function loadConfig() {
+    nconf.file({
+        file: path.join(__dirname, '/nodebb/config.json')
+    });
+
+    nconf.defaults({
+        base_dir: __dirname
+    });
+}
 
 module.exports = app;
