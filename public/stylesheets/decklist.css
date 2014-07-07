@@ -54,6 +54,7 @@
     color: #fff;
     text-decoration: none;
     margin-left: 15px;
+    cursor:pointer;
 }
 .decklist-content li .card-health {
     width: 31px;
