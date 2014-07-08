@@ -1,5 +1,8 @@
 extends layout
 block head
+  link(rel='stylesheet', href='/stylesheets/template/responsiveslides.css' type='text/css', media='all')
+  script(type='text/javascript', src='/javascripts/jcarousellite_1.0.1.js')
+  script(type='text/javascript', src='/javascripts/responsiveslides.js')
   script(type='text/javascript').
       $(document).ready(function() { 
           $('.carousel .jCarouselLite').jCarouselLite({ 
