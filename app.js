@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
+var competitions = require('./routes/competitions');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 
 loadConfig();
@@ -33,6 +34,7 @@ if(nconf.get('database') === 'mongo') {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/tournaments', tournaments);
+app.use('/competitions', competitions);
 app.use('/hearthstone-decks', hearthstoneDecks);
 
 /// catch 404 and forward to error handler
