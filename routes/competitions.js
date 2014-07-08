@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  res.render('competitions', { title: 'Compétitions', competitions:[] });
+  res.render('competitions', { title: 'CompÃ©titions', competitions:[] });
 });
 
 module.exports = router;
