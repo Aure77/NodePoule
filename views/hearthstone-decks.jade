@@ -88,14 +88,15 @@ block head
     });
     
 block content
-  div
-    select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:350px;")
-  
-  div(class='decklist-top')
-    img(src='/img/decklist/decklist_top.png')
-  
-  div(class='decklist-content')
-    ul
-
-  div(class='decklist-bottom')
-    img(src='/img/decklist/decklist_bottom.jpg')
+  .main.zerogrid
+    div
+      select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:350px;")
+    
+    div(class='decklist-top')
+      img(src='/img/decklist/decklist_top.png')
+    
+    div(class='decklist-content')
+      ul
+    
+    div(class='decklist-bottom')
+      img(src='/img/decklist/decklist_bottom.jpg')
