@@ -10,11 +10,12 @@
 
       function Challonge($this, tournamentUrl, options) {
         this._$iframe = __bind(this._$iframe, this);
-        this._sourceWithOptions = __bind(this._sourceWithOptions, this);        this.tournamentUrl = tournamentUrl || '';
+        this._sourceWithOptions = __bind(this._sourceWithOptions, this);
+        this.tournamentUrl = tournamentUrl || '';
         this.options = $.extend({}, $.fn.challonge.defaults, options || {});
         this.subdomain = this.options.subdomain;
         this.height = $this.height();
-        $this.html(this._$iframe);
+        $this.append(this._$iframe);
       }
 
       Challonge.prototype._sourceWithOptions = function() {

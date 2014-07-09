@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  div(id='challonge-frame')
-  script(type='text/javascript', src='/javascripts/jquery.challonge.js')
-  script(type='text/javascript').
-    $(function() {
-        $('#challonge-frame').challonge('#{tournament.id}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
-    });
+  .main.zerogrid
+    div(class='iframe-responsive-wrapper')
+      img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
+    script(type='text/javascript', src='/javascripts/jquery.challonge.js')
+    script(type='text/javascript').
+      $(function() {
+          $('.iframe-responsive-wrapper').challonge('#{tournament.id}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
+      });

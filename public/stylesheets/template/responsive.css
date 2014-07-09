@@ -22,9 +22,7 @@ img{
 
 @media only screen and (max-width: 959px) {
 }
-
-@media only screen and (max-width: 767px){
-	
+@media only screen and (max-width: 767px){	
 }
 @media only screen and (max-width: 619px) {
 	h1 {float:none;}
@@ -32,4 +30,22 @@ img{
 	.img-indent2{float: none;}
 }
 @media only screen and (max-width: 240px) {
+}
+
+/*------------------------*/
+
+.iframe-responsive-wrapper {
+  position: relative;
+}
+.iframe-responsive-wrapper .iframe-ratio {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.iframe-responsive-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
