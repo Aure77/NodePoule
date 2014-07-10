@@ -1,29 +1,11 @@
 var nconf = require('nconf');
 var session = require('express-session');
-var mongoClient = require('mongodb').MongoClient;
 var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
 
 module.exports = function () {
-    var dbSessionStore;
-    mongoClient.connect('mongodb://' + nconf.get('mongo:host') + ':' + nconf.get('mongo:port') + '/' + nconf.get('mongo:database'), function (err, db) {
-        if (err) {
-            console.warn("NodePoule could not connect to your Mongo database. Mongo returned the following error: " + err.message);
-            process.exit();
-        }
-        dbSessionStore = new MongoStore({
-            db: db,
-        });
-        if (nconf.get('mongo:password') && nconf.get('mongo:username')) {
-            db.authenticate(nconf.get('mongo:username'), nconf.get('mongo:password'), function (err) {
-                if (err) {
-                    console.error(err.message);
-                    process.exit();
-                }
-            });
-        } else {
-            console.warn('You have no mongo password setup!');
-            process.exit();
-        }
+    var dbSessionStore = new MongoStore({
+      db: mongoose.connection.db
     });
 
     return function (req, res, next) {

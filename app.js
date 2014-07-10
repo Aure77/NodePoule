@@ -6,13 +6,39 @@ var	path = require('path');
 var nconf = require('nconf');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+loadConfig();
+
+if(nconf.get('database') === 'mongo') {
+  // load models
+  require('./models/decks.js');
+  // connect to db
+  var dbUri = 'mongodb://' + nconf.get('mongo:host') + ':' + nconf.get('mongo:port') + '/' + nconf.get('mongo:database');
+  mongoose.connect(dbUri, { 
+    user: nconf.get('mongo:username'), 
+    pass: nconf.get('mongo:password'),
+    server: { 
+      keepAlive: 1, 
+      auto_reconnect: true, 
+    }
+  }); 
+  var conn = mongoose.connection;  
+  conn.on('error', function (err) {
+    console.log('Mongoose failed to connect:', dbUri, err);
+    mongoose.disconnect();
+  }).on('close', function () {
+    console.log('Mongoose connection closed:', dbUri);
+  }).once('open', function () {
+    console.log('Mongoose connection opened:', dbUri);
+  });
+}
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 
-loadConfig();
 var app = express();
 
 // view engine setup
