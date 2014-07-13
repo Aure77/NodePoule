@@ -1,37 +1,15 @@
 extends layout
-    
-block head
 
 block content
   .main.zerogrid
-    .competition-list-item
-      a(href='#')
-        span
-          | Titre - XX/XX/XXXX
-        img(src='img/slider-img1.jpg', style='width: 100%;')
-    .competition-list-item
-      a(href='#')
-        span
-          | Titre - XX/XX/XXXX
-        img(src='img/slider-img1.jpg', style='width: 100%;')
-    .competition-list-item
-      a(href='#')
-        span
-          | Titre - XX/XX/XXXX
-        img(src='img/slider-img1.jpg', style='width: 100%;')
-    .competition-list-item
-      a(href='#')
-        span
-          | Titre - XX/XX/XXXX
-        img(src='img/slider-img1.jpg', style='width: 100%;')
-    .competition-list-item
-      a(href='#')
-        span
-          | Titre - XX/XX/XXXX
-        img(src='img/slider-img1.jpg', style='width: 100%;')
-    div
-      a(href='#') Précédent
-      a(href='#') 1
-      a(href='#') ...
-      a(href='#') N
-      a(href='#') Suivant
+    - if(tournaments.length===0)
+      p Pas de tournois en cours...
+    - else
+      - each tournament in tournaments
+        .competition-list-item
+          a(href='/tournaments/#{tournament.tournamentId}')
+            span
+              | #{tournament.title}
+            img(src='/img/slider-img1.jpg', style='width: 100%;')
+      div        
+        include _paginate

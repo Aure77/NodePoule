@@ -12,6 +12,7 @@ loadConfig();
 
 if(nconf.get('database') === 'mongo') {
   // load models
+  require('./models/tournaments.js');
   require('./models/decks.js');
   // connect to db
   var dbUri = 'mongodb://' + nconf.get('mongo:host') + ':' + nconf.get('mongo:port') + '/' + nconf.get('mongo:database');
