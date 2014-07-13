@@ -13,15 +13,9 @@ var DecksSchema = new Schema({
   deckId : Number,
   userId : Number,
   cards: [CardsSchema]
-});
-
-/**
-* Custom Methods
-*/
-DecksSchema.methods = {  
-};
+}, { collection: 'decks' });
 
 /**
 * Register schema
 */
-mongoose.model('decks', DecksSchema);
+mongoose.model('deck', DecksSchema);

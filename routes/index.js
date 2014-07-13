@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-//var mongoose = require('mongoose'), Decks = mongoose.model('decks');
+//var mongoose = require('mongoose'), Deck = mongoose.model('deck');
 
 router.get(['/', '/index.html'], function(req, res) {
   console.log("req.user="+req.user);
-  /*var monDeck = new Decks({
+  /*var monDeck = new Deck({
     deckId : 1,
     userId : req.user
   });
