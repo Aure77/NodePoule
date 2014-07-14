@@ -2,6 +2,12 @@ extends layout
 
 block content
   .main.zerogrid
+    dl.dl-tournament
+      dt Jeux :
+      dd #{tournament.game}
+    dl
+      dt Durée du tournois :
+      dd #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
     div(class='iframe-responsive-wrapper')
       img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
     script(type='text/javascript', src='/javascripts/jquery.challonge.js')

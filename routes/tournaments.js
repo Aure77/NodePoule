@@ -8,7 +8,7 @@ router.use(paginate.middleware(4, 50));
 
 /* GET tournaments page. */
 router.get('/', function(req, res, next) {
-  Tournament.paginate({}, req.query.page, req.query.limit, function(err, pageCount, tournaments, itemCount) {
+  Tournament.paginate({}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', { 
       title: 'Listes des tournois', 
@@ -19,9 +19,11 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/:id', function(req, res) {
-  var tournament = { tournamentId : escape(req.params.id) };
-  res.render('tournament', { title: 'Tournois', tournament: tournament });
+router.get('/:id', function(req, res, next) {
+  Tournament.findOne({ tournamentId : escape(req.params.id) }, function(err, tournament) {
+    if (err) { return next(err); }
+    res.render('tournament', { title: tournament.title, tournament: tournament });
+  });
 });
 
 module.exports = router;

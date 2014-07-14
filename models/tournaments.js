@@ -29,6 +29,14 @@ TournamentsSchema.virtual('title').get(function () {
   return this.name + ' - ' + moment(this.startDate).format('DD/MM/YYYY');
 });
 
+TournamentsSchema.virtual('prettyStartDate').get(function () {
+  return moment(this.startDate).format('DD/MM/YYYY');
+});
+
+TournamentsSchema.virtual('prettyEndDate').get(function () {
+  return moment(this.endDate).format('DD/MM/YYYY');
+});
+
 TournamentsSchema.set('toJSON', { virtuals: true });
 
 /**
