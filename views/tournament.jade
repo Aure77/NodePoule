@@ -34,8 +34,13 @@ block head
 
 block content
   .main.zerogrid
+    .competition-infos
+      p.competition-title
+          img(src='/img/hearthstone_icon.png')
+          | #{tournament.game}
+        p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
     .competition-challonge
-      div(class='iframe-responsive-wrapper')
+      div(class='iframe-responsive-wrapper', style='height:500px;')
         img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
       script(type='text/javascript', src='/javascripts/jquery.challonge.js')
       script(type='text/javascript').
@@ -43,7 +48,7 @@ block content
             $('.iframe-responsive-wrapper').challonge('#{tournament.tournamentId}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
         });
     div(style='float: left;')
-      span(style='margin-top: 20px; display: block;') Calendrier
+      span(class='section-title') Agenda
       #mini-clndr.cal2
         script#mini-clndr-template(type='text/template')
           <div class="controls">

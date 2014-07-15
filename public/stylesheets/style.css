@@ -21,3 +21,38 @@
 	background-color:#000;
 	color:#fff;
 }
+
+.competition-infos{
+	width:100%;
+	font-weight:bold;
+	text-transform:uppercase;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.competition-infos .competition-title{	
+	vertical-align:middle;
+	font-size:50px;
+	padding:0px;
+	background-color:#CCC;
+	margin:0px;
+}
+.competition-infos .competition-subtitle{
+	vertical-align:middle;
+	font-size:20px;
+	padding:0px;
+	margin:0px;
+	color:#888;
+	background-color:#EEE;
+}
+.competition-infos img{
+	height:64px;
+	vertical-align:middle;
+	padding-right:20px;
+}
+.section-title{
+	margin:20px 0px 0px 20px;;
+	display:block;
+	text-transform:uppercase;
+	font-family:Verdana, Arial, Helvetica, sans-serif;	
+	font-weight:bold;
+	font-style:italic;
+}
