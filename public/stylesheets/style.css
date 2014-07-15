@@ -3,3 +3,21 @@
 	overflow:hidden;
 	margin-bottom:20px;
 }
+
+.competition-challonge{
+	float:left;
+	width:500px;
+}
+
+.button-link{
+	font-weight:bold;
+	text-decoration:none;
+	text-transform:uppercase;
+	text-align:center;
+	margin:10px;
+	display:block;
+	width:294px;
+	padding:10px;
+	background-color:#000;
+	color:#fff;
+}

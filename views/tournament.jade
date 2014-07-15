@@ -1,17 +1,75 @@
 extends layout
+block head
+  link(rel='stylesheet', href='/stylesheets/clndr.css' type='text/css', media='all')
+  script(type='text/javascript', src='/javascripts/underscore-min.js')
+  script(type='text/javascript', src='/javascripts/moment-2.5.1.js')
+  script(type='text/javascript', src='/javascripts/clndr.js')
+  script(type='text/javascript').
+    var currentMonth = moment().format('YYYY-MM');
+    var nextMonth    = moment().add('month', 1).format('YYYY-MM');
+    var events = [
+      { date: currentMonth + '-' + '10', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
+      { date: currentMonth + '-' + '19', title: 'Cat Frisbee', location: 'Jefferson Park' },
+      { date: currentMonth + '-' + '23', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+      { date: nextMonth + '-' + '07',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
+    ];
+    $(function () {
+      $('#mini-clndr').clndr({
+         template: $('#mini-clndr-template').html(),
+         events: events,
+         clickEvents: {
+           click: function(target) {
+             if(target.events.length) {
+               var daysContainer = $('#mini-clndr').find('.days-container');
+               daysContainer.toggleClass('show-events', true);
+               $('#mini-clndr').find('.x-button').click( function() {
+                 daysContainer.toggleClass('show-events', false);
+               });
+             }
+           }
+         },
+         adjacentDaysChangeMonth: true
+      });
+    });
 
 block content
   .main.zerogrid
-    dl.dl-tournament
-      dt Jeux :
-      dd #{tournament.game}
-    dl
-      dt Durée du tournois :
-      dd #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
-    div(class='iframe-responsive-wrapper')
-      img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
-    script(type='text/javascript', src='/javascripts/jquery.challonge.js')
-    script(type='text/javascript').
-      $(function() {
-          $('.iframe-responsive-wrapper').challonge('#{tournament.tournamentId}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
-      });
+    .competition-challonge
+      div(class='iframe-responsive-wrapper')
+        img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
+      script(type='text/javascript', src='/javascripts/jquery.challonge.js')
+      script(type='text/javascript').
+        $(function() {
+            $('.iframe-responsive-wrapper').challonge('#{tournament.tournamentId}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
+        });
+    div(style='float: left;')
+      span(style='margin-top: 20px; display: block;') Calendrier
+      #mini-clndr.cal2
+        script#mini-clndr-template(type='text/template')
+          <div class="controls">
+          <div class="clndr-previous-button">‹</div><div class="month"><%= month %></div><div class="clndr-next-button">›</div>
+          </div>
+          <div class="days-container">
+          <div class="days">
+          <div class="headers">
+          <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
+          </div>
+          <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
+          </div>
+          <div class="events">
+          <div class="headers">
+          <div class="x-button">x</div>
+          <div class="event-header">EVENTS</div>
+          </div>
+          <div class="events-list">
+          <% _.each(eventsThisMonth, function(event) { %>
+          <div class="event">
+          <a href="<%= event.url %>"><%= moment(event.date).format('MMMM Do') %>: <%= event.title %></a>
+          </div>
+          <% }); %>
+          </div>
+          </div>
+          </div>
+      a.button-link(href='#') Les participants
+      a.button-link(href='#') Les règles
+      a.button-link(href='#') Obtenir le jeu

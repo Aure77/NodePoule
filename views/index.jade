@@ -4,7 +4,7 @@ block head
   script(type='text/javascript', src='/javascripts/jcarousellite_1.0.1.js')
   script(type='text/javascript', src='/javascripts/responsiveslides.js')
   script(type='text/javascript').
-      $(document).ready(function() { 
+      $(function() { 
           $('.carousel .jCarouselLite').jCarouselLite({ 
               btnNext: '.carousel .next',
               btnPrev: '.carousel .prev',
@@ -16,16 +16,14 @@ block head
               start: 0,
               scroll: 1
           }); 
-      });
-      $(function () {
-        $("#slider").responsiveSlides({
-          auto: true,
-          pager: false,
-          nav: true,
-          speed: 500,
-          maxwidth: 940,
-          namespace: "centered-btns"
-        });
+          $("#slider").responsiveSlides({
+            auto: true,
+            pager: false,
+            nav: true,
+            speed: 500,
+            maxwidth: 940,
+            namespace: "centered-btns"
+          });
       });
 
 block home
