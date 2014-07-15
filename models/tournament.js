@@ -6,40 +6,40 @@ var mongoosePaginate = require('mongoose-paginate');
 /**
 * Schemas definitions
 */
-var RulesSchema = new Schema({
+var RuleSchema = new Schema({
   title : String,
   description : String
-});
+}, { _id: false });
 
-var TournamentsSchema = new Schema({
-  tournamentId : String,
+var TournamentSchema = new Schema({
+  tournamentId : { type: String, index: true },
   name : String,
-  game : String,
+  game : { type: Schema.ObjectId, ref: 'Game' },
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
-  rules: [RulesSchema]
+  rules: [RuleSchema]
 }, { collection: 'tournaments' });
 
-TournamentsSchema.plugin(mongoosePaginate);
+TournamentSchema.plugin(mongoosePaginate);
 
 /**
 * Custom Methods
 */
-TournamentsSchema.virtual('title').get(function () {
+TournamentSchema.virtual('title').get(function () {
   return this.name + ' - ' + moment(this.startDate).format('DD/MM/YYYY');
 });
 
-TournamentsSchema.virtual('prettyStartDate').get(function () {
+TournamentSchema.virtual('prettyStartDate').get(function () {
   return moment(this.startDate).format('DD/MM/YYYY');
 });
 
-TournamentsSchema.virtual('prettyEndDate').get(function () {
+TournamentSchema.virtual('prettyEndDate').get(function () {
   return moment(this.endDate).format('DD/MM/YYYY');
 });
 
-TournamentsSchema.set('toJSON', { virtuals: true });
+TournamentSchema.set('toJSON', { virtuals: true });
 
 /**
 * Register schema
 */
-mongoose.model('tournament', TournamentsSchema);
+mongoose.model('Tournament', TournamentSchema);

@@ -1,7 +1,7 @@
 var express = require('express');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
-var mongoose = require('mongoose'), Tournament = mongoose.model('tournament');
+var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament');
 var router = express.Router();
 
 router.use(paginate.middleware(4, 50));
@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  Tournament.findOne({ tournamentId : escape(req.params.id) }, function(err, tournament) {
+  Tournament.findOne({ tournamentId : escape(req.params.id) }).populate("game").exec(function(err, tournament) {
     if (err) { return next(err); }
     res.render('tournament', { title: tournament.title, tournament: tournament });
   });

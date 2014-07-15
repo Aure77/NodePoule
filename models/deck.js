@@ -4,18 +4,17 @@ var Schema = mongoose.Schema;
 /**
 * Schemas definitions
 */
-var CardsSchema = new Schema({
+var CardSchema = new Schema({
   cardId : String,
   quantity: Number
 });
 
-var DecksSchema = new Schema({
-  deckId : Number,
-  userId : Number,
-  cards: [CardsSchema]
+var DeckSchema = new Schema({
+  userId : { type: Number, index: true },
+  cards: [CardSchema]
 }, { collection: 'decks' });
 
 /**
 * Register schema
 */
-mongoose.model('deck', DecksSchema);
+mongoose.model('Deck', DeckSchema);

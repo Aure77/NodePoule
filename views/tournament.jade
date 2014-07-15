@@ -36,8 +36,8 @@ block content
   .main.zerogrid
     .competition-infos
       p.competition-title
-          img(src='/img/hearthstone_icon.png')
-          | #{tournament.game}
+          img(src='#{tournament.game.iconRelPath}')
+          | #{tournament.game.name}
         p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
     .competition-challonge
       div(class='iframe-responsive-wrapper', style='height:500px;')
@@ -77,4 +77,4 @@ block content
           </div>
       a.button-link(href='#') Les participants
       a.button-link(href='#') Les règles
-      a.button-link(href='#') Obtenir le jeu
+      a.button-link(href='#{tournament.game.link}') Obtenir le jeu
