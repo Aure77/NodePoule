@@ -14,7 +14,7 @@ router.get(['/', '/index.html'], function(req, res) {
 });
 
 router.get(['/contacts.html'], function(req, res) {
-  res.render('index', { title: 'Contactez-nous' });
+  res.render('contacts', { title: 'Contactez-nous' });
 });
 
 module.exports = router;
