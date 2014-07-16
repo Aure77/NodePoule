@@ -96,7 +96,7 @@ header {
 }
 .row-bot-bg {
 	width:100%;
-	padding:10px 0 55px;
+	padding:10px 0 25px;
 	background:url('http://cdn.mohye.eu/img/row-bot-bg.jpg') center top no-repeat;
 }
 #page1 .row-bot-bg {padding:10px 0 50px;}

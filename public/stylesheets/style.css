@@ -66,6 +66,12 @@
 	border-left:1px dotted #AAA;
 	vertical-align:middle;
 	padding-left:10px;
+	font-size:40px;
+	line-height:1.2em;
+	color:#fff;
+	margin-top:10px;
+	/* background:url('http://cdn.mohye.eu/img/pic-1.gif') 0 0 repeat-y; */
+	overflow:hidden;
 }
 
 .list-pseudos{
