@@ -95,6 +95,7 @@
 .mid-left{
 	float:left; 
 	width:50%;
+	height:300px;
 }
 .list-palmares{
 	list-style:none;
