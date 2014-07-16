@@ -23,6 +23,10 @@
 	color:#fff;
 }
 
+.competition-wrapper{
+  height: 635px;
+}
+
 .competition-infos{
 	width:100%;
 	font-weight:bold;
