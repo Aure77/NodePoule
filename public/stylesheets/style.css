@@ -79,9 +79,11 @@
 	height:227px;
 	width:300px;
 	overflow-y:scroll;
+	background:#EEE;
+	border:1px solid #AAA;
 }
 .list-pseudos li{
-	margin:0px 0px 5px 20px;
+	margin:5px 0px 0px 20px;
 }
 .list-pseudos img{
 	width:32px;
