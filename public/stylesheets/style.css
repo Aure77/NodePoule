@@ -116,3 +116,12 @@
 	vertical-align:middle;
 	margin-left:10px;
 }
+.no-tournaments{
+	font-family:verdana,arial,sans serif;
+	text-align:center;
+	font-weight:bold;
+	float:none !important;
+	text-transform:uppercase;
+	font-size:20px;
+	text-shadow:-2px 2px 5px #BD0B0B, 2px -2px 5px #D9C409
+}
