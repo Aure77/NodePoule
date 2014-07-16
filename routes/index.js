@@ -11,7 +11,6 @@ router.get(['/', '/index.html'], function(req, res) {
       tournaments: tournaments
     });
   });
-  res.render('index', { title: 'Tournois en cours' });
 });
 
 router.get(['/contacts.html'], function(req, res) {
