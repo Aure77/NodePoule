@@ -30,9 +30,13 @@ block home
   .slider-wrapper
     .rslides_container
       ul#slider.rslides
-        li
-          a(href='#')
-            img(src='http://cdn.mohye.eu/img/slider-img1.jpg', alt='HearthStone')
+        - if(tournaments.length===0)
+          p Pas de tournois en cours...
+        - else
+          - each tournament in tournaments
+            li
+              a(href='/tournaments/#{tournament.tournamentId}', title='#{tournament.title}')
+                img(src='http://cdn.mohye.eu/img/slider-img1.jpg', alt='HearthStone')
   .wrapper
     figure.img-indent2
       img(src='http://cdn.mohye.eu/img/page1-img1.png', alt='')
