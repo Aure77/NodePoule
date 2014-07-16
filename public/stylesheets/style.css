@@ -76,11 +76,12 @@
 
 .list-pseudos{
 	list-style:none;
-	height:227px;
+	height:222px;
 	width:300px;
 	overflow-y:scroll;
 	background:#EEE;
 	border:1px solid #AAA;
+	padding-bottom:5px;
 }
 .list-pseudos li{
 	margin:5px 0px 0px 20px;
