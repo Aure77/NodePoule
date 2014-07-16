@@ -4,7 +4,7 @@ var router = express.Router();
 var today = new Date();
 
 router.get(['/', '/index.html'], function(req, res) {
-  Tournament.find({ today:{$gte:'startDate', $lte:'endDate' }}, function(err, tournaments) {
+  Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournaments) {
     if (err) { return next(err); }
     res.render('index', { 
       title: 'Listes des tournois', 
