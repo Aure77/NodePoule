@@ -16,6 +16,7 @@ if(nconf.get('database') === 'mongo') {
   require('./models/user-profil.js');
   require('./models/tournament.js');
   require('./models/deck.js');
+  require('./models/news.js');
   // connect to db
   var dbUri = 'mongodb://' + nconf.get('mongo:host') + ':' + nconf.get('mongo:port') + '/' + nconf.get('mongo:database');
   mongoose.connect(dbUri, { 
@@ -41,6 +42,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
 var profile = require('./routes/profile');
+var news = require('./routes/all-news');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 
 var app = express();
@@ -63,6 +65,7 @@ if(nconf.get('database') === 'mongo') {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/tournaments', tournaments);
+app.use('/all-news', news);
 app.use('/profile', profile);
 app.use('/hearthstone-decks', hearthstoneDecks);
 

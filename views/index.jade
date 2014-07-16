@@ -53,26 +53,14 @@ block aside
           h3 A voir
           .jCarouselLite
             ul.carousel-list
-              li
-                .img-border
-                  a(href='#')
-                    img(src='http://cdn.mohye.eu/img/page1-img2.jpg', alt='carousel2')
-              li
-                .img-border
-                  a(href='#')
-                    img(src='http://cdn.mohye.eu/img/page1-img3.jpg', alt='carousel3')
-              li
-                .img-border
-                  a(href='#')
-                    img(src='http://cdn.mohye.eu/img/page1-img4.jpg', alt='carousel4')
-              li
-                .img-border
-                  a(href='#')
-                    img(src='http://cdn.mohye.eu/img/page1-img5.jpg', alt='carousel5')
-              li
-                .img-border
-                  a(href='#')
-                    img(src='http://cdn.mohye.eu/img/page1-img6.jpg', alt='carousel6')
+              - if(newscollection.length===0)
+                p(class='no-tournaments') Aucune news n'est disponible.
+              - else
+                - each news in newscollection
+                  li
+                    .img-border
+                      a(href='/#{news.newsId}')
+                        img(src='#{news.iconRelPath}', alt='#{news.title}')
 
 block content
   .main.zerogrid

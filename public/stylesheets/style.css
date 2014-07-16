@@ -125,3 +125,8 @@
 	font-size:20px;
 	text-shadow:-2px 2px 5px #BD0B0B, 2px -2px 5px #D9C409
 }
+.news-date{
+	font-size: 20px;
+	margin-left: 30px;
+	color: #888;
+}

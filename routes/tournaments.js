@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   Tournament.paginate({}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', { 
-      title: 'Listes des tournois', 
+      title: 'Tous les tournois', 
       tournaments: tournaments, 
       pageCount: pageCount,
       itemCount: itemCount 
