@@ -6,7 +6,7 @@ var today = new Date();
 router.get(['/', '/index.html'], function(req, res) {
   Tournament.find({ today:{$gte:'startDate', $lte:'endDate' }}, function(err, tournaments) {
     if (err) { return next(err); }
-    res.render('tournaments', { 
+    res.render('index', { 
       title: 'Listes des tournois', 
       tournaments: tournaments
     });
