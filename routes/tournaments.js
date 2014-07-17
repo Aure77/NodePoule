@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
   Tournament.findOne({ tournamentId : escape(req.params.id) }).populate("game").exec(function(err, tournament) {
     if (err) { return next(err); }
-    res.render('tournament', { title: tournament.title, tournament: tournament });
+    res.render('tournament', { title: tournament.name, tournament: tournament });
   });
 });
 
