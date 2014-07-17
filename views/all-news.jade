@@ -9,7 +9,7 @@ block content
           p(class='no-tournaments') Aucune news n'est disponible.
         - else
           - each news in newsCollection
-            a(href='/#{news.newsId}', class='news-box')
+            a(href='/news/#{news.newsId}', class='news-box')
               img(src='#{news.iconRelPath}')
               p #{news.title}
         div(style='clear:both;')

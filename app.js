@@ -42,7 +42,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
 var profile = require('./routes/profile');
-var news = require('./routes/all-news');
+var news = require('./routes/news');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 
 var app = express();
@@ -65,7 +65,7 @@ if(nconf.get('database') === 'mongo') {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/tournaments', tournaments);
-app.use('/all-news', news);
+app.use('/news', news);
 app.use('/profile', profile);
 app.use('/hearthstone-decks', hearthstoneDecks);
 
