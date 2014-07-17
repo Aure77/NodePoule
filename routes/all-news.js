@@ -4,7 +4,7 @@ var paginate = require('express-paginate');
 var mongoose = require('mongoose'), News = mongoose.model('News');
 var router = express.Router();
 
-router.use(paginate.middleware(4, 50));
+router.use(paginate.middleware(8, 50));
 
 /* GET news page. */
 router.get('/', function(req, res, next) {

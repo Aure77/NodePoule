@@ -50,7 +50,7 @@ block aside
         a.prev
         a.next
         .carousel-container
-          h3 A voir
+          h3 Les news
           .jCarouselLite
             ul.carousel-list
               - if(newscollection.length===0)
@@ -59,9 +59,11 @@ block aside
                 - each news in newscollection
                   li
                     .img-border
-                      a(href='/#{news.newsId}')
+                      a(href='/all-news/#{news.newsId}')
                         img(src='#{news.iconRelPath}', alt='#{news.title}')
-
+                        br
+                        #{news.title}
+        a(href='/all-news', class='small-link-right') Toutes les news...
 block content
   .main.zerogrid
     .wrapper

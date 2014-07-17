@@ -25,7 +25,7 @@ a:hover {text-decoration:none;}
 .wrapper {width:100%; overflow:hidden;}
 .extra-wrap {overflow:hidden;}
  
-p {margin-bottom:18px;}
+/*p {margin-bottom:18px;}*/
 .p0 {margin-bottom:0px;}
 .p1 {margin-bottom:8px;}
 .p2 {margin-bottom:15px;}
@@ -165,7 +165,7 @@ h2 {
 h3 {
 	font-size:24px; 
 	line-height:2em;
-	margin-bottom:18px;
+	/*margin-bottom:18px;*/
 }
 h6 {color:#000;}
 
@@ -276,7 +276,10 @@ aside {
 	width:942px;
 	margin:0 auto;
 }
-.jCarouselLite {width:100% !important;}
+.jCarouselLite {
+	width:100% !important;
+	margin-top:18px;
+}
 .carousel .prev, 
 .carousel .next {
 	display:block;
@@ -294,7 +297,7 @@ aside {
 .carousel .prev:hover {cursor:pointer;}
 .carousel-list li {
 	width:222px;
-	height:159px;
+	height:170px;
 	margin-right:18px;
 }
 
