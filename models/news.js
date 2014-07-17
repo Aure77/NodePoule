@@ -13,6 +13,8 @@ var NewsSchema = new Schema({
   iconRelPath : String
 }, { collection: 'news' });
 
+NewsSchema.plugin(mongoosePaginate);
+
 /**
 * Register schema
 */
