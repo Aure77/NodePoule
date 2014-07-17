@@ -4,19 +4,19 @@ var router = express.Router();
 var today = new Date();
 
 router.get(['/', '/index.html'], function(req, res, next) {
-  var tournaments = [], news = [];
+  var tournaments = [], newsCollection = [];
   Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournamentResults) {
     if (err) { return next(err); }
     tournaments = tournamentResults;
   });
-  News.find({}).sort('date').limit(8).exec(function(err, newsResult){
+  News.find({}).sort('date').limit(8).exec(function(err, newsCollectionResult){
     if (err) { return next(err); }
-    news = newsResult;
+    newsCollection = newsCollectionResult;
   });
   res.render('index', { 
     title: 'Accueil', 
     tournaments: tournaments,
-    newscollection : news
+    newsCollection : newsCollection
   });  
 });
 

@@ -53,10 +53,10 @@ block aside
           h3 Les news
           .jCarouselLite
             ul.carousel-list
-              - if(newscollection.length===0)
+              - if(newsCollection.length===0)
                 p(class='no-tournaments') Aucune news n'est disponible.
               - else
-                - each news in newscollection
+                - each news in newsCollection
                   li
                     .img-border
                       a(href='/all-news/#{news.newsId}')
