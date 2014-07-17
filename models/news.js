@@ -6,7 +6,7 @@ var mongoosePaginate = require('mongoose-paginate');
 * Schemas definitions
 */
 var NewsSchema = new Schema({
-  newsId: { type: Number, index: true }
+  newsId: { type: Number, index: true },
   title : String,
   content : String,
   date : { type: Date, default: Date.now },
