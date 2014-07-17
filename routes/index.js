@@ -3,20 +3,24 @@ var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), N
 var router = express.Router();
 var today = new Date();
 
-router.get(['/', '/index.html'], function(req, res) {
-  Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournaments) {
+router.get(['/', '/index.html'], function(req, res, next) {
+  var tournaments = [], news = [];
+  Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournamentResults) {
     if (err) { return next(err); }
-	News.find({}).sort('date').limit(8).exec(function(err2, newscollection){
-		res.render('index', { 
-		  title: 'Listes des tournois', 
-		  tournaments: tournaments,
-		  newscollection : newscollection
-		});
-	});
+    tournaments = tournamentResults;
   });
+  News.find({}).sort('date').limit(8).exec(function(err, newsResult){
+    if (err) { return next(err); }
+    news = newsResult;
+  });
+  res.render('index', { 
+    title: 'Accueil', 
+    tournaments: tournaments,
+    newscollection : news
+  });  
 });
 
-router.get(['/contacts.html'], function(req, res) {
+router.get('/contacts.html', function(req, res) {
   res.render('contacts', { title: 'Contactez-nous' });
 });
 
