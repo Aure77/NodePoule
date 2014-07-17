@@ -16,4 +16,4 @@ var NewsSchema = new Schema({
 /**
 * Register schema
 */
-mongoose.model('News', GameSchema);
+mongoose.model('News', NewsSchema);
