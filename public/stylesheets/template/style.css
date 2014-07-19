@@ -302,6 +302,8 @@ aside {
 }
 
 .img-border img {
+   height:120px;
+   width:200px;
 	padding:6px;
 	border: 1px solid #aaaaaa;
 }

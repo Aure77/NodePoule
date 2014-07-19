@@ -4,6 +4,13 @@ block head
   script(type='text/javascript', src='/javascripts/jcarousellite_1.0.1.js')
   script(type='text/javascript', src='/javascripts/responsiveslides.js')
   script(type='text/javascript').
+    var isCircular = true;
+    var nbVisible = 4;
+    if(#{newsCollection.length}<=4){
+      isCircular = false;
+      nbVisible = #{newsCollection.length};
+    }
+  script(type='text/javascript').
       $(function() { 
           $('.carousel .jCarouselLite').jCarouselLite({ 
               btnNext: '.carousel .next',
@@ -62,7 +69,7 @@ block aside
                       a(href='/news/#{news.newsId}')
                         img(src='#{news.iconRelPath}', alt='#{news.title}')
                         br
-                        #{news.title}
+                        | {#news.title}
         a(href='/news', class='small-link-right') Toutes les news...
 block content
   .main.zerogrid
