@@ -3,10 +3,10 @@ block head
 
 block home
   h2 #{news.title}
-  span.news-date Le #{news.date}
+  span.news-date Le #{news.prettyDate}
 
 block content
   .main.zerogrid
     .wrapper
        img(src='#{news.iconRelPath}', align='left', style='margin-right: 20px;')
-       p(style='text-align: justify;') #{news.content}
+       p(style='text-align: justify;')!= #{news.content}

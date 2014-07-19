@@ -15,6 +15,10 @@ var NewsSchema = new Schema({
 
 NewsSchema.plugin(mongoosePaginate);
 
+NewsSchema.virtual('prettyDate').get(function () {
+  return moment(this.date).format('DD/MM/YYYY');
+});
+
 /**
 * Register schema
 */
