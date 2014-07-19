@@ -6,7 +6,7 @@ var today = new Date();
 router.get(['/', '/index.html'], function(req, res, next) {
   Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournaments) {
     if (err) { return next(err); }
-    News.find({}).sort('date').limit(8).exec(function(err2, newsCollection){
+    News.find({}).sort('-date').limit(8).exec(function(err2, newsCollection){
       if (err2) { return next(err2); }
       res.render('index', { 
         title: 'Accueil', 
