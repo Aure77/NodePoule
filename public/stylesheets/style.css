@@ -54,10 +54,11 @@
 	padding:5px 20px;
 }
 .section-title{
+	color:#111;
 	margin:20px 0px 0px 20px;;
 	display:block;
 	text-transform:uppercase;
-	font-family:Verdana, Arial, Helvetica, sans-serif;	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	font-style:italic;
 }
@@ -150,4 +151,12 @@
 	background:#EEE;
 	font-size:17px;
 	font-weight:bold;
+}
+.rule-title{
+	color:#7dba14;
+	font-weight:bold;
+	font-style:italic;
+}
+.rule-description{
+	margin-left:20px;
 }

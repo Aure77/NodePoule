@@ -83,5 +83,5 @@ block content
       a(name='rules').section-title Règles
       dl
       - each rule in tournament.rules
-        dt #{rule.title}
-        dd #{rule.description}
+        dt.rule-title #{rule.title}
+        dd.rule-description #{rule.description}
