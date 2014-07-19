@@ -17,6 +17,7 @@ var TournamentSchema = new Schema({
   game : { type: Schema.ObjectId, ref: 'Game' },
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
+  imageRelPath : String,
   rules: [RuleSchema]
 }, { collection: 'tournaments' });
 

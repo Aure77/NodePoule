@@ -43,7 +43,7 @@ block home
           - each tournament in tournaments
             li
               a(href='/tournaments/#{tournament.tournamentId}', title='#{tournament.title}')
-                img(src='http://cdn.mohye.eu/img/slider-img1.jpg', alt='HearthStone')
+                img(src='#{tournament.imageRelPath}', alt='HearthStone')
   .wrapper
     figure.img-indent2
       img(src='http://cdn.mohye.eu/img/page1-img1.png', alt='')
