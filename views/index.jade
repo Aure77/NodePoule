@@ -69,7 +69,7 @@ block aside
                       a(href='/news/#{news.newsId}')
                         img(src='#{news.iconRelPath}', alt='#{news.title}')
                         br
-                        | {#news.title}
+                        | #{news.title}
         a(href='/news', class='small-link-right') Toutes les news...
 block content
   .main.zerogrid
