@@ -22,6 +22,7 @@
     "mongoose-paginate": "^3.1.0",
     "morgan": "^1.0.1",
     "nconf": "^0.6.9",
+    "restler": "^3.2.2",
     "static-favicon": "^1.0.2"
   }
 }
