@@ -26,3 +26,6 @@ node_modules
 
 # Windows
 Thumbs.db
+
+# Config file
+config.json

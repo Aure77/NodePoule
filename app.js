@@ -102,7 +102,7 @@ app.use(function(err, req, res, next) {
 
 function loadConfig() {
     nconf.file({
-        file: path.join(__dirname, '/nodebb/config.json')
+        file: path.join(__dirname, '/config.json')
     });
 
     nconf.defaults({
