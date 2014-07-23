@@ -11,14 +11,30 @@ var RuleSchema = new Schema({
   description : String
 }, { _id: false });
 
+var MatchSchema = new Schema({
+  pid1 : Number,
+  pid2 : Number,
+  score1 : Number,
+  score2 : Number,
+  eventDate : Date,
+  round : Number
+}, { _id: false });
+
+var ParticipantSchema = new Schema({
+  pid : Number,
+  name : String /* Optional or for team name */
+}, { _id: false });
+
 var TournamentSchema = new Schema({
-  tournamentId : { type: String, index: true },
+  tournamentId : { type: String, index: true, unique: true },
   name : String,
   game : { type: Schema.ObjectId, ref: 'Game' },
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
   imageRelPath : String,
-  rules: [RuleSchema]
+  matchs: [MatchSchema],
+  participants: [ParticipantSchema],
+  rules: [RuleSchema],
 }, { collection: 'tournaments' });
 
 TournamentSchema.plugin(mongoosePaginate);
