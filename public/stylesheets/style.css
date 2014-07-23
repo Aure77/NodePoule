@@ -198,3 +198,64 @@ p.game-icon{
 	width:16px;
 	margin:5px 5px 0px 0px;
 }
+.glossary-ul{
+	padding:0px 0px 0px 10px;
+	margin:0px;
+	background:#EEE;
+}
+
+.glossary-ul li {
+	background:#fff;
+	display:inline;
+	font-family:'Arial',Verdana,Tahoma;
+	font-size:16pt;
+	font-weight:bold;
+	padding:10px 15px 15px;
+	line-height:70px;
+	cursor:pointer;
+}
+
+.glossary-ul li.selected{
+	background:#000;
+	color:#ffffff;
+	font-weight:bold;
+	padding:10px 15px 22px;
+}
+
+.glossary-container{
+	clear:both;
+}
+
+.glossary-content{
+	height:430px;
+	overflow:auto;
+	font-family:'Arial',Verdana,Tahoma;
+	font-size:10pt;
+	clear:both;
+}
+
+.glossary-content div{
+	padding-left:10px;
+	border-bottom:1px #666666 solid;
+}
+
+.glossary-content div span{
+	margin-top:0px;
+}
+
+.glossary-content p.return-to-top{
+	color:#0066FF;
+	text-decoration:underline;
+	text-align:right;
+	margin-right:10px;
+	cursor:pointer;
+}
+.glossary-title{
+display: block;
+font-size: 1.5em;
+-webkit-margin-before: 0.83em;
+-webkit-margin-after: 0.83em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+font-weight: bold;
+}
