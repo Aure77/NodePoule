@@ -10,8 +10,8 @@ var GamerTagSchema = new Schema({
 }, { _id: false });
 
 var UserProfilSchema = new Schema({
-  uid : { type: Number, index: true },
-  skype : String,
+  uid : { type: Number, require: true, unique: true, index: true },
+  user : { type: Schema.ObjectId, ref: 'User' },
   gamerTags: [GamerTagSchema]
 }, { collection: 'userprofils' });
 

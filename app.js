@@ -12,6 +12,7 @@ loadConfig();
 
 if(nconf.get('database') === 'mongo') {
   // load models
+  require('./models/user.js');
   require('./models/game.js');
   require('./models/user-profil.js');
   require('./models/tournament.js');
