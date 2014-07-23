@@ -1,9 +1,9 @@
 extends layout
     
 block head
-  link(rel='stylesheet', href='/stylesheets/decklist.css')
-  link(rel='stylesheet', href='/stylesheets/chosen.css')
-  script(type='text/javascript', src='/javascripts/chosen.jquery.min.js')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/decklist.css')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/chosen.css')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/chosen.jquery.min.js')
   script(type='text/javascript').
     $(document).ready(function() {
         var posX=0,posY=0;

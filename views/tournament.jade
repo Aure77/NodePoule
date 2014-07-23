@@ -1,11 +1,11 @@
 extends layout
 block head
-  link(rel='stylesheet', href='/stylesheets/clndr.css' type='text/css', media='all')
-  link(rel='stylesheet', href='/stylesheets/jquery.bracket.min.css' type='text/css', media='all')
-  script(type='text/javascript', src='/javascripts/underscore-min.js')
-  script(type='text/javascript', src='/javascripts/moment-2.5.1.js')
-  script(type='text/javascript', src='/javascripts/clndr.js')
-  script(type='text/javascript', src='/javascripts/jquery.bracket.min.js')  
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/clndr.css' type='text/css', media='all')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/jquery.bracket.min.css' type='text/css', media='all')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/underscore-min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/moment-2.5.1.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/clndr.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.bracket.min.js')  
   script(type='text/javascript').
     var currentMonth = moment().format('YYYY-MM');
     var nextMonth    = moment().add('month', 1).format('YYYY-MM');
@@ -63,7 +63,7 @@ block content
     .competition-challonge
       div(class='iframe-responsive-wrapper', style='height:500px;')
         img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
-      script(type='text/javascript', src='/javascripts/jquery.challonge.js')
+      script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.challonge.js')
       script(type='text/javascript').
         $(function() {
             $('.iframe-responsive-wrapper').challonge('#{tournament.tournamentId}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
