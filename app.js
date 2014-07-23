@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('static-favicon');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
 var	path = require('path');
 var nconf = require('nconf');
@@ -23,8 +23,8 @@ if(nconf.get('database') === 'mongo') {
     user: nconf.get('mongo:username'), 
     pass: nconf.get('mongo:password'),
     server: { 
-      keepAlive: 1, 
-      auto_reconnect: true, 
+      keepAlive: 1,
+      auto_reconnect: true
     }
   }); 
   var conn = mongoose.connection;  
@@ -48,14 +48,17 @@ var hearthstoneDecks = require('./routes/hearthstone-decks');
 
 var app = express();
 
+// application variables provided to all templates
+app.locals.staticsPrefixPath = nconf.get('statics_prefix_path');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(favicon());
+app.use(favicon(__dirname + '/public/img/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(nconf.get('secret')));
 app.use(express.static(path.join(__dirname, 'public')));
 

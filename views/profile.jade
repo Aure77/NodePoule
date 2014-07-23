@@ -33,7 +33,7 @@ block head
     });
 
 block home
-  img.avatar(src='http://cdn.mohye.eu/img/avatar.png')
+  img.avatar(src='#{staticsPrefixPath}/img/avatar.png')
   span.pseudo-header PSEUDO
 
 block content
@@ -43,6 +43,7 @@ block content
         span.section-title Pseudos
           ul.list-pseudos
             li
+<<<<<<< HEAD
               img(src='http://cdn.mohye.eu/img/platforms/skype.png', alt='skype', title='skype')
               | Pseudo
             li
@@ -65,6 +66,30 @@ block content
               | Pseudo
             li
               img(src='http://cdn.mohye.eu/img/platforms/battle.net.png', alt='battle.net', title='battle.net')
+=======
+              img(src='#{staticsPrefixPath}/img/skype.png', alt='skype', title='skype')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/steam.png', alt='steam', title='steam')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/origin.png', alt='origin', title='origin')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/battle.net.png', alt='battle.net', title='battle.net')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/skype.png', alt='skype', title='skype')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/steam.png', alt='steam', title='steam')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/origin.png', alt='origin', title='origin')
+              | Pseudo
+            li
+              img(src='#{staticsPrefixPath}/img/battle.net.png', alt='battle.net', title='battle.net')
+>>>>>>> Externalisation du path de statiques
               | Pseudo
       .mid-left
         span.section-title Agenda
@@ -98,7 +123,7 @@ block content
         span.section-title Palmarès
         ul.list-palmares
           li
-            img.palmares-icon(src='http://cdn.mohye.eu/img/hearthstone_icon.png')
+            img.palmares-icon(src='#{staticsPrefixPath}/img/hearthstone_icon.png')
             .palmares-infos
               a(href='#') Titre du tournoi - xx/xx/xxxx
               br
