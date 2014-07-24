@@ -4,26 +4,20 @@ var mongoose = require('mongoose'), UserProfil = mongoose.model('UserProfil'), U
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  try {
-    findUserProfilById(req.user, function(userProfil) {
-      res.render('profile', { profil: userProfil });
-    });
-  } catch(e) {
-    next(new Error(e.message));
-  }
+  findUserProfilById(req.user, function(err, userProfil) {
+    if (err) { return next(err); }
+    res.render('profile', { profil: userProfil });
+  });
 });
 
 router.get('/:id', function(req, res, next) {
-  try {
-    findUserProfilById(escape(req.params.id), function(userProfil) {
-      res.render('profile', { profil: userProfil });
-    });
-  } catch(e) {
-    next(new Error(e.message));
-  }
+  findUserProfilById(escape(req.params.id), function(err, userProfil) {
+    if (err) { return next(err); }
+    res.render('profile', { profil: userProfil });
+  });
 });
 
-var findUserProfilById = function(uid, callback) {
+function findUserProfilById(uid, callback) {
   UserProfil.findOne({ uid: uid })
             .populate('user', '_key uid username picture gravatarpicture uploadedpicture status')
             .populate('gamerTags.game')
@@ -31,9 +25,9 @@ var findUserProfilById = function(uid, callback) {
             .exec(function(err, userProfil) {
     if(!userProfil) {
       //TODO if User model exist in objects collection(nodebb) -> create a new default profil
-      throw("User '"+uid+"' not found");
+      callback(new Error("UserProfil '"+uid+"' not found"), null);
     }    
-    callback(userProfil);    
+    callback(null, userProfil);    
   });
 }
 
