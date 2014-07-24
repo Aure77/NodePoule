@@ -14,7 +14,8 @@ router.get('/', function(req, res, next) {
       title: 'Toutes les news', 
       newsCollection: newsCollection, 
       pageCount: pageCount,
-      itemCount: itemCount 
+      itemCount: itemCount,
+	  sortBy: '-date'
     });
   });
 });

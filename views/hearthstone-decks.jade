@@ -36,7 +36,7 @@ block head
                 
                 var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
                 var popup = $('<div>', { class: 'decklist-popup' });
-                $('<img/>', { src: 'http://wow.zamimg.com/images/hearthstone/cards/frfr/medium/' + card.id + '.png' }).appendTo(popup)
+                $('<img/>', { src: 'http://cdn.mohye.eu/img/decklist/cartes/' + card.id + '.png' }).appendTo(popup)
                 $('<p>', { class: 'decklist-desc' }).html(card.flavor).appendTo(popup);
                 popup.appendTo(li);
                 $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(li);
