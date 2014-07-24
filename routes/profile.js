@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
       res.render('profile', { profil: userProfil });
     });
   } catch(e) {
-    next(e);
+    next(new Error(e.message));
   }
 });
 
@@ -19,7 +19,7 @@ router.get('/:id', function(req, res, next) {
       res.render('profile', { profil: userProfil });
     });
   } catch(e) {
-    next(e);
+    next(new Error(e.message));
   }
 });
 
@@ -31,7 +31,7 @@ var findUserProfilById = function(uid, callback) {
             .exec(function(err, userProfil) {
     if(!userProfil) {
       //TODO if User model exist in objects collection(nodebb) -> create a new default profil
-      throw new Error("User '"+uid+"' not found");
+      throw("User '"+uid+"' not found");
     }    
     callback(userProfil);    
   });
