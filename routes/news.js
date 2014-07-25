@@ -21,8 +21,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  News.findOne({ newsId : escape(req.params.id) }).exec(function(err, news) {
-    if (err) { return next(err); }
+  var newsId = escape(req.params.id);
+  News.findOne({ newsId : newsId }).exec(function(err, news) {
+    if (err) { return next(err); }    
+    if(!news) {
+      return next(new Error("La news '"+newsId+"' est introuvable"));
+    }
+    
     res.render('news', { title: news.title, news: news });
   });
 });
