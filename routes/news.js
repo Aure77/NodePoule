@@ -14,10 +14,10 @@ router.get('/', function(req, res, next) {
       title: 'Toutes les news', 
       newsCollection: newsCollection, 
       pageCount: pageCount,
-      itemCount: itemCount,
-	  sortBy: '-date'
+      itemCount: itemCount
     });
-  });
+  },
+  {sortBy: '-date'});
 });
 
 router.get('/:id', function(req, res, next) {
