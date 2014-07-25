@@ -23,29 +23,31 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  Tournament.findOne({ tournamentId : escape(req.params.id) }).populate("game").exec(function(err, tournament) {
-    if (err) { return next(err); }
-
+	var tid = escape(req.params.id);
+  Tournament.findOne({ tournamentId : tid }).populate("game").exec(function(err, tournament) {
+    if (err) { return next(err); }	
+		
+		if(!tournament) {
+			return next(new Error("Le tournoi '"+tid+"' est introuvable"));
+		}
+		
+		var participantsById = [];
+		tournament.participants.forEach(function(participant) { // For tests
+				participantsById[participant.pid] = participant;
+		});
+				
 		var teams = [];
     var rounds = []; // List of rounds
 		
-		if(tournament) {
-			var participantsById = [];
-			tournament.participants.forEach(function(participant) { // For tests
-					participantsById[participant.pid] = participant;
-			});
-			
-			tournament.matchs.forEach(function(match) {
-					if(match.round == 1) {
-							teams.push([ participantsById[match.pid1], participantsById[match.pid2] ]);
-					}
-					var roundIndex = match.round-1;
-					rounds[roundIndex] = rounds[roundIndex] || [];
-					rounds[roundIndex].push([ match.score1, match.score2 ]);
-			});
-		}
-    
-    res.render('tournament', { title: tournament.name, tournament: tournament, teams: teams, results: [ rounds ] });
+		tournament.matchs.forEach(function(match) {
+				if(match.round == 1) {
+						teams.push([ participantsById[match.pid1], participantsById[match.pid2] ]);
+				}
+				var roundIndex = match.round-1;
+				rounds[roundIndex] = rounds[roundIndex] || [];
+				rounds[roundIndex].push([ match.score1, match.score2 ]);
+		});
+		res.render('tournament', { title: tournament.name, tournament: tournament, teams: teams, results: [ rounds ] });  
   });
 });
 
