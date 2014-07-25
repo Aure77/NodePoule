@@ -14,8 +14,8 @@ block head
     
         $(document).on('mouseenter', '.decklist-content li .card-name a',  function(e) {
           console.log("mouseenter");
-          $(this).closest('li').find('.decklist-popup').offset({top: posY, left: posX});
           $(this).closest('li').find('.decklist-popup').show();
+          $(this).closest('li').find('.decklist-popup').offset({top: posY, left: posX});
         }).on("mouseleave", '.decklist-content li .card-name a', function() {
           $(this).closest('li').find('.decklist-popup').offset({top: 0, left: 0});
           $(this).closest('li').find('.decklist-popup').hide();
