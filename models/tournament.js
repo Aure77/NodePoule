@@ -56,9 +56,9 @@ TournamentSchema.virtual('prettyEndDate').get(function () {
 
 TournamentSchema.virtual('status').get(function () {
     var today = new Date();
-    today = today.getDate().format('DD/MM/YYYY');
-    var end = this.endDate.format('DD/MM/YYYY');
-    var start = this.startDate.format('DD/MM/YYYY');
+    today = moment(today).format('DD/MM/YYYY');
+    var end = moment(this.endDate).format('DD/MM/YYYY');
+    var start = moment(this.startDate).format('DD/MM/YYYY');
     if((+today <= +end) && (+today >= +start))
         return 'en cours';
     if(today < start)
@@ -69,9 +69,9 @@ TournamentSchema.virtual('status').get(function () {
 
 TournamentSchema.virtual('cssStatus').get(function () {
     var today = new Date();
-    today = today.getDate().format('DD/MM/YYYY');
-    var end = this.endDate.format('DD/MM/YYYY');
-    var start = this.startDate.format('DD/MM/YYYY');
+    today = moment(today).format('DD/MM/YYYY');
+    var end = moment(this.endDate).format('DD/MM/YYYY');
+    var start = moment(this.startDate).format('DD/MM/YYYY');
     if((+today <= +end) && (+today >= +start))
         return '.competition-statut.encours';
     if(today < start)
