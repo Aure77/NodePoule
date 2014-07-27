@@ -10,7 +10,7 @@ block content
           a(href='/tournaments/#{tournament.tournamentId}')
             span
               | #{tournament.title}
-            span(class='#{tournament.cssStatus}')
+          span(class='#{tournament.cssStatus}')
               | #{tournament.status}
           a(href='/tournaments/#{tournament.tournamentId}')
             img(src='#{tournament.imageRelPath}', style='width: 100%;')
