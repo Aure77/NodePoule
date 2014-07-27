@@ -54,6 +54,30 @@ TournamentSchema.virtual('prettyEndDate').get(function () {
   return moment(this.endDate).format('DD/MM/YYYY');
 });
 
+TournamentSchema.virtual('status').get(function () {
+    var today = curdate.getDate().format('DD/MM/YYYY');
+    var end = this.endDate.format('DD/MM/YYYY');
+    var start = this.startDate.format('DD/MM/YYYY');
+    if((+today <= +end) && (+today >= +start))
+        return 'en cours';
+    if(today < start)
+        return 'à venir';
+    if(today > end)
+        return 'terminé';
+});
+
+TournamentSchema.virtual('cssStatus').get(function () {
+    var today = curdate.getDate().format('DD/MM/YYYY');
+    var end = this.endDate.format('DD/MM/YYYY');
+    var start = this.startDate.format('DD/MM/YYYY');
+    if((+today <= +end) && (+today >= +start))
+        return '.competition-statut.encours';
+    if(today < start)
+        return '.competition-statut.avenir';
+    if(today > end)
+        return '.competition-statut.termine';
+});
+
 TournamentSchema.set('toJSON', { virtuals: true });
 
 /**

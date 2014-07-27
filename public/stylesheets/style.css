@@ -3,6 +3,22 @@
 	overflow:hidden;
 	margin-bottom:20px;
 }
+.competition-statut{
+	text-transform:uppercase;
+	text-decoration:none;	
+	font-weight:bold;
+	color:#000;
+	float:right;
+}
+.competition-statut.avenir{
+	color:#0F5;
+}
+.competition-statut.encours{
+	color:#FA0;
+}
+.competition-statut.termine{
+	color:#F00;
+}
 
 .competition-challonge{
 	float:left;
