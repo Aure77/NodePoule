@@ -55,7 +55,8 @@ TournamentSchema.virtual('prettyEndDate').get(function () {
 });
 
 TournamentSchema.virtual('status').get(function () {
-    var today = curdate.getDate().format('DD/MM/YYYY');
+    var today = new Date();
+    today = today.getDate().format('DD/MM/YYYY');
     var end = this.endDate.format('DD/MM/YYYY');
     var start = this.startDate.format('DD/MM/YYYY');
     if((+today <= +end) && (+today >= +start))
@@ -67,7 +68,8 @@ TournamentSchema.virtual('status').get(function () {
 });
 
 TournamentSchema.virtual('cssStatus').get(function () {
-    var today = curdate.getDate().format('DD/MM/YYYY');
+    var today = new Date();
+    today = today.getDate().format('DD/MM/YYYY');
     var end = this.endDate.format('DD/MM/YYYY');
     var start = this.startDate.format('DD/MM/YYYY');
     if((+today <= +end) && (+today >= +start))
