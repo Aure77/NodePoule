@@ -2,14 +2,14 @@ extends layout
     
 block head
   link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/decklist.css')
-  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/chosen.css')
-  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/chosen.jquery.min.js')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/selectize.css')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/selectize.min.js')
   script(type='text/javascript').
     $(function() {
         var posX=0,posY=0;
         $(document).on('mousemove', function(event) {
-           posX= event.pageX-210;
-           posY =event.pageY-150;
+           posX = event.pageX-210;
+           posY = event.pageY-150;
         });
     
         $(document).on('mouseenter', '.decklist-content li .card-name a',  function(e) {
@@ -21,22 +21,21 @@ block head
           $(this).closest('li').find('.decklist-popup').hide();
         });
         
-        var cards = !{JSON.stringify(cards)};
-        for (var i in cards) {
-            $('<option>')
-            .data('card-item', cards[i])
-            .val(cards[i].id)
-            .html(cards[i].name)
-            .appendTo("#deck-search");
-        }
         
-        $("#deck-search").chosen({no_results_text: "Oups, pas de carte trouvée!", max_selected_options: 30}).on('change', function(evt, params) {
-            if(params.selected) {
-                var card = $("#deck-search").find('option[value="'+params.selected+'"]').data('card-item');
-                
-                var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
+        $("#deck-search").selectize({
+            create: false,
+            persist: false,
+            plugins: ['remove_button'],
+            options: !{JSON.stringify(cards)},
+            maxItems: 30,
+            maxOptions: 20,
+            valueField: 'id',
+            searchField: ['name', 'type'],
+            onItemAdd: function(value, $item) {
+              var card = $item.data('card-item');
+              var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
                 var popup = $('<div>', { class: 'decklist-popup' });
-                $('<img/>', { src: 'http://cdn.mohye.eu/img/decklist/cartes/' + card.id + '.png' }).appendTo(popup)
+                $('<img/>', { src: '#{staticsPrefixPath}/img/decklist/cartes/' + card.id + '.png' }).appendTo(popup)
                 $('<p>', { class: 'decklist-desc' }).html(card.flavor).appendTo(popup);
                 popup.appendTo(li);
                 $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(li);
@@ -46,10 +45,17 @@ block head
                 $('<p>', { class: 'card-health' }).html(card.health).appendTo(li);
                 $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(li);
                 li.appendTo(".decklist-content ul");
-            }
-            if(params.deselected) {
-                var card = $("#deck-search").find('option[value="'+params.deselected+'"]').data('card-item');
-                $('li#' + card.id).remove();
+            },
+            onItemRemove: function(value) {
+              $('li#' + value).remove();
+            },
+            render: {
+                item: function(item, escape) {
+                    return '<div data-card-item="' + escape(JSON.stringify(item)) + '">' + (item.name ? '<span class="name">' + escape(item.name) + '</span>' : '') + '</div>';
+                },
+                option: function(item, escape) {
+                    return '<div><span style="display: block; background-image:url(\'#{staticsPrefixPath}/img/decklist/cartes/' + escape(item.id) + '.png\'); background-repeat:no-repeat; background-size: 200%; background-position: -25px -25px; height: 50px; width: 50px;"></span><span class="label" style="height: 50px;">' + escape(item.name) + '</span> <small>(' + escape(item.type) + ')</small></div>';
+                }
             }
         });
     });
