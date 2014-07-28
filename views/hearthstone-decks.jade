@@ -42,7 +42,7 @@ block head
                 var cardName = $('<p>', { class: 'card-name' });
                 $('<a>').html(card.name).appendTo(cardName);
                 cardName.appendTo(li);
-                $('<p>', { class: 'card-health' }).html(card.health).appendTo(li);
+                $('<p>', { class: 'card-health' }).html((typeof card.health === "undefined")? card.durability : card.health).appendTo(li);
                 $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(li);
                 li.appendTo(".decklist-content ul");
             },
