@@ -49,7 +49,7 @@
     width: 20px;
 }
 .decklist-content .decklist-card .card-name {
-    width: 184px;
+    width: 195px;
     text-align: left;
 }
 .decklist-content .decklist-card .card-name a,.decklist-content .decklist-card .card-name a:visited {
@@ -59,10 +59,10 @@
     cursor:pointer;
 }
 .decklist-content .decklist-card .card-health {
-    width: 30px;
+    width: 32px;
 }
 .decklist-content .decklist-card .card-attack {
-    width: 25px;
+    width: 30px;
 }
 .decklist-bottom {
     width: 380px;

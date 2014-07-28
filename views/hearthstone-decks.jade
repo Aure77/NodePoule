@@ -45,7 +45,8 @@ block head
               cardName.appendTo(cardDiv);
               $('<p>', { class: 'card-health' }).html((typeof card.health === 'undefined')? card.durability : card.health).appendTo(cardDiv);
               $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(cardDiv);
-              $('<input>', { type: 'checkbox', value: card.id }).html(' x2').appendTo(cardDiv);
+              $('<input>', { type: 'checkbox', value: card.id }).appendTo(cardDiv);
+              $(' x2').appendTo(cardDiv);
               cardDiv.appendTo(li);
               li.appendTo(".decklist-content ul");
             },
@@ -66,7 +67,7 @@ block head
 block content
   .main.zerogrid
     div
-      select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:350px;")
+      select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:380px;")
     
     div(class='decklist-top')
       img(src='#{staticsPrefixPath}/img/decklist/decklist_top.png')
