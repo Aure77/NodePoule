@@ -25,9 +25,8 @@
     padding-left: 35px;
     height: 40px;
     line-height: 42px;
-    width: 290px;
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card.jpg') no-repeat;
-	display:inline-block;
+	display:inline;
 }
 .decklist-content .decklist-card.minion {
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
@@ -63,6 +62,7 @@
 }
 .decklist-content .decklist-card .card-attack {
     width: 30px;
+	padding-right:15px;
 }
 .decklist-bottom {
     width: 380px;
