@@ -45,7 +45,7 @@ block head
               cardName.appendTo(cardDiv);
               $('<p>', { class: 'card-health' }).html((typeof card.health === 'undefined')? card.durability : card.health).appendTo(cardDiv);
               $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(cardDiv);
-              $('<input>', { type: 'checkbox', value: card.id }).appendTo(cardDiv);
+              $('<input type=\'checkbox\' value=\'' + card.id + '\'/>').appendTo(cardDiv);
               $(' x2').appendTo(cardDiv);
               cardDiv.appendTo(li);
               li.appendTo(".decklist-content ul");
