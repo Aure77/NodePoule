@@ -1,10 +1,10 @@
 @font-face {
     font-family: "HearthStoneFont";
-    src: url('http://cdn.mohye.eu/fonts/HearthStoneFont.ttf');
+    src: url('../fonts/HearthStoneFont.ttf');
 }
 .decklist-top {
     background: url('http://cdn.mohye.eu/img/decklist/heros/malfurion.jpg');
-    width: 350px;
+    width: 380px;
     height: 113px;
 }
 .decklist-content {
@@ -15,25 +15,27 @@
     text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
     color: #FFF;
     font-size: 18px;
-    width: 350px;
     list-style-type: none;
     margin: 0px;
     padding: 0px;
 	vertical-align:top;
+	width:380px;
 }
-.decklist-content li {
+.decklist-content .decklist-card{
     padding-left: 35px;
     height: 40px;
     line-height: 42px;
+    width: 290px;
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card.jpg') no-repeat;
+	display:inline-block;
 }
-.decklist-content li.minion {
+.decklist-content .decklist-card.minion {
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
 }
-.decklist-content li.weapon {
+.decklist-content .decklist-card.weapon {
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card_weapon.jpg') no-repeat;
 }
-.decklist-content li p {
+.decklist-content .decklist-card p {
     margin: 0px;
     padding: 0px;
     display: inline-block;
@@ -43,27 +45,27 @@
 	word-wrap: break-word;
 	overflow:hidden;
 }
-.decklist-content li .card-mana {
+.decklist-content .decklist-card .card-mana {
     width: 20px;
 }
-.decklist-content li .card-name {
-    width: 194px;
+.decklist-content .decklist-card .card-name {
+    width: 184px;
     text-align: left;
 }
-.decklist-content li .card-name a,.decklist-content li .card-name a:visited {
+.decklist-content .decklist-card .card-name a,.decklist-content .decklist-card .card-name a:visited {
     color: #fff;
     text-decoration: none;
     margin-left: 15px;
     cursor:pointer;
 }
-.decklist-content li .card-health {
-    width: 31px;
+.decklist-content .decklist-card .card-health {
+    width: 30px;
 }
-.decklist-content li .card-attack {
-    width: 35px;
+.decklist-content .decklist-card .card-attack {
+    width: 25px;
 }
 .decklist-bottom {
-    width: 350px;
+    width: 380px;
     height: 37px;
 }
 .decklist-desc{

@@ -33,17 +33,20 @@ block head
             searchField: ['name', 'type'],
             onItemAdd: function(value, $item) {
               var card = $item.data('card-item');
-              var li = $('<li>', { id: card.id, class: card.type.toLowerCase() });
+              var li = $('<li>', { id: card.id });
+			  var cardDiv = $('<div>',{ class: 'decklist-card ' + card.type.toLowerCase() });
                 var popup = $('<div>', { class: 'decklist-popup' });
                 $('<img/>', { src: '#{staticsPrefixPath}/img/decklist/cartes/' + card.id + '.png' }).appendTo(popup)
                 $('<p>', { class: 'decklist-desc' }).html(card.flavor).appendTo(popup);
-                popup.appendTo(li);
-                $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(li);
+                popup.appendTo(cardDiv);
+                $('<p>', { class: 'card-mana' }).html(card.cost).appendTo(cardDiv);
                 var cardName = $('<p>', { class: 'card-name' });
                 $('<a>').html(card.name).appendTo(cardName);
-                cardName.appendTo(li);
-                $('<p>', { class: 'card-health' }).html((typeof card.health === "undefined")? card.durability : card.health).appendTo(li);
-                $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(li);
+                cardName.appendTo(cardDiv);
+                $('<p>', { class: 'card-health' }).html((typeof card.health === "undefined")? card.durability : card.health).appendTo(cardDiv);
+                $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(cardDiv);
+				$('<input>', { type: 'checkbox', value: card.id }.html(' x2').appendTo(cardDiv);
+				cardDiv.appendTo(li);
                 li.appendTo(".decklist-content ul");
             },
             onItemRemove: function(value) {
