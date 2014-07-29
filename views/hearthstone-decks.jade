@@ -43,10 +43,12 @@ block head
               var cardName = $('<p>', { class: 'card-name' });
               $('<a>').html(card.name).appendTo(cardName);
               cardName.appendTo(cardDiv);
-              $('<p>', { class: 'card-health' }).html((typeof card.health === 'undefined')? card.durability : card.health).appendTo(cardDiv);
+              $('<p>', { class: 'card-health' }).html((typeof card.health === 'undefined') ? card.durability : card.health).appendTo(cardDiv);
               $('<p>', { class: 'card-attack' }).html(card.attack).appendTo(cardDiv);
-              var chkBox = $('<label />').html(' x2').prepend($('<input/>').attr({ type: 'checkbox', value: card.id}));
-              chkBox.appendTo(cardDiv);
+              var cardCount = $('<p>', { class: 'card-count' });
+              $('<input/>').attr({ type: 'checkbox', value: card.id}).appendTo(cardCount);
+              $('<label />').html(' x2').appendTo(cardCount);
+              cardCount.appendTo(cardDiv);
               cardDiv.appendTo(li);
               li.appendTo(".decklist-content ul");
             },
@@ -55,10 +57,12 @@ block head
             },
             render: {
                 item: function(item, escape) {
-                    return '<div data-card-item="' + escape(JSON.stringify(item)) + '">' + (item.name ? '<span class="name">' + escape(item.name) + '</span>' : '') + '</div>';
+                    return '<div class="card-item" data-card-item="' + escape(JSON.stringify(item)) + '"><span class="card-name">' + escape(item.name) + '</span></div>';
                 },
                 option: function(item, escape) {
-                    return '<div><span style="display: block; background-image:url(\'#{staticsPrefixPath}/img/decklist/cartes/' + escape(item.id) + '.png\'); background-repeat:no-repeat; background-size: 200%; background-position: -25px -25px; height: 50px; width: 50px;"></span><span class="label" style="height: 50px;">' + escape(item.name) + '</span> <small>(' + escape(item.type) + ')</small></div>';
+                    return '<div class="card-option"><div class="card-option-left"><span class="card-preview card-preview-' + item.type.toLowerCase() + '" style="background-image:url(\'#{staticsPrefixPath}/img/decklist/cartes/' + escape(item.id) + '.png\');"></span></div>'
+                    + '<div class="card-option-right"><span class="card-name">' + escape(item.name) + ' <small>(' + escape(item.type) + ')</small></span>'
+                    + '<span class="card-desc"><small>' + item.text + '</small></span></div></div>';
                 }
             }
         });
@@ -67,7 +71,7 @@ block head
 block content
   .main.zerogrid
     div
-      select(id="deck-search",class="chosen-select", multiple, data-placeholder="Rechercher une carte...", style="width:380px;")
+      select(id="deck-search", multiple, placeholder="Rechercher une carte...", style="width:380px;")
     
     div(class='decklist-top')
       img(src='#{staticsPrefixPath}/img/decklist/decklist_top.png')
@@ -77,3 +81,8 @@ block content
     
     div(class='decklist-bottom')
       img(src='#{staticsPrefixPath}/img/decklist/decklist_bottom.jpg')
+        
+    div(class='decklist-controls')
+      span Nom du deck
+      input
+      button Sauvegarder

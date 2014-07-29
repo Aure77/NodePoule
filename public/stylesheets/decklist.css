@@ -18,15 +18,15 @@
     list-style-type: none;
     margin: 0px;
     padding: 0px;
-	vertical-align:top;
-	width:380px;
+    vertical-align: top;
+    width: 380px;
 }
-.decklist-content .decklist-card{
+.decklist-content .decklist-card {
     padding-left: 35px;
     height: 40px;
     line-height: 42px;
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card.jpg') no-repeat;
-	display:inline-block;
+    display: inline-block;
 }
 .decklist-content .decklist-card.minion {
     background: url('http://cdn.mohye.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
@@ -39,10 +39,10 @@
     padding: 0px;
     display: inline-block;
     text-align: center;
-	max-height:40px;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	overflow:hidden;
+    max-height: 40px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow:hidden;
 }
 .decklist-content .decklist-card .card-mana {
     width: 20px;
@@ -55,38 +55,96 @@
     color: #fff;
     text-decoration: none;
     margin-left: 15px;
-    cursor:pointer;
+    cursor: pointer;
 }
 .decklist-content .decklist-card .card-health {
     width: 32px;
 }
 .decklist-content .decklist-card .card-attack {
     width: 30px;
-	padding-right:15px;
+    padding-right: 15px;
 }
 .decklist-bottom {
     width: 380px;
     height: 37px;
 }
-.decklist-desc{
-	width:200px;
-	font-family:Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
-	font-style:italic;
-	color:#ffd100;
-	font-size:12px;
-	line-height:17px;
-	background:url('http://cdn.mohye.eu/img/decklist/tooltip.png') repeat;
-	padding:5px;
-	margin:5px;
-	border:1px #fff solid;
+.decklist-desc {
+	width: 200px;
+	font-family: Verdana, "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-style: italic;
+	color: #ffd100;
+	font-size: 12px;
+	line-height: 17px;
+	background: url('http://cdn.mohye.eu/img/decklist/tooltip.png') repeat;
+	padding: 5px;
+	margin: 5px;
+	border: 1px #fff solid;
 	border-radius : 5px;
-	max-height:300px !important;
+	max-height: 300px !important;
 }
-.decklist-popup{
-	display:none;
-	position:absolute;
-  z-index: 1000;
+.decklist-popup {
+	display: none;
+	position: absolute;
+    z-index: 1000;
 }
 .decklist-popup img{
 	display:block;
+}
+
+/* Style decksearch */
+.card-option {
+    display: block;
+    height: 55px;
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.card-option-left {
+    display: inline-block;
+    width: 20%;
+}
+
+.card-option-right {
+    display: inline-block;
+    width: 80%;
+}
+
+.card-option .card-preview {
+    display: inline-block;
+    background-repeat:no-repeat;
+    border-radius: 15px;
+    height: 50px;
+    width: 50px;
+}
+
+.card-option .card-preview-minion {
+    background-size: 220%;
+    background-position: -30px -30px;
+}
+
+.card-option .card-preview-weapon {
+    background-size: 210%;
+    background-position: -27px -32px;
+}
+
+.card-option .card-preview-spell {
+    background-size: 220%;
+    background-position: -30px -35px;
+}
+
+.card-option .card-name {
+    display: inline-block;
+    font-weight: bold;
+    height: 20px;
+    width: 100%;
+}
+
+.card-option .card-desc {
+    display: inline-block;
+    color: #808080;
+    height: 30px;
+    width: 100%;
+}
+
+.card-option small {
+    font-size: x-small;
 }
