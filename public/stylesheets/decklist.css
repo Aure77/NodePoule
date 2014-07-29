@@ -3,12 +3,12 @@
     src: url('../fonts/HearthStoneFont.ttf');
 }
 .decklist-top {
-    background: url('http://cdn.mohye.eu/img/decklist/heros/malfurion.jpg');
+    background: url('http://cdn.nodepoule.eu/img/decklist/heros/malfurion.jpg');
     width: 380px;
     height: 113px;
 }
 .decklist-content {
-    background: url('http://cdn.mohye.eu/img/decklist/decklist_bgr.jpg') repeat-y;
+    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_bgr.jpg') repeat-y;
 }
 .decklist-content ul {
     font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
@@ -25,14 +25,14 @@
     padding-left: 35px;
     height: 40px;
     line-height: 42px;
-    background: url('http://cdn.mohye.eu/img/decklist/decklist_card.jpg') no-repeat;
+    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card.jpg') no-repeat;
     display: inline-block;
 }
 .decklist-content .decklist-card.minion {
-    background: url('http://cdn.mohye.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
+    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
 }
 .decklist-content .decklist-card.weapon {
-    background: url('http://cdn.mohye.eu/img/decklist/decklist_card_weapon.jpg') no-repeat;
+    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_weapon.jpg') no-repeat;
 }
 .decklist-content .decklist-card p {
     margin: 0px;
@@ -75,7 +75,7 @@
 	color: #ffd100;
 	font-size: 12px;
 	line-height: 17px;
-	background: url('http://cdn.mohye.eu/img/decklist/tooltip.png') repeat;
+	background: url('http://cdn.nodepoule.eu/img/decklist/tooltip.png') repeat;
 	padding: 5px;
 	margin: 5px;
 	border: 1px #fff solid;

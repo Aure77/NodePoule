@@ -7,7 +7,7 @@ html {width:100%;}
 
 body {font-family:Arial, Helvetica, sans-serif;font-size:100%; color:#030303;background:#f3f3f3;}
 .ic {border:0;float:right;background:#fff;color:#f00;width:50%;line-height:10px;font-size:10px;margin:-220% 0 0 0;overflow:hidden;padding:0}
-.bg {width:100%; background:url('http://cdn.mohye.eu/img/bg-top.jpg') center 0 no-repeat;}
+.bg {width:100%; background:url('http://cdn.nodepoule.eu/img/bg-top.jpg') center 0 no-repeat;}
 
 .main {	
 	font-size:13px;
@@ -92,12 +92,12 @@ header {
 
 .row-bot {
 	width:100%;
-	background:url('http://cdn.mohye.eu/img/row-bot-tail.gif') center top repeat;
+	background:url('http://cdn.nodepoule.eu/img/row-bot-tail.gif') center top repeat;
 }
 .row-bot-bg {
 	width:100%;
 	padding:10px 0 25px;
-	background:url('http://cdn.mohye.eu/img/row-bot-bg.jpg') center top no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/row-bot-bg.jpg') center top no-repeat;
 }
 #page1 .row-bot-bg {padding:10px 0 50px;}
 
@@ -111,14 +111,14 @@ h2 {
 	color:#fff;
 	padding:10px 0 0 30px;
 	margin-top:28px;
-	/* background:url('http://cdn.mohye.eu/img/pic-1.gif') 0 0 repeat-y; */
+	/* background:url('http://cdn.nodepoule.eu/img/pic-1.gif') 0 0 repeat-y; */
 	overflow:hidden;
 }
 
 /***** menu *****/
 .menu-row {
 	width:100%;
-	background:url('http://cdn.mohye.eu/img/menu-row.gif') center top repeat-x #000;
+	background:url('http://cdn.nodepoule.eu/img/menu-row.gif') center top repeat-x #000;
 	border-bottom:1px solid #2b2b2b;
 }
 .menu {
@@ -155,11 +155,11 @@ h2 {
 	position:relative;
 	z-index:1;
 }
-#page4 #content {background:url('http://cdn.mohye.eu/img/content-tail.gif') center top repeat-x #fff;}
+#page4 #content {background:url('http://cdn.nodepoule.eu/img/content-tail.gif') center top repeat-x #fff;}
 
 .spacer-1 {
 	width:100%; 
-	background:url('http://cdn.mohye.eu/img/pic-1.gif') 217px 0 repeat-y;
+	background:url('http://cdn.nodepoule.eu/img/pic-1.gif') 217px 0 repeat-y;
 }
 
 h3 {
@@ -172,19 +172,19 @@ h6 {color:#000;}
 .border-bot {
 	width:100%; 
 	padding-bottom:22px; 
-	background:url('http://cdn.mohye.eu/img/pic-2.gif') 0 bottom repeat-x;
+	background:url('http://cdn.nodepoule.eu/img/pic-2.gif') 0 bottom repeat-x;
 }
 
 .box {
 	width:100%; 
-	background:url('http://cdn.mohye.eu/img/box-tail.gif') 0 0 repeat-x;
+	background:url('http://cdn.nodepoule.eu/img/box-tail.gif') 0 0 repeat-x;
 }
 
 .button {
 	display:inline-block; 
 	padding:9px 28px 2px 20px;
 	color:#fff; 
-	background:url('http://cdn.mohye.eu/img/button-tail.gif') 0 0 repeat-x #498f06;
+	background:url('http://cdn.nodepoule.eu/img/button-tail.gif') 0 0 repeat-x #498f06;
 	cursor:pointer;
 	border-radius:6px;
 }
@@ -194,14 +194,14 @@ h6 {color:#000;}
 		line-height:1.23em;
 		font-weight:bold;
 		padding-left:14px;
-		background:url('http://cdn.mohye.eu/img/marker-2.gif') 0 7px no-repeat;
+		background:url('http://cdn.nodepoule.eu/img/marker-2.gif') 0 7px no-repeat;
 	}
 .button:hover {background:#498f06;}
 
 .list-1 li {
 	line-height:18px; 
 	padding:6px 0 6px 15px; 
-	background:url('http://cdn.mohye.eu/img/marker-1.gif') 0 13px no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/marker-1.gif') 0 13px no-repeat;
 }
 	.list-1 li a {
 		display:inline-block;
@@ -213,13 +213,13 @@ h6 {color:#000;}
 	font-size:14px; 
 	line-height:24px; 
 	padding:0px; 
-	background:url('http://cdn.mohye.eu/img/pic-1.gif') 0 bottom repeat-x;
+	background:url('http://cdn.nodepoule.eu/img/pic-1.gif') 0 bottom repeat-x;
 }
 	.list-2 li a {
 		display:block; 
 		color:#1799cf; 
 		padding-left:12px; 
-		background:url('http://cdn.mohye.eu/img/marker-1.gif') 0 10px no-repeat;
+		background:url('http://cdn.nodepoule.eu/img/marker-1.gif') 0 10px no-repeat;
 	}
 	.list-2 li a:hover {color:#fff;}
 	.list-2 .last-item {background:none;}
@@ -243,7 +243,7 @@ h6 {color:#000;}
 	line-height:30px;
 	color:#7f7f7f;
 	padding:5px 0 0 40px;
-	background:url('http://cdn.mohye.eu/img/pic-1.gif') 0 0 repeat-y;
+	background:url('http://cdn.nodepoule.eu/img/pic-1.gif') 0 0 repeat-y;
 } 
 .text-2 {
 	display:block;
@@ -291,8 +291,8 @@ aside {
 	top:126px;
 	z-index:99;
 }
-.carousel .prev {left:0; background:url('http://cdn.mohye.eu/img/carousel-prev.png') 0 0 no-repeat;}
-.carousel .next {right:0; background:url('http://cdn.mohye.eu/img/carousel-next.png') 0 0 no-repeat;}
+.carousel .prev {left:0; background:url('http://cdn.nodepoule.eu/img/carousel-prev.png') 0 0 no-repeat;}
+.carousel .next {right:0; background:url('http://cdn.nodepoule.eu/img/carousel-next.png') 0 0 no-repeat;}
 .carousel .next:hover,
 .carousel .prev:hover {cursor:pointer;}
 .carousel-list li {
@@ -361,7 +361,7 @@ div.nav-controls a.prev {
 	display:block;
 	width:39px;
 	height:39px;
-	background:url('http://cdn.mohye.eu/img/carousel-prev.png') 0 0 no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/carousel-prev.png') 0 0 no-repeat;
 	text-indent:-9999em;
 	cursor:pointer;
 	position:absolute;
@@ -373,7 +373,7 @@ div.nav-controls a.next {
 	display:block;
 	width:39px;
 	height:39px;
-	background:url('http://cdn.mohye.eu/img/carousel-next.png') 0 0 no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/carousel-next.png') 0 0 no-repeat;
 	text-indent:-9999em;
 	cursor:pointer;
 	position:absolute;
@@ -402,7 +402,7 @@ div.caption {
 	display: block;
 	width: 920px;
 	height: 347px;
-	background:url('http://cdn.mohye.eu/img/img-border2.jpg') 0 0 no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/img-border2.jpg') 0 0 no-repeat;
 	position:absolute;
 	left:0;
 	top:0;
@@ -456,7 +456,7 @@ div.caption {
 	width:200px;
 	height:137px;
 	padding:11px;
-	background:url('http://cdn.mohye.eu/img/img-border.png') 0 0 no-repeat;
+	background:url('http://cdn.nodepoule.eu/img/img-border.png') 0 0 no-repeat;
 }
 ul.thumbs li.last {margin-right:0;}
 ul.thumbs li.last2 {margin-bottom:0;}

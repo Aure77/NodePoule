@@ -61,7 +61,7 @@ router.get('/:id/participants', function(req, res, next) {
       participants.push({
         id: "challonge:" + chalParticipant.participant.id,
         pseudo: (chalParticipant.participant.username != null) ? chalParticipant.participant.username : chalParticipant.participant.name,
-        avatarRelPath: util.format('http://www.gravatar.com/avatar/%s?r=r&s=200&d=http://mohye.eu/img/avatar.png', chalParticipant.participant.email_hash),
+        avatarRelPath: util.format('http://www.gravatar.com/avatar/%s?r=r&s=200&d=http://nodepoule.eu/img/avatar.png', chalParticipant.participant.email_hash),
         nb1stPlace: 0,
         nb2ndPlace: 0,
         nb3rdPlace: 0
