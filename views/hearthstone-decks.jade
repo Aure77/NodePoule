@@ -72,17 +72,15 @@ block content
   .main.zerogrid
     div
       select(id="deck-search", multiple, placeholder="Rechercher une carte...", style="width:380px;")
-    
+
     div(class='decklist-top')
-      img(src='#{staticsPrefixPath}/img/decklist/decklist_top.png')
-    
+      textarea(style='background-image: url(\'#{staticsPrefixPath}/img/decklist/heros/malfurion.png\');') Malfurion
+
     div(class='decklist-content')
       ul
     
     div(class='decklist-bottom')
       img(src='#{staticsPrefixPath}/img/decklist/decklist_bottom.jpg')
-        
+
     div(class='decklist-controls')
-      span Nom du deck
-      input
       button Sauvegarder

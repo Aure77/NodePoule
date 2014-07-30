@@ -3,9 +3,24 @@
     src: url('../fonts/HearthStoneFont.ttf');
 }
 .decklist-top {
-    background: url('http://cdn.nodepoule.eu/img/decklist/heros/malfurion.jpg');
+    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_top.png');
     width: 380px;
     height: 113px;
+}
+.decklist-top  textarea{
+	width:278px;
+	height:63px;
+	background:transparent no-repeat;
+	border:none 0px;
+    font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    color: #FFF;
+    font-size: 18px;
+	margin-top:16px;
+	margin-left:38px;
+	vertical-align:bottom;
+	padding-left:10px;
+	padding-top:10px;
 }
 .decklist-content {
     background: url('http://cdn.nodepoule.eu/img/decklist/decklist_bgr.jpg') repeat-y;
