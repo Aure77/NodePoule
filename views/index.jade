@@ -3,6 +3,7 @@ block head
   link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/template/responsiveslides.css' type='text/css', media='all')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jcarousellite_1.0.1.js')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/responsiveslides.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.feeds.min.js')
   script(type='text/javascript').
     var isCircular = true;
     var nbVisible = 4;
@@ -11,27 +12,36 @@ block head
       nbVisible = #{newsCollection.length};
     }
   script(type='text/javascript').
-      $(function() { 
-          $('.carousel .jCarouselLite').jCarouselLite({ 
-              btnNext: '.carousel .next',
-              btnPrev: '.carousel .prev',
-              speed: 600,
-              easing: 'easeOutQuart',
-              vertical: false,
-              circular: isCircular,
-              visible: nbVisible,
-              start: 0,
-              scroll: 1
-          }); 
-          $("#slider").responsiveSlides({
-            auto: true,
-            pager: false,
-            nav: true,
-            speed: 500,
-            maxwidth: 940,
-            namespace: "centered-btns"
-          });
+    $(function() {
+      $('.carousel .jCarouselLite').jCarouselLite({
+          btnNext: '.carousel .next',
+          btnPrev: '.carousel .prev',
+          speed: 600,
+          easing: 'easeOutQuart',
+          vertical: false,
+          circular: isCircular,
+          visible: nbVisible,
+          start: 0,
+          scroll: 1
       });
+      $("#slider").responsiveSlides({
+          auto: true,
+          pager: false,
+          nav: true,
+          speed: 500,
+          maxwidth: 940,
+          namespace: "centered-btns"
+      });
+      $('ul#feeds').feeds({
+          feeds: {
+              category16: 'http://forum.nodepoule.eu/category/16.rss',
+              category15: 'http://forum.nodepoule.eu/category/15.rss'
+          },
+          entryTemplate: function(entry) {
+              return '<li><a href="' + entry.link + '">' + entry.title + '</a></li>';
+          }
+      });
+    });
 
 block home
   .slider-wrapper
@@ -53,16 +63,16 @@ block home
 
 block aside
   aside
-    .carousel
-        a.prev
-        a.next
-        .carousel-container
-          h3 Les news
-          .jCarouselLite
-            ul.carousel-list
-              - if(newsCollection.length===0)
-                p(class='no-tournaments') Aucune news n'est disponible.
-              - else
+    - if(newsCollection.length===0)
+      p(class='no-tournaments') Aucune news n'est disponible.
+    - else
+      .carousel
+          a.prev
+          a.next
+          .carousel-container
+            h3 Les news
+            .jCarouselLite
+              ul.carousel-list
                 - each news in newsCollection
                   li
                     .img-border
@@ -70,56 +80,28 @@ block aside
                         img(src='#{news.iconRelPath}', alt='#{news.title}')
                         br
                         | #{news.title}
-        a(href='/news', class='small-link-right') Toutes les news...
+              a.button(href='/news', class='small-link-right') Toutes les news...
 block content
   .main.zerogrid
     .wrapper
       article.col-1-3
         .wrap-col
-          h3.prev-indent-bot Shortly About Us
-          h6.p1 Sed ut perspiciatis unde omnis
+          h3.prev-indent-bot A propos de nous
+          h6.p1 NodePoule, la référence
           p.img-indent-bot
-            | PSD source files are available for free for the registered members of TemplatesMonster. The basic package is available for anyone without registration. This website template has several pages:
-            a.link(href='index.html') Home Page
-            | ,
-            a.link(href='#') Company
-            | ,
-            a.link(href='services.html') Services
-            | ,
-            a.link(href='#') Clients
-            | ,
-            a.link(href='contacts.html') Contacts
-            | (note that contact us form - doesn't work).
-          a.button(href='#')
-            span read more
+            | NodePoule est le site à privilégier pour organiser des tournois de jeux vidéos entres amis !
+          a.button(href='/faq')
+            span en savoir plus
       article.col-1-3
         .wrap-col
           .indent-left
             h3.p1 Derniers posts
-            ul.list-1
-              li
-                a(href='#') Liste natus error sit voluptatem
-              li
-                a(href='#') Accusantium doloremque laudantium
-              li
-                a(href='#') Totam rem aperiam, eaque ipsa quae ab illo
-              li
-                a(href='#') Inventore veritatis et quasi
-              li
-                a(href='#') Architecto beatae vitae dicta sunt
-              li
-                a(href='#') Nemo enim ipsam voluptatem
-              li
-                a(href='#') Quia voluptas sit aspernatur aut odit aut
-              li
-                a(href='#') Sed quia consequuntur magni dolores
-              li
-                a(href='#') Eos qui ratione voluptatem sequi nesciunt
+            ul#feeds.list-1
       article.col-1-3
         .wrap-col
           .indent-left2
-            h3 Our Locations
+            h3 Où sommes nous ?
             figure.prev-indent-bot
               img(src='#{staticsPrefixPath}/img/page1-img10.jpg', alt='')
-            a.link-2(href='#')
-              | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia.
+            a.link-2(href='https://goo.gl/maps/g06yB')
+              | Quelque part part là...
