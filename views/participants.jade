@@ -10,7 +10,7 @@ block content
         - else
           - each participant in participants
             .user-box
-              a(href='/profile/#{participant.id}')
+              a(href='/profile/#{participant.uid}')
                   img.user-avatar(src='#{participant.avatarRelPath}')
                   p #{participant.pseudo}
                 p.user-awards
