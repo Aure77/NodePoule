@@ -1,20 +1,32 @@
 var express = require('express');
+var util = require('util');
+var nconf = require('nconf');
 var escape = require('escape-html');
 var mongoose = require('mongoose'), UserProfil = mongoose.model('UserProfil'), User = mongoose.model('User');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  findOrCreateUserProfilByUserId(req.user, function(err, userProfil) {
-    if (err) { return next(err); }
-    res.render('profile', { profil: userProfil });
-  });
+  var userId = req.user;
+  if(userId == null) { // not logged in
+    res.redirect(util.format("%s/login?next=%s/profile", nconf.get("forum_url"), nconf.get("base_url")));
+  } else {
+    findOrCreateUserProfilByUserId(userId, function(err, userProfil) {
+      if (err) { return next(err); }
+      res.render('profile', { title: util.format('Profile de %s', userProfil.user.username), profil: userProfil });
+    });
+  }
 });
 
 router.get('/:id', function(req, res, next) {
-  findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
-    if (err) { return next(err); }
-    res.render('profile', { profil: userProfil });
-  });
+  var userId = req.user;
+  if(userId == null) { // not logged in
+    res.redirect(util.format("%s/login?next=%s/profile", nconf.get("forum_url"), nconf.get("base_url")));
+  } else {
+    findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
+      if (err) { return next(err); }
+      res.render('profile', { title: util.format('Profile de %s', userProfil.user.username), profil: userProfil });
+    });
+  }
 });
 
 function findOrCreateUserProfilByUserId(uid, callback) {
