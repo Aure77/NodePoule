@@ -25,6 +25,10 @@ block head
             function(e){
                 $('.div-hero.selected').removeClass('selected');
                 $(this).addClass('selected');
+                var classChosen = $(this).find('.radiobtn-hero').val();
+                var bgrUrl = 'http://cdn.nodepoule.eu/img/decklist/heros/'+classChosen+'.png';
+                $('#txt-deck-name').css('background-image', 'url('+bgrUrl+')');
+                $('#txt-deck-name').val(classChosen);
             }
         );
         
@@ -144,7 +148,7 @@ block content
       select(id="deck-search", multiple, placeholder="Rechercher une carte...", style="width:380px;")
 
     div(class='decklist-top')
-      textarea(style='background-image: url(\'#{staticsPrefixPath}/img/decklist/heros/malfurion.png\');') Malfurion
+      textarea(id='txt-deck-name')
 
     div(class='decklist-content')
       ul
