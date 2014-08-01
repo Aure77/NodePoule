@@ -2,6 +2,10 @@
     font-family: "HearthStoneFont";
     src: url('../fonts/HearthStoneFont.ttf');
 }
+@font-face {
+	font-family: "metroSysIcons";
+	src: url('../fonts/metroSysIcons.ttf');
+}
 .decklist-top {
     background: url('http://cdn.nodepoule.eu/img/decklist/decklist_top.png');
     width: 380px;
@@ -162,4 +166,44 @@
 
 .card-option small {
     font-size: x-small;
+}
+
+input[type=radio].radiobtn-hero{
+	display:none;
+}
+.list-heros{
+	margin:0px auto;
+	text-align:center;
+	padding-bottom:20px;
+}
+.div-hero{
+	width:10%;
+	display:inline-block;
+	text-align:center;
+	position:relative;
+}
+.div-hero.selected{
+	border:4px solid #7DBA14;
+}
+.div-hero.selected:after{
+	border-left:28px solid rgba(0, 0, 0, 0);
+	border-top:33px solid #7DBA14;
+	content: "";
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 101;
+}
+.div-hero.selected:before {
+	color: #FFFFFF;
+	content: "\e003";
+	display: block;
+	font-family: 'metroSysIcons';
+	font-size: 9pt;
+	font-weight: normal;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 102;
 }

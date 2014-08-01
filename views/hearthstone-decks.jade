@@ -21,6 +21,12 @@ block head
           $(this).closest('li').find('.decklist-popup').hide();
         });
         
+        $('.div-hero').click(
+            function(e){
+                $('.div-hero.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        );
         
         $("#deck-search").selectize({
             create: false,
@@ -71,6 +77,70 @@ block head
 block content
   .main.zerogrid
     div
+      .list-heros
+          .div-hero
+              label.label-hero(for='priest')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/anduin.png', alt='anduin')
+                br
+                | Prêtre
+                br
+              input#priest.radiobtn-hero(type='radio', name='heroselect', value='Priest')
+            .div-hero
+              label.label-hero(for='warrior')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/garrosh.png', alt='garrosh')
+                br
+                | Guerrier
+                br
+              input#warrior.radiobtn-hero(type='radio', name='heroselect', value='Warrior')
+            .div-hero
+              label.label-hero(for='mage')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/jaina.png', alt='jaina')
+                br
+                | Mage
+                br
+              input#mage.radiobtn-hero(type='radio', name='heroselect', value='Mage')
+            .div-hero
+              label.label-hero(for='paladin')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/uther.png', alt='uther')
+                br
+                | Paladin
+                br
+              input#paladin.radiobtn-hero(type='radio', name='heroselect', value='Paladin')
+            .div-hero
+              label.label-hero(for='druid')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/malfurion.png', alt='malfurion')
+                br
+                | Druide
+                br
+              input#druid.radiobtn-hero(type='radio', name='heroselect', value='Druid')
+            .div-hero
+              label.label-hero(for='warlock')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/guldan.png', alt='guldan')
+                br
+                | Démoniste
+                br
+              input#warlock.radiobtn-hero(type='radio', name='heroselect', value='Warlock')
+            .div-hero
+              label.label-hero(for='thief')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/valeera.png', alt='valeera')
+                br
+                | Voleur
+                br
+              input#thief.radiobtn-hero(type='radio', name='heroselect', value='Thief')
+            .div-hero
+              label.label-hero(for='shaman')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/thrall.png', alt='thrall')
+                br
+                | Chaman
+                br
+              input#shaman.radiobtn-hero(type='radio', name='heroselect', value='Shaman')
+            .div-hero
+              label.label-hero(for='hunter')
+                img(style='width: 100%;', src='#{staticsPrefixPath}/img/decklist/classes/rexxar.png', alt='rexxar')
+                br
+                | Chasseur
+                br
+              input#hunter.radiobtn-hero(type='radio', name='heroselect', value='Hunter')
       select(id="deck-search", multiple, placeholder="Rechercher une carte...", style="width:380px;")
 
     div(class='decklist-top')
