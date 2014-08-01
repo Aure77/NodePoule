@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   } else {
     findOrCreateUserProfilByUserId(userId, function(err, userProfil) {
       if (err) { return next(err); }
-      res.render('profile', { title: util.format('Profile de %s', userProfil.user.username), profil: userProfil });
+      res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
     });
   }
 });
@@ -24,7 +24,7 @@ router.get('/:id', function(req, res, next) {
   } else {
     findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
       if (err) { return next(err); }
-      res.render('profile', { title: util.format('Profile de %s', userProfil.user.username), profil: userProfil });
+      res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
     });
   }
 });
