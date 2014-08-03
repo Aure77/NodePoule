@@ -5,28 +5,26 @@ var escape = require('escape-html');
 var mongoose = require('mongoose'), UserProfil = mongoose.model('UserProfil'), User = mongoose.model('User');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  var userId = req.user;
-  if(userId == null) { // not logged in
-    res.redirect(util.format("%s/login?next=%s/profile", nconf.get("forum_url"), nconf.get("base_url")));
+function isUserLoggedIn(req, res, next) {
+  if (req.user == null) { // not logged in
+    res.redirect(util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.path));
   } else {
-    findOrCreateUserProfilByUserId(userId, function(err, userProfil) {
-      if (err) { return next(err); }
-      res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
-    });
+    next();
   }
+}
+
+router.get('/', isUserLoggedIn, function(req, res, next) {
+  findOrCreateUserProfilByUserId(req.user, function(err, userProfil) {
+    if (err) { return next(err); }
+    res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
+  });
 });
 
-router.get('/:id', function(req, res, next) {
-  var userId = req.user;
-  if(userId == null) { // not logged in
-    res.redirect(util.format("%s/login?next=%s/profile", nconf.get("forum_url"), nconf.get("base_url")));
-  } else {
-    findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
-      if (err) { return next(err); }
-      res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
-    });
-  }
+router.get('/:id', isUserLoggedIn, function(req, res, next) {
+  findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
+    if (err) { return next(err); }
+    res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
+  });
 });
 
 function findOrCreateUserProfilByUserId(uid, callback) {
