@@ -25,8 +25,8 @@ module.exports = function () {
 
             if (uid) {
                 console.log("User with uid=" + uid + " found !");
-                // Access to user id from request
-                req.user = sessionData.passport.user;
+                // Access to user id from response locals
+                res.locals.user = sessionData.passport.user;
             } else {
                 console.log("User with uid=" + uid + " NOT found !");
             }

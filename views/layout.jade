@@ -28,8 +28,12 @@ html
                   a(href='http://forum.nodepoule.eu/') Forum
                 li
                   a(href='/faq') FAQ
-                li
-                  a(href='/profile') Mon Profil
+                - if(user)
+                  li
+                    a(href='/profile') Mon Profil
+                - else
+                  li
+                    a(href='#{forumUrl}/login?next=#{baseUrl}#{currentReqPath}') Se connecter
         .row-bot
           .row-bot-bg
             .main.zerogrid
