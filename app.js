@@ -40,7 +40,6 @@ if(nconf.get('database') === 'mongo') {
 }
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var tournaments = require('./routes/tournaments');
 var profile = require('./routes/profile');
 var news = require('./routes/news');
@@ -68,7 +67,6 @@ if(nconf.get('database') === 'mongo') {
 }
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/tournaments', tournaments);
 app.use('/news', news);
 app.use('/profile', profile);

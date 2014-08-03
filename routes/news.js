@@ -12,6 +12,7 @@ router.get('/', function(req, res, next) {
     if (err) { return next(err); }
     res.render('all-news', { 
       title: 'Toutes les news', 
+      htitle: 'Toutes les news', 
       newsCollection: newsCollection, 
       pageCount: pageCount,
       itemCount: itemCount

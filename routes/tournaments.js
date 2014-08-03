@@ -15,6 +15,7 @@ router.get('/', function(req, res, next) {
     if (err) { return next(err); }
     res.render('tournaments', { 
       title: 'Tous les tournois', 
+      htitle: 'Tous les tournois',
       tournaments: tournaments, 
       pageCount: pageCount,
       itemCount: itemCount 
@@ -47,7 +48,7 @@ router.get('/:id', function(req, res, next) {
 				rounds[roundIndex] = rounds[roundIndex] || [];
 				rounds[roundIndex].push([ match.score1, match.score2 ]);
 		});
-		res.render('tournament', { title: tournament.name, tournament: tournament, teams: teams, results: [ rounds ] });  
+		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, teams: teams, results: [ rounds ] });  
   });
 });
 
