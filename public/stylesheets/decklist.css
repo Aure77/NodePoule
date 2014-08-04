@@ -1,25 +1,25 @@
 @font-face {
-    font-family: "HearthStoneFont";
-    src: url('../fonts/HearthStoneFont.ttf');
+	font-family: "HearthStoneFont";
+	src: url('../fonts/HearthStoneFont.ttf');
 }
 @font-face {
 	font-family: "metroSysIcons";
 	src: url('../fonts/metroSysIcons.ttf');
 }
 .decklist-top {
-    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_top.png');
-    width: 380px;
-    height: 113px;
+	background: url('http://cdn.nodepoule.eu/img/decklist/decklist_top.png');
+	width: 380px;
+	height: 113px;
 }
 .decklist-top  textarea{
 	width:278px;
 	height:63px;
 	background:transparent no-repeat;
 	border:none 0px;
-    font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-    color: #FFF;
-    font-size: 18px;
+	font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
+	text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+	color: #FFF;
+	font-size: 18px;
 	margin-top:16px;
 	margin-left:38px;
 	vertical-align:bottom;
@@ -27,65 +27,65 @@
 	padding-top:10px;
 }
 .decklist-content {
-    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_bgr.jpg') repeat-y;
+	background: url('http://cdn.nodepoule.eu/img/decklist/decklist_bgr.jpg') repeat-y;
 }
 .decklist-content ul {
-    font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-    color: #FFF;
-    font-size: 18px;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    vertical-align: top;
-    width: 380px;
+	font-family: "HearthStoneFont", Helvetica, Arial, sans-serif;
+	text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+	color: #FFF;
+	font-size: 18px;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	vertical-align: top;
+	width: 380px;
 }
 .decklist-content .decklist-card {
-    padding-left: 35px;
-    height: 40px;
-    line-height: 42px;
-    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card.jpg') no-repeat;
-    display: inline-block;
+	padding-left: 35px;
+	height: 40px;
+	line-height: 42px;
+	background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card.jpg') no-repeat;
+	display: inline-block;
 }
 .decklist-content .decklist-card.minion {
-    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
+	background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_minion.jpg') no-repeat;
 }
 .decklist-content .decklist-card.weapon {
-    background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_weapon.jpg') no-repeat;
+	background: url('http://cdn.nodepoule.eu/img/decklist/decklist_card_weapon.jpg') no-repeat;
 }
 .decklist-content .decklist-card p {
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    text-align: center;
-    max-height: 40px;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    overflow:hidden;
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+	text-align: center;
+	max-height: 40px;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	overflow:hidden;
 }
 .decklist-content .decklist-card .card-mana {
-    width: 20px;
+	width: 20px;
 }
 .decklist-content .decklist-card .card-name {
-    width: 195px;
-    text-align: left;
+	width: 195px;
+	text-align: left;
 }
 .decklist-content .decklist-card .card-name a,.decklist-content .decklist-card .card-name a:visited {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 15px;
-    cursor: pointer;
+	color: #fff;
+	text-decoration: none;
+	margin-left: 15px;
+	cursor: pointer;
 }
 .decklist-content .decklist-card .card-health {
-    width: 32px;
+	width: 32px;
 }
 .decklist-content .decklist-card .card-attack {
-    width: 30px;
-    padding-right: 15px;
+	width: 30px;
+	padding-right: 15px;
 }
 .decklist-bottom {
-    width: 380px;
-    height: 37px;
+	width: 380px;
+	height: 37px;
 }
 .decklist-desc {
 	width: 200px;
@@ -104,7 +104,7 @@
 .decklist-popup {
 	display: none;
 	position: absolute;
-    z-index: 1000;
+	z-index: 1000;
 }
 .decklist-popup img{
 	display:block;
@@ -112,60 +112,60 @@
 
 /* Style decksearch */
 .card-option {
-    display: block;
-    height: 55px;
-    border-bottom: 1px solid #D3D3D3;
+	display: block;
+	height: 55px;
+	border-bottom: 1px solid #D3D3D3;
 }
 
 .card-option-left {
-    display: inline-block;
-    width: 20%;
+	display: inline-block;
+	width: 20%;
 }
 
 .card-option-right {
-    display: inline-block;
-    width: 80%;
+	display: inline-block;
+	width: 80%;
 }
 
 .card-option .card-preview {
-    display: inline-block;
-    background-repeat:no-repeat;
-    border-radius: 15px;
-    height: 50px;
-    width: 50px;
+	display: inline-block;
+	background-repeat:no-repeat;
+	border-radius: 15px;
+	height: 50px;
+	width: 50px;
 }
 
 .card-option .card-preview-minion {
-    background-size: 220%;
-    background-position: -30px -30px;
+	background-size: 220%;
+	background-position: -30px -30px;
 }
 
 .card-option .card-preview-weapon {
-    background-size: 210%;
-    background-position: -27px -32px;
+	background-size: 210%;
+	background-position: -27px -32px;
 }
 
 .card-option .card-preview-spell {
-    background-size: 220%;
-    background-position: -30px -35px;
+	background-size: 220%;
+	background-position: -30px -35px;
 }
 
 .card-option .card-name {
-    display: inline-block;
-    font-weight: bold;
-    height: 20px;
-    width: 100%;
+	display: inline-block;
+	font-weight: bold;
+	height: 20px;
+	width: 100%;
 }
 
 .card-option .card-desc {
-    display: inline-block;
-    color: #808080;
-    height: 30px;
-    width: 100%;
+	display: inline-block;
+	color: #808080;
+	height: 30px;
+	width: 100%;
 }
 
 .card-option small {
-    font-size: x-small;
+	font-size: x-small;
 }
 
 input[type=radio].radiobtn-hero{
@@ -206,4 +206,7 @@ input[type=radio].radiobtn-hero{
 	right: 0;
 	top: 0;
 	z-index: 102;
+}
+.div-hero label {
+	cursor: pointer;
 }
