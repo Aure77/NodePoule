@@ -3,73 +3,6 @@ block head
   link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets//mytourney.css', type='text/css', media='all')
   link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/dp_calendar.css', type='text/css', media='all')
   link(rel="stylesheet" href='#{staticsPrefixPath}/stylesheets/jquery.modal.css', type='text/css', media='all')
-  style.
-    .button-link {
-        font-weight: bold;
-        text-decoration: none;
-        text-transform: uppercase;
-        text-align: center;
-        margin: 10px 10px 0px 0px;
-        display: inline-block;
-        width: 280px;
-        padding: 10px;
-        background-color: #000;
-        color: #fff;
-    }
-
-    .competition-bracket {
-        width: 100%;
-    }
-
-    .competition-infos {
-        width: 100%;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-    }
-
-    .competition-infos .competition-title {
-        vertical-align: middle;
-        font-size: 50px;
-        padding: 0px;
-        background-color: #CCC;
-        margin: 0px;
-    }
-
-    .competition-infos .competition-subtitle {
-        vertical-align: middle;
-        font-size: 20px;
-        padding: 0px 0px 0px 20px;
-        margin: 0px;
-        color: #888;
-        background-color: #EEE;
-    }
-
-    .competition-infos img {
-        height: 64px;
-        vertical-align: middle;
-        padding: 5px 20px;
-    }
-
-    .section-title {
-        margin: 20px 0px 0px 20px;
-        ;
-            display: block;
-        text-transform: uppercase;
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-weight: bold;
-        font-style: italic;
-    }
-
-    .rule-title {
-        color: rgb(125, 186, 20);
-        font-weight: bold;
-        font-style: italic;
-    }
-
-    .rule-description {
-        margin-left: 20px;
-    }
   script(type='text/javascript', src='//code.jquery.com/ui/1.11.1/jquery-ui.min.js')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/date.js')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.dp_calendar.js')
@@ -79,7 +12,7 @@ block head
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/mytourney.js')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.modal.js')
   script(type='text/javascript').
-    var singleElimination = {
+    var Tourney = {
         "teams": !{JSON.stringify(teams)},
         "results": !{JSON.stringify(results)}
     };
@@ -127,7 +60,7 @@ block head
         });
 
         $("#calendar").hide();
-        generateBracket(tourneyUsers, $('.bracket'));
+        generateBracket(Tourney.teams, $('.bracket'));
     });
 
     function showCalendar() {
@@ -144,15 +77,20 @@ block content
       p.competition-title
           img(src='#{tournament.game.iconRelPath}')
           | #{tournament.game.name}
-        p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}  
+        p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
+
     div(style='width:100%;')
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
       a.button-link(href='#{tournament.game.link}') Obtenir le jeu
       a.button-link(href='#', onclick='showCalendar();') Agenda
-    .competition-brackets(style='float: left; width: 80%;')
+
+    .competition-brackets
       .bracket
+
+    div(style='clear:both;')
     div(id="calendar", class="dp_calendar")
+
     div(style='float: left;')
       a(name='rules').section-title Règles
       dl

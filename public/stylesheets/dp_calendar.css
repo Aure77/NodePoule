@@ -7,7 +7,7 @@
 
 .dp_calendar .clear { clear:both; }
 
-.dp_calendar .loading { background:url(../images/calendar/loading.gif) 50% 50% no-repeat; width:41px; height:39px; }
+.dp_calendar .loading { background:url(../img/calendar/loading.gif) 50% 50% no-repeat; width:41px; height:39px; }
 
 .dp_calendar {
 	width:500px;
@@ -26,7 +26,7 @@
 .dp_calendar .div_main_date {
 	padding:20px;
 	text-align:center;
-	background:url(../images/calendar/bg_top.jpg) 0 100% repeat-x #f6f6f6;
+	background:url(../img/calendar/bg_top.jpg) 0 100% repeat-x #f6f6f6;
 }
 
 .dp_calendar .main_date {
@@ -53,7 +53,7 @@
 
 .dp_calendar .div_dates {
 	text-align:center;
-	background:url(../images/calendar/box_border.jpg) 0 100% repeat-x;
+	background:url(../img/calendar/box_border.jpg) 0 100% repeat-x;
 }
 
 .dp_calendar .div_dates ul {
@@ -82,14 +82,14 @@
 }
 
 .dp_calendar .div_dates li:hover, .dp_calendar .div_dates li.active {
-	background:url(../images/calendar/hover_dates.png) no-repeat 50% 0;
+	background:url(../img/calendar/hover_dates.png) no-repeat 50% 0;
 	color:#000;
 	text-decoration:underline;
 	cursor:pointer;
 }
 
 .dp_calendar .div_dates li.has_events {
-	background:url(../images/calendar/hover_dates_has_event.png) no-repeat 50% 0;
+	background:url(../img/calendar/hover_dates_has_event.png) no-repeat 50% 0;
 	color:#3679B5 !important;
 }
 
