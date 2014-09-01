@@ -41,7 +41,7 @@ router.get('/:id', function(req, res, next) {
 				rounds[roundIndex] = rounds[roundIndex] || [];
 				rounds[roundIndex].push([ match.score1, match.score2 ]);
 		});
-		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, results: [ rounds ] });  
+		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: tournament.participants, results: [ rounds ] });  
   });
 });
 
