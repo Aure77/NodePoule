@@ -60,7 +60,9 @@ block head
         });
 
         $("#calendar").hide();
-        generateBracket(Tourney.teams, $('.bracket'));
+        if(Tourney.participants && Tourney.participants.length > 0) {
+            generateBracket(Tourney.participants, $('.bracket'));
+        }
     });
 
     function showCalendar() {

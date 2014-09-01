@@ -31,15 +31,8 @@ router.get('/:id', function(req, res, next) {
 		if(!tournament) {
 			return next(new Error("Le tournoi '"+tid+"' est introuvable"));
 		}
-		
-		var participantsById = [];
-		tournament.participants.forEach(function(participant) { // For tests
-				participantsById[participant.pid] = participant;
-		});
 				
-		var teams = [];
-    var rounds = []; // List of rounds
-		
+    var rounds = []; // List of rounds		
 		tournament.matchs.forEach(function(match) {
 				if(match.round == 1) {
 						teams.push([ participantsById[match.pid1], participantsById[match.pid2] ]);
@@ -48,7 +41,7 @@ router.get('/:id', function(req, res, next) {
 				rounds[roundIndex] = rounds[roundIndex] || [];
 				rounds[roundIndex].push([ match.score1, match.score2 ]);
 		});
-		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, teams: teams, results: [ rounds ] });  
+		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, results: [ rounds ] });  
   });
 });
 
