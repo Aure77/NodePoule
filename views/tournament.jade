@@ -1,57 +1,142 @@
 extends layout
 block head
-  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/clndr.css' type='text/css', media='all')
-  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/jquery.bracket.min.css' type='text/css', media='all')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets//mytourney.css', type='text/css', media='all')
+  link(rel='stylesheet', href='#{staticsPrefixPath}/stylesheets/dp_calendar.css', type='text/css', media='all')
+  link(rel="stylesheet" href='#{staticsPrefixPath}/stylesheets/jquery.modal.css', type='text/css', media='all')
+  style.
+    .button-link {
+        font-weight: bold;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 10px 10px 0px 0px;
+        display: inline-block;
+        width: 280px;
+        padding: 10px;
+        background-color: #000;
+        color: #fff;
+    }
+
+    .competition-bracket {
+        width: 100%;
+    }
+
+    .competition-infos {
+        width: 100%;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .competition-infos .competition-title {
+        vertical-align: middle;
+        font-size: 50px;
+        padding: 0px;
+        background-color: #CCC;
+        margin: 0px;
+    }
+
+    .competition-infos .competition-subtitle {
+        vertical-align: middle;
+        font-size: 20px;
+        padding: 0px 0px 0px 20px;
+        margin: 0px;
+        color: #888;
+        background-color: #EEE;
+    }
+
+    .competition-infos img {
+        height: 64px;
+        vertical-align: middle;
+        padding: 5px 20px;
+    }
+
+    .section-title {
+        margin: 20px 0px 0px 20px;
+        ;
+            display: block;
+        text-transform: uppercase;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .rule-title {
+        color: rgb(125, 186, 20);
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .rule-description {
+        margin-left: 20px;
+    }
+  script(type='text/javascript', src='//code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/date.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.dp_calendar.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.dp_calendar-fr.js')
   script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/underscore-min.js')
-  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/moment-2.5.1.js')
-  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/clndr.js')
-  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.bracket.min.js')  
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.jsPlumb-1.6.4-min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/mytourney.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.modal.js')
   script(type='text/javascript').
-    var currentMonth = moment().format('YYYY-MM');
-    var nextMonth    = moment().add('month', 1).format('YYYY-MM');
-    var events = [
-      { date: currentMonth + '-' + '10', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
-      { date: currentMonth + '-' + '19', title: 'Cat Frisbee', location: 'Jefferson Park' },
-      { date: currentMonth + '-' + '23', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
-      { date: nextMonth + '-' + '07',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
-    ];
-    
     var singleElimination = {
         "teams": !{JSON.stringify(teams)},
         "results": !{JSON.stringify(results)}
     };
-      
-    function renderBracketPlayer(container, data, score) {
-      if (!data.name) {
-        return;
-      }
-      container.append(data.name);
-    }
-    
-    $(function () {
-      $('#mini-clndr').clndr({
-         template: $('#mini-clndr-template').html(),
-         events: events,
-         clickEvents: {
-           click: function(target) {
-             if(target.events.length) {
-               var daysContainer = $('#mini-clndr').find('.days-container');
-               daysContainer.toggleClass('show-events', true);
-               $('#mini-clndr').find('.x-button').click( function() {
-                 daysContainer.toggleClass('show-events', false);
-               });
-             }
-           }
-         },
-         adjacentDaysChangeMonth: true
-      });
-      if(singleElimination.teams.length > 0) {
-        $('.competition-brackets').bracket({
-          init: singleElimination,
-          decorator: { edit: function() {}, render: renderBracketPlayer }
+
+    $(function() {
+        var events_array = new Array({
+            startDate: new Date(2014, 07, 20, 15, 50), // Month : 0-11
+            title: "Event 1",
+            description: "Description 1",
+            priority: 2 // 1 = Low, 2 = Medium, 3 = Urgent
+            //frequency: 1 // 1 = Daily, 2 = Weekly, 3 = Monthly, 4 = Yearly
+        },
+        {
+            startDate: new Date(2014, 07, 20, 16, 50), // Month : 0-11
+            title: "Event 2",
+            description: "Description 2",
+            priority: 1
+            //frequency:2
+        },
+        {
+            startDate: new Date(2014, 07, 20, 9, 50), // Month : 0-11
+            title: "Event 3",
+            description: "Description 3",
+            priority: 3
+            //frequency:3
+        },
+        {
+            startDate: new Date(2014, 07, 20, 11, 50), // Month : 0-11
+            title: "Ebent 4",
+            description: "Description 3",
+            priority: 1
+            //frequency:3
+        },
+        {
+            startDate: new Date(2014, 07, 20, 18, 50), // Month : 0-11
+            title: "Event 5",
+            description: "Description 3",
+            priority: 2
+            //frequency:3
         });
-      }
+
+        $("#calendar").dp_calendar({
+            events_array: events_array,
+            order_by: 3 //1 = Time, 2 = Title, 3 = Priority, date_selected: new Date(2011,06,30) 
+        });
+
+        $("#calendar").hide();
+        generateBracket(tourneyUsers, $('.bracket'));
     });
+
+    function showCalendar() {
+        $('#calendar').modal({
+            closeClass: 'icon-remove',
+            closeText: '!'
+        });
+        return false;
+    }
 
 block content
   .main.zerogrid
@@ -60,47 +145,14 @@ block content
           img(src='#{tournament.game.iconRelPath}')
           | #{tournament.game.name}
         p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}  
-    .competition-challonge
-      div(class='iframe-responsive-wrapper', style='height:500px;')
-        img(class='iframe-ratio', src='data:image/gif;base64,R0lGODlhEAAJAIAAAP///wAAACH5BAEAAAAALAAAAAAQAAkAAAIKhI+py+0Po5yUFQA7')
-      script(type='text/javascript', src='#{staticsPrefixPath}/javascripts/jquery.challonge.js')
-      script(type='text/javascript').
-        $(function() {
-            $('.iframe-responsive-wrapper').challonge('#{tournament.tournamentId}', {height: '100%', subdomain: '', theme: '2', multiplier: '1.0', match_width_multiplier: '1.0', show_final_results: '1', show_standings: '1'});
-        });
-    //- .competition-brackets(style='float: left; width: 80%;')
-    div(style='float: left; height: 520px;')
-      span(class='section-title') Agenda
-      #mini-clndr.cal2
-        script#mini-clndr-template(type='text/template')
-          <div class="controls">
-          <div class="clndr-previous-button">‹</div><div class="month"><%= month %></div><div class="clndr-next-button">›</div>
-          </div>
-          <div class="days-container">
-          <div class="days">
-          <div class="headers">
-          <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
-          </div>
-          <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
-          </div>
-          <div class="events">
-          <div class="headers">
-          <div class="x-button">x</div>
-          <div class="event-header">EVENTS</div>
-          </div>
-          <div class="events-list">
-          <% _.each(eventsThisMonth, function(event) { %>
-          <div class="event">
-          <a href="<%= event.url %>"><%= moment(event.date).format('MMMM Do') %>: <%= event.title %></a>
-          </div>
-          <% }); %>
-          </div>
-          </div>
-          </div>
-      a.button-link(href='http://forum.nodepoule.eu/register') Je m'inscris!
+    div(style='width:100%;')
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
       a.button-link(href='#{tournament.game.link}') Obtenir le jeu
+      a.button-link(href='#', onclick='showCalendar();') Agenda
+    .competition-brackets(style='float: left; width: 80%;')
+      .bracket
+    div(id="calendar", class="dp_calendar")
     div(style='float: left;')
       a(name='rules').section-title Règles
       dl
