@@ -31,12 +31,13 @@
 	text-decoration:none;
 	text-transform:uppercase;
 	text-align:center;
-	margin:10px;
+	margin:5px;
 	display:block;
-	width:294px;
+	width:290px;
 	padding:10px;
 	background-color:#000;
 	color:#fff;
+	float:left;
 }
 
 .competition-wrapper{
