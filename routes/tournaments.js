@@ -1,10 +1,11 @@
+var _ = require('underscore');
 var express = require('express');
 var util = require('util');
 var rest = require('restler');
 var nconf = require('nconf');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
-var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament');
+var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), User = mongoose.model('User');
 var router = express.Router();
 
 router.use(paginate.middleware(4, 50));
@@ -31,17 +32,33 @@ router.get('/:id', function(req, res, next) {
 		if(!tournament) {
 			return next(new Error("Le tournoi '"+tid+"' est introuvable"));
 		}
-				
-    var rounds = []; // List of rounds		
-		tournament.matchs.forEach(function(match) {
-				if(match.round == 1) {
-						teams.push([ participantsById[match.pid1], participantsById[match.pid2] ]);
-				}
-				var roundIndex = match.round-1;
-				rounds[roundIndex] = rounds[roundIndex] || [];
-				rounds[roundIndex].push([ match.score1, match.score2 ]);
-		});
-		res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: tournament.participants, results: [ rounds ] });  
+
+    var participants = [];
+    // Get all existing users
+    User.find({}, 'uid username picture gravatarpicture uploadedpicture status').lean().exec(function(err, users) {
+      if (err) { return next(err); }
+
+      // Get user from participant id
+      tournament.participants.forEach(function(participant) {
+        var user = _.find(users, function (item) { return item.uid === participant.pid; });
+        if(user) {
+          console.log("user=" + JSON.stringify(user));
+          participants.push({uid: user.uid, name: user.username });
+        }
+      });
+
+      var rounds = []; // List of rounds    
+      /*tournament.matchs.forEach(function(match) {
+          if(match.round == 1) {
+              teams.push([ participantsById[match.pid1], participantsById[match.pid2] ]);
+          }
+          var roundIndex = match.round-1;
+          rounds[roundIndex] = rounds[roundIndex] || [];
+          rounds[roundIndex].push([ match.score1, match.score2 ]);
+      });*/
+      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, results: [ rounds ] });  
+
+    });
   });
 });
 

@@ -82,6 +82,9 @@ function generateBracket(tourneyUsers, container){
 				matches.push({ user1: {uid:-1,name:''} , user2: {uid:-1,name:''} , matchId: matchId++, nextMatchId : ''});
 			}
 		}
+	} else {
+		nbParticipantsTour1 = nbParticipants;
+		nbMatchsType = nbParticipants / 2;
 	}
 	
 	/*
