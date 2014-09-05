@@ -172,9 +172,10 @@
 
 .dp_calendar .calendar_list #list {
 	list-style:none;
-	margin:20px 0 0 0;
-	max-height: 200px;
-    overflow-y: auto;
+	max-height: 130px;
+	margin: 20px 0 0 0;
+	overflow: auto;
+}
 }
 
 .dp_calendar .calendar_list #list li {

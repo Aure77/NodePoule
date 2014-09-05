@@ -87,7 +87,7 @@ h1 a {text-decoration:none;}
 header {
 	width:100%;
 	position:relative; 
-	z-index:2;
+	/*z-index:2;*/
 }
 
 .row-bot {
@@ -153,7 +153,7 @@ h2 {
 	padding:33px 0 50px;
 	background:#fff;
 	position:relative;
-	z-index:1;
+	/*z-index:1;*/
 }
 #page4 #content {background:url('http://cdn.nodepoule.eu/img/content-tail.gif') center top repeat-x #fff;}
 
