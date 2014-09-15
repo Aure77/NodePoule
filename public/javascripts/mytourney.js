@@ -134,7 +134,7 @@ MyTourney = function() {
                   score1 : match.score1,
                   score2 : match.score2,
                   eventDate : null,
-                  round : nRound
+                  round : nRound+1
                 });
             });
         });
