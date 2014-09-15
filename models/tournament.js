@@ -12,6 +12,8 @@ var RuleSchema = new Schema({
 }, { _id: false });
 
 var MatchSchema = new Schema({
+  matchId : Number,
+  nextMatchId : Number,
   pid1 : Number,
   pid2 : Number,
   score1 : Number,
@@ -32,7 +34,7 @@ var TournamentSchema = new Schema({
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
   imageRelPath : String,
-  matchs: [MatchSchema],
+  matches: [MatchSchema],
   participants: [ParticipantSchema],
   rules: [RuleSchema],
 }, { collection: 'tournaments' });

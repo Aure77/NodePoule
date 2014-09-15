@@ -24,7 +24,7 @@ p{
 	word-wrap:break-word;
 	white-space: nowrap;
 	display:inline-block;
-	text-align:center;
+	text-align: left;
 	padding:5px;
 	vertical-align:center;
 	line-height:14px;
@@ -47,4 +47,10 @@ p{
 
 .mytourney-user.selected{
 	background:#8FA;
+}
+
+.mytourney-avatar {
+	width: 15px;
+	height: 15px;
+	margin-right: 4px;
 }

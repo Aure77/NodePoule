@@ -31,7 +31,7 @@ router.get('/:id', isUserLoggedIn, function(req, res, next) {
 
 function findOrCreateUserProfilByUserId(uid, callback) {
   UserProfil.findOne({ uid: uid })
-            .populate('user', '_key uid username picture gravatarpicture uploadedpicture status')
+            .populate('user', '_key uid username picture status')
             .populate('gamerTags.game')
             .lean()
             .exec(function(err, userProfil) {
@@ -57,7 +57,7 @@ function createDefaultUserProfil(uid, callback) {
     defaultUserProfil.gamerTags = [];
     defaultUserProfil.save(function(err) {
       if (err) { return callback(err, null); }
-      UserProfil.populate(defaultUserProfil, { path: 'user', select: '_key uid username picture gravatarpicture uploadedpicture status' }, function(err, userProfil) {
+      UserProfil.populate(defaultUserProfil, { path: 'user', select: '_key uid username picture status' }, function(err, userProfil) {
         if (err) { return callback(err, null); }
         console.log("UserProfil '"+userProfil.uid+"' successfully created");
         callback(null, userProfil);

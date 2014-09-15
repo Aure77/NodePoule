@@ -14,7 +14,7 @@ block head
   script(type='text/javascript').
     var Tourney = {
         "participants": !{JSON.stringify(participants)},
-        "results": !{JSON.stringify(results)}
+        "rounds": !{JSON.stringify(rounds)}
     };
 
     $(function() {
@@ -61,7 +61,7 @@ block head
 
         $("#calendar").hide();
         if(Tourney.participants && Tourney.participants.length > 0) {
-            generateBracket(Tourney.participants, $('.bracket'));
+            MyTourney.drawBracket(Tourney.participants, Tourney.rounds, $('.bracket'));
         }
     });
 
