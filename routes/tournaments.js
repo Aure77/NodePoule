@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var express = require('express');
 var util = require('util');
-var rest = require('restler');
 var nconf = require('nconf');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
@@ -25,13 +24,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-	var tid = escape(req.params.id);
+  var tid = escape(req.params.id);
   Tournament.findOne({ tournamentId : tid }).populate("game").exec(function(err, tournament) {
     if (err) { return next(err); }
-		
-		if(!tournament) {
-			return next(new Error("Le tournoi '"+tid+"' est introuvable"));
-		}
+    
+    if(!tournament) {
+      return next(new Error("Le tournoi '"+tid+"' est introuvable"));
+    }
 
     var participants = [];
     // Get all existing users
@@ -61,21 +60,19 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/:id/participants', function(req, res, next) {
-  var challongeUrl = util.format('https://api.challonge.com/v1/tournaments/%s/participants.json?api_key=%s', escape(req.params.id), nconf.get('challonge_api_key'));
-  rest.json(challongeUrl, {timeout: 5000}).on('timeout', function(ms) {
-    return next(new Error('Challonge did not return within ' + ms + ' ms'));
-  }).on('complete',function(challongeParticipants, response) {
+  // Get all existing users
+  User.find({}, 'uid username picture').lean().exec(function(err, users) {
+    if (err) { return next(err); }
+
     var participants = [];
-    challongeParticipants.forEach(function(chalParticipant) {
-      participants.push({
-        id: "challonge:" + chalParticipant.participant.id,
-        pseudo: (chalParticipant.participant.username != null) ? chalParticipant.participant.username : chalParticipant.participant.name,
-        avatarRelPath: util.format('http://www.gravatar.com/avatar/%s?r=r&s=200&d=http://nodepoule.eu/img/avatar.png', chalParticipant.participant.email_hash),
-        nb1stPlace: 0,
-        nb2ndPlace: 0,
-        nb3rdPlace: 0
-      });
+    // Get user from participant id
+    tournament.participants.forEach(function(participant) {
+      var user = _.find(users, function (item) { return item.uid === participant.pid; });
+      if(user) {
+        participants.push({uid: user.uid, name: user.username, picture: user.picture, nb1stPlace: 0, nb2ndPlace: 0, nb3rdPlace: 0 });
+      }
     });
+
     res.render('participants', { title: "Participants", participants: participants });
   });
 });

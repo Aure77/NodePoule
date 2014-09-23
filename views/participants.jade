@@ -11,8 +11,8 @@ block content
           - each participant in participants
             .user-box
               a(href='/profile/#{participant.uid}')
-                  img.user-avatar(src='#{participant.avatarRelPath}')
-                  p #{participant.pseudo}
+                  img.user-avatar(src='#{participant.picture}')
+                  p #{participant.name}
                 p.user-awards
                   | #{participant.nb1stPlace}
                   img(src='#{staticsPrefixPath}/img/awards/gold.png')
