@@ -50,8 +50,10 @@ router.get('/:id', function(req, res, next) {
         var roundIndex = match.round-1;
         rounds[roundIndex] = rounds[roundIndex] || [];
         var user1 = match.pid1 != null ? _.find(participants, function (item) { return item.uid === match.pid1; }) : { uid: -1, name: '' };
+        user1.score = match.score1;
         var user2 = match.pid2 != null ? _.find(participants, function (item) { return item.uid === match.pid2; }) : { uid: -1, name: '' };
-        rounds[roundIndex].push({ user1: user1, user2: user2, score1: match.score1, score2: match.score2, matchId: match.matchId, nextMatchId: match.nextMatchId });
+        user2.score = match.score2;
+        rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
       res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds });
 

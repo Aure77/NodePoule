@@ -67,7 +67,12 @@ block head
         });
 
         if(Tourney.participants && Tourney.participants.length > 0) {
-            MyTourney.drawBracket(Tourney.participants, Tourney.rounds, $('.bracket'));
+            MyTourney.drawBracket({
+                participants: Tourney.participants, 
+                rounds: Tourney.rounds, 
+                container: $('.bracket'),
+                baseProfileUrl: "#{baseUrl}/profile"
+            });
         }
     });
 

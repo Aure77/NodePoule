@@ -7,6 +7,18 @@ MyTourney = function() {
                     16777216,33554432,67108864,134217728,268435456,536870912,
                     1073741824,2147483648];
 
+    var defaultTemplate = '<div class="mytourney-block" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
+        <% _.each([ match.user1, match.user2 ], function(user) { %> \
+            <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
+                <span class="mytourney-user" title="<%= user.name %>"> \
+                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
+                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.name %></a> \
+                </span> \
+                <span class="mytourney-score"><%= user.score ? user.score : \"--\" %></span> \
+            </p> \
+        <% }); %> \
+    </div>';
+
     // Private method
     var isPowerOfTwo = function(x) {
         return ((x != 0) && ((x & (~x + 1)) == x));
@@ -48,7 +60,7 @@ MyTourney = function() {
             */
             var matchId = 0;
             for (i = 0; i < preliminaryUsers.length; i += 2) {
-                matches.push({ user1: preliminaryUsers[i], user2: preliminaryUsers[i + 1], score1: '--', score2: '--', matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: preliminaryUsers[i], user2: preliminaryUsers[i + 1], matchId: matchId++, nextMatchId: '' });
             }
             tours.push(matches);
             matches = [];
@@ -61,7 +73,7 @@ MyTourney = function() {
             var nbMatchsType = closest / 2;
             if (nbParticipantsTour1 < nbMatchsType) {
                 for (i = nbParticipantsTour1; i < nbMatchsType; i++) {
-                    matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, score1: '--', score2: '--', matchId: matchId++, nextMatchId: '' });
+                    matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
                 }
             }
         } else {
@@ -74,9 +86,9 @@ MyTourney = function() {
         */
         for (i = 0; i < nbParticipantsTour1; i++) {
             if (i >= diff) {
-                matches.push({ user1: participants[i], user2: participants[++i], score1: '--', score2: '--', matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: participants[i], user2: participants[++i], matchId: matchId++, nextMatchId: '' });
             } else {
-                matches.push({ user1: participants[i], user2: { uid: -1, name: '' }, score1: '--', score2: '--', matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: participants[i], user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
             }
         }
         tours.push(matches);
@@ -88,7 +100,7 @@ MyTourney = function() {
         while (nb > 1) {
             matches = [];
             for (i = 0; i < nb; i += 2) {
-                matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, score1: '--', score2: '--', matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
             }
             tours.push(matches);
             nb = nb / 2;
@@ -131,8 +143,8 @@ MyTourney = function() {
                   nextMatchId : match.nextMatchId,
                   pid1 : match.user1.uid == -1 ? null : match.user1.uid,
                   pid2 : match.user2.uid == -1 ? null : match.user2.uid,
-                  score1 : match.score1,
-                  score2 : match.score2,
+                  score1 : match.user1.score,
+                  score2 : match.user2.score,
                   eventDate : null,
                   round : nRound+1
                 });
@@ -142,17 +154,18 @@ MyTourney = function() {
     };
 
     // Public method
-    var drawBracket = function(participants, tours, container) {
+    var drawBracket = function(opt) {
         // Le tournoi aura un tour préliminaire si le nombre de participants n'est pas une puissance de 2.
-        var containsPreliminary = !isPowerOfTwo(participants.length);
-        var profileUrl = '/profile/';
+        var containsPreliminary = !isPowerOfTwo(opt.participants.length);
         var offsetTour = 25;
         var padding = 0;
         var paddingStyle = '';
         var prevNextMatchId = -1;
         var prevMatchDouble = 0;
 
-        $.each(tours, function(nTour, matches) {
+        var renderTemplate = _.template(opt.template ? opt.template : defaultTemplate);
+
+        $.each(opt.rounds, function(nTour, matches) {
             /*
               Création d'un tour
             */
@@ -177,39 +190,21 @@ MyTourney = function() {
                     }
                     prevMatchDouble++;
                 }
+
                 /*
-                  Création d'un 'block' de match
+                  Création d'un 'block' de match depuis le template
                 */
-                var divBlock = $('<div>', { class: 'mytourney-block', style: paddingStyle, 'data-mytourney-current-block-id': match.matchId, 'data-mytourney-next-block-id': match.nextMatchId });
-                var pBlock = $('<p>', { class: 'player-block', 'data-mytourney-player-id': match.user1.uid });
-                var profileLink = $('<a>', { href: profileUrl + match.user1.uid, target: '_blank' }).html(match.user1.name);
-                var divUser = $('<span>', { class: 'mytourney-user', title: match.user1.name });
-                if(match.user1.picture) {
-                    $('<img>', { src: match.user1.picture, alt: 'avatar1', class: 'mytourney-avatar' }).appendTo(divUser);
-                }
-                divUser.append(profileLink).appendTo(pBlock);
-                $('<span>', { class: 'mytourney-score' }).html(match.score1 != null ? match.score1 : '--').appendTo(pBlock);
-                pBlock.appendTo(divBlock);
-                pBlock = $('<p>', { class: 'player-block', 'data-mytourney-player-id': match.user2.uid });
-                avatar = $('<img>', { src: match.user2.picture, alt: 'avatar2', class: 'mytourney-avatar' });
-                profileLink = $('<a>', { href: profileUrl + match.user2.uid, target: '_blank' }).html(match.user2.name);
-                divUser = $('<span>', { class: 'mytourney-user', title: match.user2.name });
-                if(match.user2.picture) {
-                    $('<img>', { src: match.user2.picture, alt: 'avatar2', class: 'mytourney-avatar' }).appendTo(divUser);
-                }
-                divUser.append(profileLink).appendTo(pBlock);
-                $('<span>', { class: 'mytourney-score' }).html(match.score2 != null ? match.score2 : '--').appendTo(pBlock);
-                pBlock.appendTo(divBlock);
+                var html = renderTemplate({ match : match, options: opt });
                 prevNextMatchId = match.nextMatchId;
                 /*
                   Ajouter le match au tour en cours.
                 */
-                divBlock.appendTo(divTour);
+                divTour.append(html);
             });
             /*
               Ajouter le tour au tournoi.
             */
-            divTour.appendTo(container);
+            divTour.appendTo(opt.container);
         });
 
         /*
