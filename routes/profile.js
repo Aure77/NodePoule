@@ -7,7 +7,7 @@ var router = express.Router();
 
 function isUserLoggedIn(req, res, next) {
   if (res.locals.user == null) { // not logged in
-    var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.path);
+    var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.originalUrl);
     console.log("redirect to " + redirectUrl);
     res.redirect(redirectUrl);
   } else {
