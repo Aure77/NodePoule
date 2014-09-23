@@ -7,7 +7,7 @@ MyTourney = function() {
                     16777216,33554432,67108864,134217728,268435456,536870912,
                     1073741824,2147483648];
 
-    var defaultTemplate = '<div class="mytourney-block" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
+    var defaultTemplate = '<div class="mytourney-block" style="<%= paddingStyle %>" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
         <% _.each([ match.user1, match.user2 ], function(user) { %> \
             <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
                 <span class="mytourney-user" title="<%= user.name %>"> \
@@ -194,7 +194,7 @@ MyTourney = function() {
                 /*
                   Création d'un 'block' de match depuis le template
                 */
-                var html = renderTemplate({ match : match, options: opt });
+                var html = renderTemplate({ paddingStyle: paddingStyle, match : match, options: opt });
                 prevNextMatchId = match.nextMatchId;
                 /*
                   Ajouter le match au tour en cours.
