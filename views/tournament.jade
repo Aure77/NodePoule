@@ -58,8 +58,15 @@ block head
             events_array: events_array,
             order_by: 3 //1 = Time, 2 = Title, 3 = Priority, date_selected: new Date(2011,06,30) 
         });
-
         $("#calendar").hide();
+
+        $("#open-calendar").on("click", function(e) {
+            e.preventDefault();
+            showCalendar();            
+            return false;
+        });
+
+
         if(Tourney.participants && Tourney.participants.length > 0) {
             MyTourney.drawBracket(Tourney.participants, Tourney.rounds, $('.bracket'));
         }
@@ -70,7 +77,6 @@ block head
             closeClass: 'icon-remove',
             closeText: '!'
         });
-        return false;
     }
 
 block content
@@ -85,7 +91,7 @@ block content
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
       a.button-link(href='#{tournament.game.link}') Obtenir le jeu
-      a.button-link(href='#', onclick='showCalendar();') Agenda
+      a.button-link(href='#', id="open-calendar") Agenda
 
     div(style='clear:both;')
     .competition-brackets
