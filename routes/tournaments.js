@@ -32,11 +32,11 @@ router.get('/:id', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
 
-    var participants = [];
     // Get all existing users
     User.find({}, 'uid username picture').lean().exec(function(err, users) {
       if (err) { return next(err); }
 
+      var participants = [];
       // Get user from participant id
       tournament.participants.forEach(function(participant) {
         var user = _.find(users, function (item) { return item.uid === participant.pid; });
@@ -60,20 +60,29 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/:id/participants', function(req, res, next) {
-  // Get all existing users
-  User.find({}, 'uid username picture').lean().exec(function(err, users) {
+  var tid = escape(req.params.id);
+  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
     if (err) { return next(err); }
+    
+    if(!tournament) {
+      return next(new Error("Le tournoi '"+tid+"' est introuvable"));
+    }
 
-    var participants = [];
-    // Get user from participant id
-    tournament.participants.forEach(function(participant) {
-      var user = _.find(users, function (item) { return item.uid === participant.pid; });
-      if(user) {
-        participants.push({uid: user.uid, name: user.username, picture: user.picture, nb1stPlace: 0, nb2ndPlace: 0, nb3rdPlace: 0 });
-      }
+    // Get all existing users
+    User.find({}, 'uid username picture').lean().exec(function(err, users) {
+      if (err) { return next(err); }
+
+      var participants = [];
+      // Get user from participant id
+      tournament.participants.forEach(function(participant) {
+        var user = _.find(users, function (item) { return item.uid === participant.pid; });
+        if(user) {
+          participants.push({uid: user.uid, name: user.username, picture: user.picture, nb1stPlace: 0, nb2ndPlace: 0, nb3rdPlace: 0 });
+        }
+      });
+
+      res.render('participants', { title: "Participants", participants: participants });
     });
-
-    res.render('participants', { title: "Participants", participants: participants });
   });
 });
 
