@@ -34,8 +34,7 @@ block head
       });
       $('ul#feeds').feeds({
           feeds: {
-              category16: 'http://forum.nodepoule.eu/category/16.rss',
-              category15: 'http://forum.nodepoule.eu/category/15.rss'
+              recent: '#{forumUrl}/recent.rss',
           },
           entryTemplate: function(entry) {
               return '<li><a href="' + entry.link + '">' + entry.title + '</a></li>';
