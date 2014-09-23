@@ -18,6 +18,7 @@ html
         var path = window.location.pathname;
         path = path.replace(/\/$/, "");
         path = decodeURIComponent(path);
+        path = path === "" ? "/index.html" : path; // index
 
         $("ul.menu a").each(function() {
           var href = $(this).attr('href');
