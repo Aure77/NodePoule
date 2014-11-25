@@ -1,0 +1,64 @@
+extends ../layout
+block head
+  link(rel='stylesheet', href='#{staticsPrefixPath}/../stylesheets/mytourney.css', type='text/css', media='all')
+  script(type='text/javascript', src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/../javascripts/underscore-min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/../javascripts/jquery.jsPlumb-1.6.4-min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/../javascripts/mytourney.js')
+  script(type='text/javascript').
+    var Tourney = {
+        "participants": !{JSON.stringify(participants)},
+        "rounds": !{JSON.stringify(rounds)}
+    };
+
+    $(function() {
+        if(Tourney.participants && Tourney.participants.length > 0) {
+            MyTourney.drawBracket({
+                participants: Tourney.participants, 
+                rounds: Tourney.rounds, 
+                container: $('.bracket'),
+                baseProfileUrl: "#{baseUrl}/profile",
+                template: MyTourney.adminTemplate
+            });
+        }
+    });
+
+block content
+  .main.zerogrid
+    .competition-infos
+      p.competition-title
+          img(src='#{tournament.game.iconRelPath}')
+          | #{tournament.game.name}
+        p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
+
+    p.news-editor-title Titre
+    input(type='text', style='width: 100%; height: 25px;')
+    p.news-editor-title Dates
+    input#datedebut(type='text', style='width: 45%; height: 25px;')
+    | -
+    input#datefin(type='text', style='width: 45%; height: 25px;')
+
+    .desc Description
+    textarea
+
+    .desc Participants
+    table(border='1')
+      th Pseudo
+      th Actions
+
+    .add User
+    input
+    button Add
+
+    div
+      .warning Attention !!
+      button Shuffle
+      button Generate Bracket
+
+    div(style='clear:both;')
+    .competition-brackets
+      .bracket
+
+    div(style='clear:both;')
+      
+    button Save

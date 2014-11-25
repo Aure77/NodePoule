@@ -45,6 +45,7 @@ var profile = require('./routes/profile');
 var news = require('./routes/news');
 var faq = require('./routes/faq');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -80,6 +81,7 @@ app.use('/news', news);
 app.use('/profile', profile);
 app.use('/faq', faq);
 app.use('/hearthstone-decks', hearthstoneDecks);
+app.use('/admin', admin);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

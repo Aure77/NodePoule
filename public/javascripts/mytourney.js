@@ -18,6 +18,18 @@ MyTourney = function() {
             </p> \
         <% }); %> \
     </div>';
+    
+    var adminTemplate = '<div class="mytourney-block" style="<%= paddingStyle %>" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
+        <% _.each([ match.user1, match.user2 ], function(user) { %> \
+            <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
+                <span class="mytourney-user" title="<%= user.name %>"> \
+                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
+                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.name %></a> \
+                </span> \
+                <input class="mytourney-score" type="text" placeholder="--" value="<%= user.score %>" /> \
+            </p> \
+        <% }); %> \
+    </div>';
 
     // Private method
     var isPowerOfTwo = function(x) {
@@ -157,7 +169,7 @@ MyTourney = function() {
     var drawBracket = function(opt) {
         // Le tournoi aura un tour préliminaire si le nombre de participants n'est pas une puissance de 2.
         var containsPreliminary = !isPowerOfTwo(opt.participants.length);
-        var offsetTour = 25;
+        var offsetTour = 26;
         var padding = 0;
         var paddingStyle = '';
         var prevNextMatchId = -1;
@@ -274,7 +286,8 @@ MyTourney = function() {
     var oPublic = {
         generateBracket: generateBracket,
         drawBracket: drawBracket,
-        roundsToModel: roundsToModel
+        roundsToModel: roundsToModel,
+        adminTemplate: adminTemplate
     };
     return oPublic;
 

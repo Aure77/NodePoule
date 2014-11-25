@@ -11,7 +11,8 @@ var NewsSchema = new Schema({
   title : String,
   content : String,
   date : { type: Date, default: Date.now },
-  iconRelPath : String
+  hideThumbnail: { type: Boolean, default: false },
+  thumbnailRelPath : String
 }, { collection: 'news' });
 
 NewsSchema.plugin(mongoosePaginate);
