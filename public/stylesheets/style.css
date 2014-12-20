@@ -276,3 +276,20 @@ font-size: 1.5em;
 -webkit-margin-end: 0px;
 font-weight: bold;
 }
+.faq-game-button{
+	margin:0px 5px 5px 0px;
+	display:inline-block;
+	background:#000;
+}
+.faq-game-button img{
+	padding:2px;
+	width:200px;
+	height:100px;
+}
+.faq-game-button span{
+	color:#fff;
+	margin-left:5px;
+	display:block;
+	text-transform:uppercase;
+	font-weight:bold;
+}
