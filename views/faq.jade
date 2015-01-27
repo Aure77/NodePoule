@@ -10,6 +10,6 @@ block content
       - else
         - each game in games
          .faq-game-button
-             a(href='/tournaments/#{game.gameId}#faq')
+             a(href='/games/#{game._id}#faq')
                  img(src='#{game.iconRelPath}')
                | span #{game.name}

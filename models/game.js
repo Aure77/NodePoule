@@ -11,7 +11,6 @@ var QuestionSchema = new Schema({
 }, { _id: false });
 
 var GameSchema = new Schema({
-  gameId : String,
   name : { type: String, index: true },
   description : String,
   link : String,

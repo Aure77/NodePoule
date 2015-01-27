@@ -44,6 +44,7 @@ var tournaments = require('./routes/tournaments');
 var profile = require('./routes/profile');
 var news = require('./routes/news');
 var faq = require('./routes/faq');
+var games = require('./routes/games');
 var hearthstoneDecks = require('./routes/hearthstone-decks');
 var admin = require('./routes/admin');
 
@@ -80,6 +81,7 @@ app.use('/tournaments', tournaments);
 app.use('/news', news);
 app.use('/profile', profile);
 app.use('/faq', faq);
+app.use('/games', games);
 app.use('/hearthstone-decks', hearthstoneDecks);
 app.use('/admin', admin);
 
