@@ -76,7 +76,8 @@ block aside
                   li
                     .img-border
                       a(href='/news/#{news.newsId}')
-                        img(src='#{news.iconRelPath}', alt='#{news.title}')
+                        - if(!news.hideThumbnail)
+                          img(src='#{news.thumbnailRelPath}', alt='#{news.title}')
                         br
                         | #{news.title}
           a.button(href='/news', class='small-link-right')

@@ -10,7 +10,8 @@ block content
         - else
           - each news in newsCollection
             a(href='/news/#{news.newsId}', class='news-box')
-              img(src='#{news.iconRelPath}')
+              - if(!news.hideThumbnail)
+                img(src='#{news.thumbnailRelPath}', alt='#{news.title}')
               p #{news.title}
         div(style='clear:both;')
         div        
