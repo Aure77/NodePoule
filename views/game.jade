@@ -26,10 +26,25 @@ block content
           li#v V
 
        .glossary-content
-        - each faqEntry in game.faq
-          div(id='content-for-#{faqEntry.letter.toLowerCase()}')
-            span.glossary-title #{faqEntry.letter}
-            p !{faqEntry.content}
+        - var prevFaq = ''
+        - each faqEntry, ind in game.faq
+          - if(prevFaq!="" && prevFaq!=faqEntry.letter) {
+                p.return-to-top Retourner au début
+              | </div>
+          - }
+          - if(prevFaq!=faqEntry.letter) {
+              | <div id='content-for-#{faqEntry.letter.toLowerCase()}'>
+              span.glossary-title #{faqEntry.letter}
+          - }
+                p
+                  strong !{faqEntry.title}
+                  br
+                  !{faqEntry.content}
+          - prevFaq=faqEntry.letter
+          - if(ind == game.faq.length-1) {
+                p.return-to-top Retourner au début
+              | </div>
+          - }
 
   script(language='javascript', type='text/javascript').
       $(function() {

@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.get('/:id', function(req, res, next) {
   var gameId = escape(req.params.id);
-	Game.findById(gameId).exec(function(err, game){
+	Game.findById(gameId).sort({"faq.letter": 1}).exec(function(err, game){
     if (err) { return next(err); }    
     if(!game) {
       return next(new Error("Le jeu '"+gameId+"' est introuvable"));
