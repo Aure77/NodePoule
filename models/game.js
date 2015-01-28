@@ -15,6 +15,7 @@ var GameSchema = new Schema({
   description : String,
   link : String,
   iconRelPath : String,
+  type : String,
   faq : [QuestionSchema]
 }, { collection: 'games' });
 
