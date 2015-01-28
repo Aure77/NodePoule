@@ -7,8 +7,11 @@ block content
       - if(games.length===0)
         p Pas de faq disponible...
       - else
+        - var prevGame = ''
         - each game in games
-         h3.faq-game-type #{game.type}
+         - if(prevGame!=game.type)
+          h3.faq-game-type #{game.type}
+          - prevGame = game.type
          .faq-game-button
              a(href='/games/#{game._id}#faq')
                   img(src='#{game.iconRelPath}')

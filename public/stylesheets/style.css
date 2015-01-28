@@ -293,3 +293,6 @@ font-weight: bold;
 	text-transform:uppercase;
 	font-weight:bold;
 }
+.faq-game-type{
+ text-transform: capitalize;
+}
