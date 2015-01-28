@@ -173,7 +173,7 @@
 
 .dp_calendar .calendar_list #list {
 	list-style:none;
-	max-height: 130px;
+	max-height: 300px;
 	margin: 20px 0 0 0;
 	overflow: auto;
 }
