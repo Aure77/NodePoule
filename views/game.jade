@@ -6,3 +6,52 @@ block content
     .wrapper
       h3 #{game.name}
       img(src='#{game.iconRelPath}')
+      div(class='game-desc') #{game.description}
+
+      div(class='game-glossary')
+        h3 FAQ
+        ul.glossary-ul
+          li#a.selected A
+          li#b B
+          li#c C
+          li#d D
+          li#h H
+          li#k K
+          li#m M
+          li#n N
+          li#p P
+          li#r R
+          li#s S
+          li#t T
+          li#v V
+
+       .glossary-content
+        - each faqEntry in game.faq
+          div(id='content-for-#{faqEntry.letter.toLowerCase()}')
+            span.glossary-title #{faqEntry.letter}
+            p #{faqEntry.content}
+
+  script(language='javascript', type='text/javascript').
+      $(function() {
+        //below code is for high-lighting the link and scroll to particular DOM Element as well
+        $(".glossary-ul li").each(function() {
+          $(this).click(function() { //On click of any Alphabet
+            $(".glossary-ul li").removeClass("selected"); //Initially remove "selected" class if any
+            $(this).addClass("selected"); //Add "selected" class for the clicked one
+            elementClick = $(this).attr("id"); //get respective 'Id' for example 'a','b','c'.. etc.,
+            $(".glossary-content").scrollTo($("#content-for-"+elementClick), 800); //scrollTo particular DOM Element
+            $(".glossary-content div").css({'background-color' : '#ffffff'}); //set the background color to default, that is white
+            $(".glossary-content #content-for-"+elementClick).css({'background-color' : '#DDD'}); //set the background color to light-blue to that div
+          });
+        });
+        //When "Retourner au début" is clicked highlight the first Alphabet that 'A' and scroll to top.
+        $('.return-to-top').click(function(){
+          $(".glossary-ul li").each(function() {
+            $(".glossary-ul li").removeClass("selected"); //Remove classname "selected"
+          });
+          $("#a").addClass("selected"); //Add a class named "selected" to the first Alphabet
+          $(".glossary-content").scrollTo($("#content-for-a"), 800); //This is for scrolling to particular element that is "A" here...
+          $(".glossary-content div").css({'background-color' : '#ffffff'}); //set the background color to default, that is white
+          $(".glossary-content #content-for-a").css({'background-color' : '#DDD'}); //set the background color to light-blue to that div
+        });
+      });

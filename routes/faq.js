@@ -5,7 +5,7 @@ var mongoose = require('mongoose'), Game = mongoose.model('Game');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-	Game.find({},"_id name iconRelPath type").sort("type", 1).exec(function(err, games){
+	Game.find({},"_id name iconRelPath type").sort({type: 1}).exec(function(err, games){
 		res.render('faq', { title: "FAQ", htitle: "La Foire Aux Questions!", games: games });
 	});
 });
