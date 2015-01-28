@@ -4,11 +4,11 @@ block head
 block content
   .main.zerogrid
     .wrapper
-      h3 Jeux
       - if(games.length===0)
         p Pas de faq disponible...
       - else
         - each game in games
+         h3.faq-game-type #{game.type}
          .faq-game-button
              a(href='/games/#{game._id}#faq')
                   img(src='#{game.iconRelPath}')
