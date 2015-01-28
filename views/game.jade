@@ -6,7 +6,7 @@ block content
     .wrapper
       h3 #{game.name}
       img(src='#{game.iconRelPath}')
-      div(class='game-desc') #{game.description}
+      div(class='game-desc') !{game.description}
 
       div(class='game-glossary')
         h3 FAQ
@@ -29,7 +29,7 @@ block content
         - each faqEntry in game.faq
           div(id='content-for-#{faqEntry.letter.toLowerCase()}')
             span.glossary-title #{faqEntry.letter}
-            p #{faqEntry.content}
+            p !{faqEntry.content}
 
   script(language='javascript', type='text/javascript').
       $(function() {
