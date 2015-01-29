@@ -4,6 +4,8 @@ var paginate = require('express-paginate');
 var mongoose = require('mongoose'), Game = mongoose.model('Game'), Tournament = mongoose.model('tournament');
 var router = express.Router();
 
+router.use(paginate.middleware(4, 50));
+
 router.get('/:id', function(req, res, next) {
   var gameId = escape(req.params.id);
 	Game.findById(gameId).sort({"faq.letter": 1}).exec(function(err, game){
