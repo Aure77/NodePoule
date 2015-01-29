@@ -5,16 +5,19 @@ block content
   .main.zerogrid
     .wrapper
       h3 #{game.name}
-      img(src='#{game.iconRelPath}')
+      a(href='#{game.link}', title='Télécharger #{game.name}')
+        img(src='#{game.iconRelPath}')
+
       div(class='game-desc') !{game.description}
 
-      div(class='game-glossary')
-        - var faq = {};
-        - each faqEntry, ind in game.faq
-          - if(!Array.isArray(faq[faqEntry.letter]))
-            - faq[faqEntry.letter] = [];
-          - faq[faqEntry.letter].push(faqEntry);
+    - var faq = {};
+    - each faqEntry, ind in game.faq
+      - if(!Array.isArray(faq[faqEntry.letter]))
+        - faq[faqEntry.letter] = [];
+      - faq[faqEntry.letter].push(faqEntry);
 
+    - if(Object.getOwnPropertyNames(faq).length != 0)
+      div(class='game-glossary')
         h3(id="faq") FAQ
         ul.glossary-ul
           - var isFirst = true;
