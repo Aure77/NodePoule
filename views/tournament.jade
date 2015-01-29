@@ -71,8 +71,8 @@ block content
     div(style='width:100%;')
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
-      a.button-link(href='#{tournament.game.link}') Infos sur le jeu
-      a.button-link(href='#{tournament.game.link}') Topic du tournoi
+      a.button-link(href='/game/#{tournament.game._id}') Infos sur le jeu
+      a.button-link(href='#{tournament.topicId}') Topic du tournoi
       a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
