@@ -56,14 +56,15 @@ html
                 h1
                   a(href='index.html')
                     img(src='#{staticsPrefixPath}/img/logo.png', alt='logo')
-              .main.zerogrid
-                h2= htitle
               block home
 
     block aside
 
     section#content
-      block content
+      .main.zerogrid
+        .wrapper
+            h2= htitle
+            block content
 
     footer
       .main.zerogrid
