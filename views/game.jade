@@ -9,42 +9,31 @@ block content
       div(class='game-desc') !{game.description}
 
       div(class='game-glossary')
-        h3 FAQ
+        - var faq = {};
+        - each faqEntry, ind in game.faq
+          - if(!Array.isArray(faq[faqEntry.letter]))
+            - faq[faqEntry.letter] = [];
+          - faq[faqEntry.letter].push(faqEntry);
+
+        h3(id="faq") FAQ
         ul.glossary-ul
-          li#a.selected A
-          li#b B
-          li#c C
-          li#d D
-          li#h H
-          li#k K
-          li#m M
-          li#n N
-          li#p P
-          li#r R
-          li#s S
-          li#t T
-          li#v V
+          - var isFirst = true;
+          - each faqEntry, letter in faq
+            li(id='#{letter.toLowerCase()}', class=(isFirst ? 'selected' : '')) #{letter}
+            - isFirst = false;
 
        .glossary-content
         - var prevFaq = ''
-        - each faqEntry, ind in game.faq
-          - if(prevFaq!="" && prevFaq!=faqEntry.letter) {
-                p.return-to-top Retourner au début
-              | </div>
-          - }
-          - if(prevFaq!=faqEntry.letter) {
-              | <div id='content-for-#{faqEntry.letter.toLowerCase()}'>
-              span.glossary-title #{faqEntry.letter}
-          - }
-                p
-                  strong !{faqEntry.title}
-                  br
-                  !{faqEntry.content}
-          - prevFaq=faqEntry.letter
-          - if(ind == game.faq.length-1) {
-                p.return-to-top Retourner au début
-              | </div>
-          - }
+        - each faqData, letter in faq
+          | <div id='content-for-#{letter.toLowerCase()}'>
+          span.glossary-title #{letter}
+          - each faqEntry in faqData
+            p
+              strong !{faqEntry.title}
+              br
+              !{faqEntry.content}
+          p.return-to-top Retourner au début
+          | </div>
 
   script(language='javascript', type='text/javascript').
       $(function() {
