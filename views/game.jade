@@ -4,39 +4,49 @@ block head
 block content
   .main.zerogrid
     .wrapper
-      h3 #{game.name}
-      a(href='#{game.link}', title='Télécharger #{game.name}')
+      .game-infos
+        p.game-title
         img(src='#{game.iconRelPath}')
+        | #{game.name}
+        p.game-subtitle
+        a(href='#{game.link}') Obtenir
+      div(style='width:100%;')
+        a.button-link(href='#') Tournois
+        a.button-link(href='#faq') FAQ
+        a.button-link(href='#') Topic
 
-      div(class='game-desc') !{game.description}
+      hr
+      h3 Description
+      div(class='game-description') !{game.description}
 
-    - var faq = {};
-    - each faqEntry, ind in game.faq
-      - if(!Array.isArray(faq[faqEntry.letter]))
-        - faq[faqEntry.letter] = [];
-      - faq[faqEntry.letter].push(faqEntry);
-
-    - if(Object.getOwnPropertyNames(faq).length != 0)
-      div(class='game-glossary')
-        h3(id="faq") FAQ
-        ul.glossary-ul
-          - var isFirst = true;
-          - each faqEntry, letter in faq
-            li(id='#{letter.toLowerCase()}', class=(isFirst ? 'selected' : '')) #{letter}
-            - isFirst = false;
-
-       .glossary-content
-        - var prevFaq = ''
-        - each faqData, letter in faq
-          | <div id='content-for-#{letter.toLowerCase()}'>
-          span.glossary-title #{letter}
-          - each faqEntry in faqData
-            p
-              strong !{faqEntry.title}
-              br
-              !{faqEntry.content}
-          p.return-to-top Retourner au début
-          | </div>
+      - var faq = {};
+      - each faqEntry, ind in game.faq
+        - if(!Array.isArray(faq[faqEntry.letter]))
+          - faq[faqEntry.letter] = [];
+        - faq[faqEntry.letter].push(faqEntry);
+  
+      - if(Object.getOwnPropertyNames(faq).length != 0)
+        hr
+        div(class='game-glossary')
+          h3(id="faq") FAQ
+          ul.glossary-ul
+            - var isFirst = true;
+            - each faqEntry, letter in faq
+              li(id='#{letter.toLowerCase()}', class=(isFirst ? 'selected' : '')) #{letter}
+              - isFirst = false;
+  
+         .glossary-content
+          - var prevFaq = ''
+          - each faqData, letter in faq
+            | <div id='content-for-#{letter.toLowerCase()}'>
+            span.glossary-title #{letter}
+            - each faqEntry in faqData
+              p
+                strong !{faqEntry.title}
+                br
+                !{faqEntry.content}
+            p.return-to-top Retourner au début
+            | </div>
 
   script(language='javascript', type='text/javascript').
       $(function() {

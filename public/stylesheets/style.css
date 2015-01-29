@@ -296,3 +296,30 @@ font-weight: bold;
 .faq-game-type{
  text-transform: capitalize;
 }
+
+.game-infos{
+    width:100%;
+    font-weight:bold;
+    text-transform:uppercase;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.game-infos .game-title{	
+    vertical-align:middle;
+    font-size:50px;
+    padding:0px;
+    background-color:#CCC;
+    margin:0px;
+}
+.game-infos .game-subtitle{
+    vertical-align:middle;
+    font-size:20px;
+    padding:0px 0px 0px 20px;
+    margin:0px;
+    color:#888;
+    background-color:#EEE;
+}
+.game-infos img{
+    height:64px;
+    vertical-align:middle;
+    padding:5px 20px;
+}
