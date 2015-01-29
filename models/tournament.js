@@ -34,6 +34,7 @@ var TournamentSchema = new Schema({
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
   imageRelPath : String,
+  topicId: String,
   matches: [MatchSchema],
   participants: [ParticipantSchema],
   rules: [RuleSchema],
