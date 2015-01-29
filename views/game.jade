@@ -6,14 +6,14 @@ block content
     .wrapper
       .game-infos
         p.game-title
-        img(src='#{game.iconRelPath}')
-        | #{game.name}
+          img(src='#{game.iconRelPath}')
+          | #{game.name}
         p.game-subtitle
-        a(href='#{game.link}') Obtenir
+          a(href='#{game.link}') Obtenir
       div(style='width:100%;')
         a.button-link(href='#') Tournois
         a.button-link(href='#faq') FAQ
-        a.button-link(href='#') Topic
+        a.button-link(href='#{game.topicId}') Topic
 
       hr
       h3 Description
