@@ -1,7 +1,7 @@
 var express = require('express');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
-var mongoose = require('mongoose'), Game = mongoose.model('Game'), Tournament =  = mongoose.model('tournament');
+var mongoose = require('mongoose'), Game = mongoose.model('Game'), Tournament = mongoose.model('tournament');
 var router = express.Router();
 
 router.get('/:id', function(req, res, next) {
