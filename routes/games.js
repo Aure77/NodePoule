@@ -1,7 +1,7 @@
 var express = require('express');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
-var mongoose = require('mongoose'), Game = mongoose.model('Game'), Tournament = mongoose.model('tournament');
+var mongoose = require('mongoose'), Game = mongoose.model('Game'), Tournament = mongoose.model('Tournament');
 var router = express.Router();
 
 router.use(paginate.middleware(4, 50));
@@ -19,7 +19,7 @@ router.get('/:id', function(req, res, next) {
 
 router.get('/:id/tournaments', function(req, res, next) {
     var gameId = escape(req.params.id);
-    Tournament.paginate({game._id : gameId}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
+    Tournament.paginate({"game._id" : gameId}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', { 
       title: 'Tous les tournois', 
