@@ -40,6 +40,10 @@
 	float:left;
 }
 
+.button-link.subscribe{
+	background-color:#008b00;
+}
+
 .competition-wrapper{
   height: 635px;
 }

@@ -51,6 +51,12 @@ block head
                 baseProfileUrl: "#{baseUrl}/profile"
             });
         }
+        
+        if(#{tournament.startDate} > new Date()){
+            $('#subscribe').click(function(){
+                //ajouter l'utilisateur courant à la liste des participants du tournoi.
+            });
+        }
     });
 
     function showCalendar() {
@@ -71,7 +77,10 @@ block content
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
       a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
-      a.button-link(href='#{tournament.topicId}') Topic du tournoi
+      - if(#{tournament.topicId})
+        a.button-link(href='#{tournament.topicId}') Topic du tournoi
+      - if(#{tournament.startDate} > new Date())
+        a#subscribe.button-link.subscribe(href='#') Je participe!
       a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
