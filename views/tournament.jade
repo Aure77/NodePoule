@@ -18,46 +18,69 @@ block head
         "matches": !{JSON.stringify(tournament.matches)}
     };
 
-    $(function() {
-        var events_array = [];
-        $.each(Tourney.matches,function(index, match){
-        var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
-        var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
-            events_array.push({
-                startDate: new Date(match.eventDate),
-                title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
-                description: "Tour : " + match.round,
-                priority: 1
-            });
-        });
-
-        $("#calendar").dp_calendar({
-            events_array: events_array,
-            order_by: 1 //1 = Time, 2 = Title, 3 = Priority 
-        });
-        //$("#calendar").hide();
-
-        //$("#open-calendar").on("click", function(e) {
-        //    e.preventDefault();
-        //    showCalendar();            
-        //    return false;
-        //});
-
-        if(Tourney.participants && Tourney.participants.length > 0) {
-            MyTourney.drawBracket({
-                participants: Tourney.participants, 
-                rounds: Tourney.rounds, 
-                container: $('.bracket'),
-                baseProfileUrl: "#{baseUrl}/profile"
-            });
-        }
-        
+    $(function() {        
+        //Si le tournoi n'a pas commencé
+        //TODO: Changer cette condition partout dans la page par genre "if(HasTournamentBegun)"
         if(#{tournament.startDate} > new Date()){
-            $('#subscribe').click(function(){
-                //ajouter l'utilisateur courant à la liste des participants du tournoi.
+            //On permet l'inscription (TODO : Vérifier que les inscriptions ne sont pas closes
+            var uid = #{currentUser};
+            if(_.contains(Tourney.participants, uid) != -1){
+                $('#subscribe').html("Je ne participe plus");
+                $('#subscribe').on("click", function(e) {
+                    //supprimer l'utilisateur courant de la liste des participants du tournoi.
+                    $.ajax({
+                        type: 'POST',
+                        url: "#{tournament.tournamentId}/removeuser",
+                        success: updateView,
+                    });
+                    return false;
+                });
+            }else{
+                $('#subscribe').html("Je participe!");
+                $('#subscribe').on("click", function(e) {
+                    //ajouter l'utilisateur courant à la liste des participants du tournoi.
+                    $.ajax({
+                        type: 'POST',
+                        url: "#{tournament.tournamentId}/adduser",
+                        success: updateView,
+                    });
+                    return false;
+                });
+            }
+        }else{
+            //On ne crée le bracket qu'une fois le tournoi commencé
+            if(Tourney.participants && Tourney.participants.length > 0) {
+                MyTourney.drawBracket({
+                    participants: Tourney.participants, 
+                    rounds: Tourney.rounds, 
+                    container: $('.bracket'),
+                    baseProfileUrl: "#{baseUrl}/profile"
+                });
+            }
+            //pareil pour l'agenda des matchs
+            var events_array = [];
+            $.each(Tourney.matches,function(index, match){
+            var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
+            var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
+                events_array.push({
+                    startDate: new Date(match.eventDate),
+                    title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
+                    description: "Tour : " + match.round,
+                    priority: 1
+                });
+            });
+            
+            $("#calendar").dp_calendar({
+                events_array: events_array,
+                order_by: 1 //1 = Time, 2 = Title, 3 = Priority 
             });
         }
     });
+    
+    function updateView(parts)
+    {
+        //Mettre à jour la liste des participants sur la page.
+    }
 
     function showCalendar() {
         $('#calendar').modal({
@@ -81,14 +104,21 @@ block content
         a.button-link(href='#{tournament.topicId}') Topic du tournoi
       - if(#{tournament.startDate} > new Date())
         a#subscribe.button-link.subscribe(href='#') Je participe!
-      a.button-link(href='#calendar', id="open-calendar") Agenda
+      - if(#{tournament.startDate} > new Date())
+        a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
-    .competition-brackets
-      .bracket
+    - if(#{tournament.startDate} > new Date())
+      .competition-brackets
+        .bracket
+    
+    - if(!(#{tournament.startDate} > new Date()))
+      //- TODO: Lister les inscrits
+      .participants
 
     div(style='clear:both;')
-    div(id="calendar", class="dp_calendar")
+    - if(#{tournament.startDate} > new Date())
+      div(id="calendar", class="dp_calendar")
 
     div(style='float: left;')
       a(name='rules').section-title Règles

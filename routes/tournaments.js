@@ -61,6 +61,42 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+router.get('/:id/adduser', function(req, res, next) {
+  var tid = escape(req.params.id);
+  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
+    if (err) { return next(err); }
+    
+    if(!tournament) {
+      return next(new Error("Le tournoi '"+tid+"' est introuvable"));
+    }
+    //TODO : Faire toutes les verifs qui vont bien (Date, etc)
+    var parts = tournament.participants;
+    parts = parts.push(res.locals.user);
+    Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
+        if (err) return handleError(err);
+        res.send(parts);
+    });
+  });
+});
+
+router.get('/:id/removeuser', function(req, res, next) {
+  var tid = escape(req.params.id);
+  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
+    if (err) { return next(err); }
+    
+    if(!tournament) {
+      return next(new Error("Le tournoi '"+tid+"' est introuvable"));
+    }
+    //TODO : Faire toutes les verifs qui vont bien (Date, etc)    
+    var parts = tournament.participants;
+    parts = _.without(parts, res.locals.user);
+    Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
+        if (err) return handleError(err);
+        res.send(parts);
+    });
+  });
+});
+
 router.get('/:id/participants', function(req, res, next) {
   var tid = escape(req.params.id);
   Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
