@@ -5,7 +5,6 @@ var nconf = require('nconf');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
 var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), User = mongoose.model('User');
-mongoose.set('debug', true);
 var router = express.Router();
 
 router.use(paginate.middleware(4, 50));
@@ -33,15 +32,15 @@ router.get('/:id', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
 	
-	var participantIds = [];
-	tournament.participants.forEach(function(participant) {
+    var participantIds = [];
+    tournament.participants.forEach(function(participant) {
        participantIds.push(participant.pid);      
     });
 
     User.find({ 'uid' : { $in : participantIds }}, 'uid username picture').lean().exec(function(err, users) {
       if (err) { return next(err); }
 
-	  //TODO : utiliser directement "users"
+      //TODO : utiliser directement "users" ?
       var participants = [];
       // Get user from participant id
       tournament.participants.forEach(function(participant) {
@@ -112,17 +111,15 @@ router.get('/:id/participants', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
 
-	var participantIds = [];
-	tournament.participants.forEach(function(participant) {
+    var participantIds = [];
+    tournament.participants.forEach(function(participant) {
        participantIds.push(participant.pid);      
     });
-	
-	console.log(participantIds)
 	
     User.find({ 'uid' : { $in : participantIds }}, 'uid username picture').lean().exec(function(err, users) {
       if (err) { return next(err); }
 
-	  //TODO : utiliser directement "users"
+      //TODO : utiliser directement "users" ?
       var participants = [];
       // Get user from participant id
       tournament.participants.forEach(function(participant) {

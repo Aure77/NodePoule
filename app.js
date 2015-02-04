@@ -7,6 +7,7 @@ var nconf = require('nconf');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.set('debug', true);
 
 loadConfig();
 
