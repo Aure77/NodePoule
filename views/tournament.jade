@@ -100,24 +100,24 @@ block content
       a.button-link(href='#{tournament.tournamentId}/participants') Les participants
       a.button-link(href='#rules') Les règles
       a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
-      - if(#{tournament.topicId})
+      - if(tournament.topicId)
         a.button-link(href='#{tournament.topicId}') Topic du tournoi
-      - if(#{tournament.startDate} > new Date())
+      - if(tournament.startDate > new Date())
         a#subscribe.button-link.subscribe(href='#') Je participe!
-      - if(#{tournament.startDate} > new Date())
+      - if(tournament.startDate > new Date())
         a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
-    - if(#{tournament.startDate} > new Date())
+    - if(tournament.startDate > new Date())
       .competition-brackets
         .bracket
     
-    - if(!(#{tournament.startDate} > new Date()))
+    - if(!(tournament.startDate > new Date()))
       //- TODO: Lister les inscrits
       .participants
 
     div(style='clear:both;')
-    - if(#{tournament.startDate} > new Date())
+    - if(tournament.startDate > new Date())
       div(id="calendar", class="dp_calendar")
 
     div(style='float: left;')
