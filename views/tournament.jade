@@ -17,11 +17,13 @@ block head
         "rounds": !{JSON.stringify(rounds)},
         "matches": !{JSON.stringify(tournament.matches)}
     };
+    
+    var HasTournamentBegun = (new Date("'"+#{tournament.startDate}+"'") > new Date());
 
     $(function() {        
         //Si le tournoi n'a pas commencé
         //TODO: Changer cette condition partout dans la page par genre "if(HasTournamentBegun)"
-        if(#{tournament.startDate} > new Date()){
+        if(HasTournamentBegun){
             //On permet l'inscription (TODO : Vérifier que les inscriptions ne sont pas closes
             var uid = #{currentUser};
             if(_.contains(Tourney.participants, uid) != -1){
@@ -102,22 +104,22 @@ block content
       a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
       - if(tournament.topicId)
         a.button-link(href='#{tournament.topicId}') Topic du tournoi
-      - if(tournament.startDate > new Date())
+      - if(HasTournamentBegun)
         a#subscribe.button-link.subscribe(href='#') Je participe!
-      - if(tournament.startDate > new Date())
+      - if(HasTournamentBegun)
         a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
-    - if(tournament.startDate > new Date())
+    - if(HasTournamentBegun)
       .competition-brackets
         .bracket
     
-    - if(!(tournament.startDate > new Date()))
+    - if(!HasTournamentBegun)
       //- TODO: Lister les inscrits
       .participants
 
     div(style='clear:both;')
-    - if(tournament.startDate > new Date())
+    - if(HasTournamentBegun)
       div(id="calendar", class="dp_calendar")
 
     div(style='float: left;')
