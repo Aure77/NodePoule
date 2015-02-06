@@ -18,7 +18,7 @@ block head
         "matches": !{JSON.stringify(tournament.matches)}
     };
     
-    var HasTournamentBegun = (new Date("'"+#{tournament.startDate}+"'") > new Date());
+    var HasTournamentBegun = (new Date('#{tournament.startDate}') > new Date());
 
     $(function() {        
         //Si le tournoi n'a pas commencé
