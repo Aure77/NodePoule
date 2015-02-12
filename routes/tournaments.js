@@ -3,6 +3,7 @@ var express = require('express');
 var util = require('util');
 var nconf = require('nconf');
 var escape = require('escape-html');
+var moment = require('moment');
 var paginate = require('express-paginate');
 var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), User = mongoose.model('User');
 var router = express.Router();
@@ -60,13 +61,13 @@ router.get('/:id', function(req, res, next) {
         user2.score = match.score2;
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user });
+      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user, hasTournamentBegun: moment(tournament.startDate) < moment() });
 
     });
   });
 });
 
-router.get('/:id/adduser', function(req, res, next) {
+router.get('/:id/join', function(req, res, next) {
   var tid = escape(req.params.id);
   Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
     if (err) { return next(err); }
@@ -75,7 +76,7 @@ router.get('/:id/adduser', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)
-    var parts = tournament.participants;
+    var parts = tournament.participants || [];
     parts = parts.push(res.locals.user);
     Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
         if (err) return handleError(err);
@@ -84,7 +85,7 @@ router.get('/:id/adduser', function(req, res, next) {
   });
 });
 
-router.get('/:id/removeuser', function(req, res, next) {
+router.get('/:id/leave', function(req, res, next) {
   var tid = escape(req.params.id);
   Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
     if (err) { return next(err); }
@@ -93,7 +94,7 @@ router.get('/:id/removeuser', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)    
-    var parts = tournament.participants;
+    var parts = tournament.participants || [];
     parts = _.without(parts, res.locals.user);
     Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
         if (err) return handleError(err);

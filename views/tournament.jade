@@ -17,23 +17,29 @@ block head
         "rounds": !{JSON.stringify(rounds)},
         "matches": !{JSON.stringify(tournament.matches)}
     };
-    
-    var HasTournamentBegun = (new Date('#{tournament.startDate}') > new Date());
 
-    $(function() {        
+    $(function() {  
+        $(document).ajaxError(function(event, xhr, ajaxSettings, errorThrown) {
+            if (xhr.status == 401) {
+              //TODO: ne pas rediriger vers adduser ou autre...
+              location.href = xhr.getResponseHeader("Location");
+            }
+            console.log(JSON.stringify(ajaxSettings) + " : " + errorThrown + " : " + JSON.stringify(xhr));
+          });
+
         //Si le tournoi n'a pas commencé
         //TODO: Changer cette condition partout dans la page par genre "if(HasTournamentBegun)"
-        if(HasTournamentBegun){
+        if(!#{hasTournamentBegun}){
             //On permet l'inscription (TODO : Vérifier que les inscriptions ne sont pas closes
-            var uid = #{currentUser};
-            if(_.contains(Tourney.participants, uid) != -1){
+            var uid = '#{currentUser}';
+            if(uid.length > 0 && _.contains(Tourney.participants, uid) != -1){
                 $('#subscribe').html("Je ne participe plus");
                 $('#subscribe').on("click", function(e) {
                     //supprimer l'utilisateur courant de la liste des participants du tournoi.
                     $.ajax({
-                        type: 'POST',
-                        url: "#{tournament.tournamentId}/removeuser",
-                        success: updateView,
+                        type: 'GET',
+                        url: "#{tournament.tournamentId}/leave",
+                        success: updateView
                     });
                     return false;
                 });
@@ -42,9 +48,11 @@ block head
                 $('#subscribe').on("click", function(e) {
                     //ajouter l'utilisateur courant à la liste des participants du tournoi.
                     $.ajax({
-                        type: 'POST',
-                        url: "#{tournament.tournamentId}/adduser",
-                        success: updateView,
+                        type: 'GET',
+                        url: "#{tournament.tournamentId}/join",
+                        success: updateView
+                    }).always(function (jqXHR) {
+                        console.log(jqXHR.status);
                     });
                     return false;
                 });
@@ -79,9 +87,12 @@ block head
         }
     });
     
-    function updateView(parts)
-    {
-        //Mettre à jour la liste des participants sur la page.
+    function updateView(xhr, parts) {
+      if (xhr.status == 302) {
+        location.href = xhr.getResponseHeader("Location");
+      }
+      //Mettre à jour la liste des participants sur la page.
+      console.log("Mettre à jour la liste des participants sur la page.");
     }
 
     function showCalendar() {
@@ -104,17 +115,17 @@ block content
       a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
       - if(tournament.topicId)
         a.button-link(href='#{tournament.topicId}') Topic du tournoi
-      - if(HasTournamentBegun)
+      - if(!hasTournamentBegun)
         a#subscribe.button-link.subscribe(href='#') Je participe!
-      - if(HasTournamentBegun)
+      - if(hasTournamentBegun)
         a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
-    - if(HasTournamentBegun)
+    - if(hasTournamentBegun)
       .competition-brackets
         .bracket
     
-    - if(!HasTournamentBegun)
+    - if(!hasTournamentBegun)
       //- TODO: Lister les inscrits
       .participants
 
