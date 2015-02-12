@@ -29,7 +29,7 @@ block head
 
         //Si le tournoi n'a pas commencé
         //TODO: Changer cette condition partout dans la page par genre "if(HasTournamentBegun)"
-        | if(!#{hasTournamentBegun}){
+        if(!#{hasTournamentBegun}){
             //On permet l'inscription (TODO : Vérifier que les inscriptions ne sont pas closes
             var uid = '#{currentUser}';
             if(uid.length > 0 && _.contains(Tourney.participants, uid) != -1){
@@ -57,7 +57,7 @@ block head
                     return false;
                 });
             }
-        | }else{
+        }else{
             //On ne crée le bracket qu'une fois le tournoi commencé
             if(Tourney.participants && Tourney.participants.length > 0) {
                 MyTourney.drawBracket({
@@ -84,7 +84,7 @@ block head
                 events_array: events_array,
                 order_by: 1 //1 = Time, 2 = Title, 3 = Priority 
             });
-        | }
+        }
     });
     
     function updateView(xhr, parts) {
