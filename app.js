@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var	path = require('path');
 var nconf = require('nconf');
+var util = require('util');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -12,14 +13,14 @@ mongoose.set('debug', true);
 loadConfig();
 
 if(nconf.get('database') === 'mongo') {
-  // load models
+  // load DB models
   require('./models/user.js');
   require('./models/game.js');
   require('./models/user-profil.js');
   require('./models/tournament.js');
   require('./models/deck.js');
   require('./models/news.js');
-  // connect to db
+  // connect to db with keepAlive
   var dbUri = 'mongodb://' + nconf.get('mongo:host') + ':' + nconf.get('mongo:port') + '/' + nconf.get('mongo:database');
   mongoose.connect(dbUri, { 
     user: nconf.get('mongo:username'), 
@@ -40,6 +41,7 @@ if(nconf.get('database') === 'mongo') {
   });
 }
 
+// Declare routes
 var routes = require('./routes/index');
 var tournaments = require('./routes/tournaments');
 var profile = require('./routes/profile');
@@ -60,6 +62,7 @@ app.locals.forumUrl = nconf.get('forum_url');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// setup middlewares
 app.use(favicon(__dirname + '/public/img/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -71,12 +74,30 @@ if(nconf.get('database') === 'mongo') {
   app.use(require('./middlewares/mongo-session-store')());
 }
 
-// setup global response variables
+// Middleware for every request
 app.use(function(req, res, next) {
-  res.locals.currentReqPath = req.path; // current uri path
+  // setup global response variables
+  res.locals.currentReqPath = req.path; // setup current uri path
   next();
 });
 
+function requireAuthentication(req, res, next) {
+  if (res.locals.user == null) { // not logged in
+    var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.originalUrl);
+    console.log("redirect to " + redirectUrl);
+    if(req.xhr) { // requete ajax
+      res.redirect(401, redirectUrl); // 401 for ajax ?
+    } else {
+      res.redirect(redirectUrl); // 302
+    }
+  } else {
+    next();
+  }
+}
+// setup path who need credentials (redirect to login page if necessary)
+app.all(['/profile/*', '/tournaments/:id/*'], requireAuthentication);
+
+// define routes path
 app.use('/', routes);
 app.use('/tournaments', tournaments);
 app.use('/news', news);
@@ -85,6 +106,8 @@ app.use('/faq', faq);
 app.use('/games', games);
 app.use('/hearthstone-decks', hearthstoneDecks);
 app.use('/admin', admin);
+
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

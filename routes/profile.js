@@ -5,24 +5,14 @@ var escape = require('escape-html');
 var mongoose = require('mongoose'), UserProfil = mongoose.model('UserProfil'), User = mongoose.model('User');
 var router = express.Router();
 
-function isUserLoggedIn(req, res, next) {
-  if (res.locals.user == null) { // not logged in
-    var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.originalUrl);
-    console.log("redirect to " + redirectUrl);
-    res.redirect(redirectUrl);
-  } else {
-    next();
-  }
-}
-
-router.get('/', isUserLoggedIn, function(req, res, next) {
+router.get('/', function(req, res, next) {
   findOrCreateUserProfilByUserId(res.locals.user, function(err, userProfil) {
     if (err) { return next(err); }
     res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
   });
 });
 
-router.get('/:id', isUserLoggedIn, function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   findOrCreateUserProfilByUserId(escape(req.params.id), function(err, userProfil) {
     if (err) { return next(err); }
     res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
