@@ -327,3 +327,9 @@ font-weight: bold;
     vertical-align:middle;
     padding:5px 20px;
 }
+.participants .user-avatar{
+    height:28px;
+}
+.participants a{
+    display:block;
+}

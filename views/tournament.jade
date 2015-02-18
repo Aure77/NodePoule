@@ -56,6 +56,8 @@ block head
                     return false;
                 });
             }
+            
+            //Et on liste les participants
         }else{
             //On ne crée le bracket qu'une fois le tournoi commencé
             if(Tourney.participants && Tourney.participants.length > 0) {
@@ -127,6 +129,10 @@ block content
     - if(!closedRegistrations)
       //- TODO: Lister les inscrits
       .participants
+        -each participant in participants
+            a(href='/profile/#{participant.uid}')
+                img.user-avatar(src='#{participant.picture}')
+                span #{participant.name}
 
     div(style='clear:both;')
     - if(closedRegistrations)
