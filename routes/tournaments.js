@@ -41,11 +41,10 @@ router.get('/:id', function(req, res, next) {
     User.find({ 'uid' : { $in : participantIds }}, 'uid username picture').lean().exec(function(err, users) {
       if (err) { return next(err); }
 
-      //TODO : utiliser directement "users" ?
       var participants = [];
       // Get user from participant id
       tournament.participants.forEach(function(participant) {
-        var user = _.find(users, function (item) { return item.uid === participant.pid; });
+        var user = _.find(users, function (item) { return (item.uid === participant.pid && !participant.excluded); });
         if(user) {
           participants.push({uid: user.uid, name: user.username, picture: user.picture });
         }
@@ -61,7 +60,8 @@ router.get('/:id', function(req, res, next) {
         user2.score = match.score2;
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-      var closedRegistrations = ((moment(tournament.startDate) >= moment()) || tournament.closedRegistrations);
+      var isExcluded = _.find(users, function (item) { return item.uid === currentUser.uid; });
+      var closedRegistrations = ((moment(tournament.startDate) >= moment()) || tournament.closedRegistrations || isExcluded);
       res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user, closedRegistrations: closedRegistrations });
 
     });

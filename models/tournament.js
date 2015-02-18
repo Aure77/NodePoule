@@ -24,7 +24,8 @@ var MatchSchema = new Schema({
 
 var ParticipantSchema = new Schema({
   pid : Number,
-  name : String /* Optional or for team name */
+  name : String /* Optional or for team name */,
+  excluded : { type: Boolean, default: false },
 }, { _id: false });
 
 var TournamentSchema = new Schema({
