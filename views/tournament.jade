@@ -27,10 +27,9 @@ block head
             console.log(JSON.stringify(ajaxSettings) + " : " + errorThrown + " : " + JSON.stringify(xhr));
           });
 
-        //Si le tournoi n'a pas commencé
-        //TODO: Changer cette condition partout dans la page par genre "if(HasTournamentBegun)"
-        if(!#{hasTournamentBegun}){
-            //On permet l'inscription (TODO : Vérifier que les inscriptions ne sont pas closes
+        //Si le tournoi n'a pas commencé et que les inscriptions sont ouvertes
+        if(!#{closedRegistrations}){
+            //On permet l'inscription
             var uid = '#{currentUser}';
             if(uid.length > 0 && _.contains(Tourney.participants, uid) != -1){
                 $('#subscribe').html("Je ne participe plus");
@@ -115,22 +114,22 @@ block content
       a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
       - if(tournament.topicId)
         a.button-link(href='#{tournament.topicId}') Topic du tournoi
-      - if(!hasTournamentBegun)
+      - if(!closedRegistrations)
         a#subscribe.button-link.subscribe(href='#') Je participe!
-      - if(hasTournamentBegun)
+      - if(closedRegistrations)
         a.button-link(href='#calendar', id="open-calendar") Agenda
 
     div(style='clear:both;')
-    - if(hasTournamentBegun)
+    - if(closedRegistrations)
       .competition-brackets
         .bracket
     
-    - if(!hasTournamentBegun)
+    - if(!closedRegistrations)
       //- TODO: Lister les inscrits
       .participants
 
     div(style='clear:both;')
-    - if(HasTournamentBegun)
+    - if(closedRegistrations)
       div(id="calendar", class="dp_calendar")
 
     div(style='float: left;')

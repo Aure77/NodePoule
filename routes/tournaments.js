@@ -61,7 +61,8 @@ router.get('/:id', function(req, res, next) {
         user2.score = match.score2;
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user, hasTournamentBegun: moment(tournament.startDate) < moment() });
+      var closedRegistrations = ((moment(tournament.startDate) >= moment()) || tournament.closedRegistrations);
+      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user, closedRegistrations: closedRegistrations });
 
     });
   });

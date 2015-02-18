@@ -31,6 +31,7 @@ var TournamentSchema = new Schema({
   tournamentId : { type: String, index: true, unique: true },
   name : String,
   game : { type: Schema.ObjectId, ref: 'Game' },
+  closedRegistrations : { type: Boolean, default: false },
   startDate : { type: Date, default: Date.now },
   endDate : { type: Date, default: Date.now },
   imageRelPath : String,
