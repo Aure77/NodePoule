@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 module.exports = function () {
     var dbSessionStore = new MongoStore({
-      db: mongoose.connection.db
+        mongooseConnection: mongoose.connection
     });
 
     return function (req, res, next) {
