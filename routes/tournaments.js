@@ -60,9 +60,10 @@ router.get('/:id', function(req, res, next) {
         user2.score = match.score2;
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-      var isExcluded = _.find(users, function (item) { return item.uid === currentUser.uid; });
+	  var currentUser = res.locals.user;
+      var isExcluded = currentUser ? _.find(users, function (item) { return item.uid === currentUser.uid; }) : false;
       var closedRegistrations = ((moment(tournament.startDate) >= moment()) || tournament.closedRegistrations || isExcluded);
-      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: res.locals.user, closedRegistrations: closedRegistrations });
+      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: currentUser, closedRegistrations: closedRegistrations });
 
     });
   });
