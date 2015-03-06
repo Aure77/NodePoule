@@ -18,7 +18,7 @@ module.exports = function () {
         console.log("sessionID=" + sessionID);
         dbSessionStore.get(sessionID, function (err, sessionData) {
             if (!err && sessionData && sessionData.passport && sessionData.passport.user) {
-                uid = parseInt(sessionData.passport.user, 10);
+                uid = parseInt(sessionData.passport.user);
             } else {
                 uid = 0;
             }

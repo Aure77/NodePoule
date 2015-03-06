@@ -11,6 +11,8 @@ var RuleSchema = new Schema({
   description : String
 }, { _id: false });
 
+RuleSchema.set('toJSON', { getters: true, virtuals: false });
+
 var MatchSchema = new Schema({
   matchId : Number,
   nextMatchId : Number,
@@ -22,11 +24,15 @@ var MatchSchema = new Schema({
   round : Number
 }, { _id: false });
 
+MatchSchema.set('toJSON', { getters: true, virtuals: false });
+
 var ParticipantSchema = new Schema({
   pid : Number,
   name : String /* Optional or for team name */,
   excluded : { type: Boolean, default: false },
 }, { _id: false });
+
+ParticipantSchema.set('toJSON', { getters: true, virtuals: false });
 
 var TournamentSchema = new Schema({
   tournamentId : { type: String, index: true, unique: true },

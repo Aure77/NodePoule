@@ -61,47 +61,55 @@ router.get('/:id', function(req, res, next) {
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
 	  var currentUser = res.locals.user;
-      var isExcluded = currentUser ? _.find(users, function (item) { return item.uid === currentUser.uid; }) : false;
-      var closedRegistrations = ((moment(tournament.startDate) >= moment()) || tournament.closedRegistrations || isExcluded);
+      var isExcluded = currentUser ? _.find(users, function (item) { return item.uid === currentUser.uid; }) != null : false;
+      var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isExcluded;
+	  console.log(isExcluded);
+	  console.log(closedRegistrations);
       res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: currentUser, closedRegistrations: closedRegistrations });
-
     });
   });
 });
 
 router.get('/:id/join', function(req, res, next) {
   var tid = escape(req.params.id);
-  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
+  Tournament.findOne({ tournamentId : tid }).lean().exec(function(err, tournament) {
     if (err) { return next(err); }
     
     if(!tournament) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)
-    var parts = tournament.participants || [];
-    parts = parts.push(res.locals.user);
-    Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
-        if (err) return handleError(err);
-        res.send(parts);
-    });
+	var uid = parseInt(res.locals.user);
+	if(uid > 0) {
+		//TODO: regarder pk addToSet ne fonctionne pas avec un objet json
+		Tournament.update({ tournamentId: tid }, { $addToSet: { participants: { pid : uid, name : null, /* team ? */ excluded : false	} }}, function (err, tnmt) {
+			if (err) return next(err);
+			res.json({ "msg": "OK" });
+		});
+	} else {
+		res.status(401).json({ "error": "User not found" });
+	}
   });
 });
 
 router.get('/:id/leave', function(req, res, next) {
   var tid = escape(req.params.id);
-  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
+  Tournament.findOne({ tournamentId : tid }).lean().exec(function(err, tournament) {
     if (err) { return next(err); }
     
     if(!tournament) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)    
-    var parts = tournament.participants || [];
-    parts = _.without(parts, res.locals.user);
-    Tournament.update({ tournamentId: tid }, { $set: { participants: parts }}, function (err, tnmt) {
-        if (err) return handleError(err);
-        res.send(parts);
-    });
+	var uid = parseInt(res.locals.user);
+	if(uid > 0) {
+		Tournament.update({ tournamentId: tid }, { $pull: { participants: { pid : uid } }}, function (err, tnmt) {
+			if (err) return next(err);
+			res.json({ "msg": "OK" });
+		});
+	} else {
+		res.status(401).json({ "error": "User not found" });
+	}
   });
 });
 
