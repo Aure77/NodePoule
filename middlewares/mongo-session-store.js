@@ -1,3 +1,4 @@
+var winston = require('winston');
 var nconf = require('nconf');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -10,12 +11,12 @@ module.exports = function () {
 
     return function (req, res, next) {
         if(typeof dbSessionStore === 'undefined') {
-          console.warn("MongoStore is undefined");
+          winston.warn("MongoStore is undefined");
           return next();
         }
         
         var sessionID = req.signedCookies['express.sid'];
-        console.log("sessionID=" + sessionID);
+        winston.info("sessionID=" + sessionID);
         dbSessionStore.get(sessionID, function (err, sessionData) {
             if (!err && sessionData && sessionData.passport && sessionData.passport.user) {
                 uid = parseInt(sessionData.passport.user);
@@ -24,11 +25,11 @@ module.exports = function () {
             }
 
             if (uid) {
-                console.log("User with uid=" + uid + " found !");
+                winston.info("User with uid=" + uid + " found !");
                 // Access to user id from response locals
                 res.locals.user = sessionData.passport.user;
             } else {
-                console.log("User with uid=" + uid + " NOT found !");
+                winston.info("User with uid=" + uid + " NOT found !");
             }
             next();
         });    

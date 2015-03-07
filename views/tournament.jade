@@ -28,10 +28,9 @@ block head
           });
 
         //Si le tournoi n'a pas commencé et que les inscriptions sont ouvertes
-        if(!!{JSON.stringify(closedRegistrations)}){
+        if(!#{closedRegistrations}){
             //On permet l'inscription
-            var uid = '#{currentUser}';
-            if(uid.length > 0 && _.contains(Tourney.participants, uid)){
+            if(#{userIsRegistered}){
                 $('#subscribe').html("Je ne participe plus");
                 $('#subscribe').on("click", function(e) {
                     //supprimer l'utilisateur courant de la liste des participants du tournoi.

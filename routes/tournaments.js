@@ -1,3 +1,4 @@
+var winston = require('winston');
 var _ = require('underscore');
 var express = require('express');
 var util = require('util');
@@ -12,7 +13,10 @@ router.use(paginate.middleware(4, 50));
 
 /* GET tournaments page. */
 router.get('/', function(req, res, next) {
-  Tournament.paginate({}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
+  var page = escape(req.query.page);
+  var limit = escape(req.query.limit);
+  winston.debug('Fetching all tournaments, page:%d, limit:%d', page, limit);
+  Tournament.paginate({}, page, limit, function(err, pageCount, tournaments, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', { 
       title: 'Tous les tournois', 
@@ -26,6 +30,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
   var tid = escape(req.params.id);
+  winston.debug('Find tournament with tid: %d', tid);
   Tournament.findOne({ tournamentId : tid }).populate("game").exec(function(err, tournament) {
     if (err) { return next(err); }
     
@@ -37,6 +42,7 @@ router.get('/:id', function(req, res, next) {
     tournament.participants.forEach(function(participant) {
        participantIds.push(participant.pid);      
     });
+    winston.info('participants id found: ', participantIds);
 
     User.find({ 'uid' : { $in : participantIds }}, 'uid username picture').lean().exec(function(err, users) {
       if (err) { return next(err); }
@@ -60,12 +66,14 @@ router.get('/:id', function(req, res, next) {
         user2.score = match.score2;
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-	  var currentUser = res.locals.user;
-      var isExcluded = currentUser ? _.find(users, function (item) { return item.uid === currentUser.uid; }) != null : false;
-      var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isExcluded;
-	  console.log(isExcluded);
-	  console.log(closedRegistrations);
-      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, currentUser: currentUser, closedRegistrations: closedRegistrations });
+      winston.info('rounds nested objects : ', rounds);
+
+      var uid = parseInt(res.locals.user);
+      var userIsRegistered = uid > 0 ? _.find(users, function (item) { return item.uid === uid; }) != null : false;
+      winston.info('userIsRegistered : %s', userIsRegistered);
+      var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isNaN(uid) /* || userIsRegistered*/;
+      winston.info('closedRegistrations : %s', closedRegistrations);
+      res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, participants: participants, rounds: rounds, closedRegistrations: closedRegistrations, userIsRegistered: userIsRegistered });
     });
   });
 });
@@ -81,12 +89,13 @@ router.get('/:id/join', function(req, res, next) {
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)
 	var uid = parseInt(res.locals.user);
 	if(uid > 0) {
-		//TODO: regarder pk addToSet ne fonctionne pas avec un objet json
 		Tournament.update({ tournamentId: tid }, { $addToSet: { participants: { pid : uid, name : null, /* team ? */ excluded : false	} }}, function (err, tnmt) {
 			if (err) return next(err);
+      winston.info('Registering user:%d to tournament:%d', uid, tid);
 			res.json({ "msg": "OK" });
 		});
 	} else {
+    winston.info('Registering: User not found');
 		res.status(401).json({ "error": "User not found" });
 	}
   });
@@ -105,9 +114,11 @@ router.get('/:id/leave', function(req, res, next) {
 	if(uid > 0) {
 		Tournament.update({ tournamentId: tid }, { $pull: { participants: { pid : uid } }}, function (err, tnmt) {
 			if (err) return next(err);
+      winston.info('Unregistering user:%d from tournament:%d', uid, tid);
 			res.json({ "msg": "OK" });
 		});
 	} else {
+    winston.info('Unregistering: User not found');
 		res.status(401).json({ "error": "User not found" });
 	}
   });
@@ -115,6 +126,7 @@ router.get('/:id/leave', function(req, res, next) {
 
 router.get('/:id/participants', function(req, res, next) {
   var tid = escape(req.params.id);
+  winston.info('Fetching all participants for tournament:%d', tid);
   Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
     if (err) { return next(err); }
     
