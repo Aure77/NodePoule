@@ -32,6 +32,8 @@ block head
             //On permet l'inscription
             if(#{userIsRegistered}){
                 $('#subscribe').html("Je ne participe plus");
+                $('#subscribe').removeClass("subscribe");
+                $('#subscribe').addClass("unsubscribe");
                 $('#subscribe').on("click", function(e) {
                     //supprimer l'utilisateur courant de la liste des participants du tournoi.
                     $.ajax({
@@ -43,6 +45,8 @@ block head
                 });
             }else{
                 $('#subscribe').html("Je participe!");
+                $('#subscribe').removeClass("unsubscribe");
+                $('#subscribe').addClass("subscribe");
                 $('#subscribe').on("click", function(e) {
                     //ajouter l'utilisateur courant à la liste des participants du tournoi.
                     $.ajax({
@@ -122,11 +126,13 @@ block content
 
     div(style='clear:both;')
     - if(closedRegistrations)
+      a(name='participants').section-title Participants
       .competition-brackets
         .bracket
     
     - if(!closedRegistrations)
       .participants
+        a(name='inscrits').section-title Inscrits
         -each participant in participants
             a(href='/profile/#{participant.uid}')
                 img.user-avatar(src='#{participant.picture}')

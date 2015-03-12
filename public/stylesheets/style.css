@@ -43,6 +43,9 @@
 .button-link.subscribe{
 	background-color:#008b00;
 }
+.button-link.unsubscribe{
+	background-color:#c60000;
+}
 
 .competition-wrapper{
   height: 635px;
