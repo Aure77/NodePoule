@@ -97,7 +97,8 @@ header {
 .row-bot-bg {
 	width:100%;
 	padding:10px 0 25px;
-	background:url('http://cdn.nodepoule.eu/img/row-bot-bg.jpg') center top no-repeat;
+	/*background:url('http://cdn.nodepoule.eu/img/row-bot-bg.jpg') center top no-repeat;*/
+    background:#000;
 }
 #page1 .row-bot-bg {padding:10px 0 50px;}
 
@@ -118,8 +119,8 @@ h2 {
 /***** menu *****/
 .menu-row {
 	width:100%;
-	background:url('http://cdn.nodepoule.eu/img/menu-row.gif') center top repeat-x #000;
-	border-bottom:1px solid #2b2b2b;
+	background:/*url('http://cdn.nodepoule.eu/img/menu-row.gif') center top repeat-x*/ #000;
+	/*border-bottom:1px solid #2b2b2b;*/
 }
 .menu {
 	padding:28px 10px 26px 0; 
