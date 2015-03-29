@@ -10,9 +10,9 @@ MyTourney = function() {
     var defaultTemplate = '<div class="mytourney-block" style="<%= paddingStyle %>" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
         <% _.each([ match.user1, match.user2 ], function(user) { %> \
             <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
-                <span class="mytourney-user" title="<%= user.name %>"> \
+                <span class="mytourney-user" title="<%= user.username %>"> \
                     <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
-                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.name %></a> \
+                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.username %></a> \
                 </span> \
                 <span class="mytourney-score"><%= user.score ? user.score : \"--\" %></span> \
             </p> \
@@ -22,9 +22,9 @@ MyTourney = function() {
     var adminTemplate = '<div class="mytourney-block" style="<%= paddingStyle %>" data-mytourney-current-block-id="<%= match.matchId %>" data-mytourney-next-block-id="<%= match.nextMatchId %>"> \
         <% _.each([ match.user1, match.user2 ], function(user) { %> \
             <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
-                <span class="mytourney-user" title="<%= user.name %>"> \
+                <span class="mytourney-user" title="<%= user.username %>"> \
                     <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
-                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.name %></a> \
+                    <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.username %></a> \
                 </span> \
                 <input class="mytourney-score" type="text" placeholder="--" value="<%= user.score %>" /> \
             </p> \
@@ -85,7 +85,7 @@ MyTourney = function() {
             var nbMatchsType = closest / 2;
             if (nbParticipantsTour1 < nbMatchsType) {
                 for (i = nbParticipantsTour1; i < nbMatchsType; i++) {
-                    matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
+                    matches.push({ user1: { uid: -1, username: '' }, user2: { uid: -1, username: '' }, matchId: matchId++, nextMatchId: '' });
                 }
             }
         } else {
@@ -100,7 +100,7 @@ MyTourney = function() {
             if (i >= diff) {
                 matches.push({ user1: participants[i], user2: participants[++i], matchId: matchId++, nextMatchId: '' });
             } else {
-                matches.push({ user1: participants[i], user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: participants[i], user2: { uid: -1, username: '' }, matchId: matchId++, nextMatchId: '' });
             }
         }
         tours.push(matches);
@@ -112,7 +112,7 @@ MyTourney = function() {
         while (nb > 1) {
             matches = [];
             for (i = 0; i < nb; i += 2) {
-                matches.push({ user1: { uid: -1, name: '' }, user2: { uid: -1, name: '' }, matchId: matchId++, nextMatchId: '' });
+                matches.push({ user1: { uid: -1, username: '' }, user2: { uid: -1, username: '' }, matchId: matchId++, nextMatchId: '' });
             }
             tours.push(matches);
             nb = nb / 2;
@@ -243,28 +243,31 @@ MyTourney = function() {
             var currentTour = $(this);
             currentTour.find('.mytourney-block').each(function() {
                 //color = getRandomColor();
-                var id = $(this).attr('data-mytourney-next-block-id');
+                var block = $(this);
+                var id = block.attr('data-mytourney-next-block-id');
                 var nextBlock = currentTour.next().find('.mytourney-block[data-mytourney-current-block-id=\'' + id + '\']');
-                jsPlumb.connect({
-                    source: $(this),
-                    target: nextBlock,
-                    anchors: ["Right", "Left"],
-                    endpoint: "Rectangle",
-                    endpointStyle: {
-                        //fillStyle: (oldId == id ? oldColor : color),
-                        fillStyle: color,
-                        width: 5,
-                        height: 5
-                    },
-                    connector: "Flowchart",
-                    paintStyle: {
-                        //strokeStyle:(oldId == id ? oldColor : color),
-                        strokeStyle: color,
-                        fillStyle: "transparent",
-                        lineWidth: 1
-                    },
-                    detachable: false
-                });
+                if(block.length && nextBlock.length) { // blocks exists
+                    jsPlumb.connect({
+                        source: block,
+                        target: nextBlock,
+                        anchors: ["Right", "Left"],
+                        endpoint: "Rectangle",
+                        endpointStyle: {
+                            //fillStyle: (oldId == id ? oldColor : color),
+                            fillStyle: color,
+                            width: 5,
+                            height: 5
+                        },
+                        connector: "Flowchart",
+                        paintStyle: {
+                            //strokeStyle:(oldId == id ? oldColor : color),
+                            strokeStyle: color,
+                            fillStyle: "transparent",
+                            lineWidth: 1
+                        },
+                        detachable: false
+                    });
+                }
                 //oldId = id;
                 //oldColor = color;
             });

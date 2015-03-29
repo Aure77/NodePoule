@@ -83,11 +83,14 @@ app.use(function(req, res, next) {
 
 function requireAuthentication(req, res, next) {
   if (res.locals.user == null) { // not logged in
-    var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.originalUrl);
-    console.log("redirect to " + redirectUrl);
-    if(req.xhr) { // requete ajax
+  console.log(req.headers);
+    if(req.xhr || req.headers.accept.indexOf('json') > -1) { // requete ajax
+      var redirectUrl = util.format("%s/login?next=%s", nconf.get("forum_url"), req.headers.referer);
+      console.log("[xhr] redirect to " + redirectUrl);
       res.redirect(401, redirectUrl); // 401 for ajax ?
     } else {
+      var redirectUrl = util.format("%s/login?next=%s%s", nconf.get("forum_url"), nconf.get("base_url"), req.originalUrl);
+      console.log("redirect to " + redirectUrl);
       res.redirect(redirectUrl); // 302
     }
   } else {

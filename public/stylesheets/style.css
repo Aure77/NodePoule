@@ -336,3 +336,7 @@ font-weight: bold;
 .participants a{
     display:block;
 }
+/* Angular */
+a[ng-click],a[data-ng-click]{
+    cursor: pointer;
+}
