@@ -41,8 +41,8 @@ block content
           a(name='inscrits').section-title Inscrits
           ul
             li(data-ng-repeat="participant in participants")
-              a(href='/profile/{{participant.uid}}')
-                  img.user-avatar(src='{{participant.picture}}')
+              a(data-ng-href='/profile/{{participant.uid}}')
+                  img.user-avatar(data-ng-src='{{participant.picture}}')
                   span {{participant.name}}
 
       div(style='clear:both;')
@@ -158,75 +158,3 @@ block content
               closeText: '!'
           });
       }
-
-      /*$(function() {  
-        $(document).ajaxError(function(event, xhr, ajaxSettings, errorThrown) {
-          if (xhr.status == 401) {
-            //TODO: ne pas rediriger vers adduser ou autre...
-            location.href = xhr.getResponseHeader("Location");
-          }
-          console.log(JSON.stringify(ajaxSettings) + " : " + errorThrown + " : " + JSON.stringify(xhr));
-        });
-
-        //Si le tournoi n'a pas commencé et que les inscriptions sont ouvertes
-        if(!#{closedRegistrations}) {
-            //On permet l'inscription
-            if(#{userIsRegistered}){
-                $('#subscribe').html("Je ne participe plus");
-                $('#subscribe').removeClass("subscribe");
-                $('#subscribe').addClass("unsubscribe");
-                $('#subscribe').on("click", function(e) {
-                    //supprimer l'utilisateur courant de la liste des participants du tournoi.
-                    $.ajax({
-                        type: 'GET',
-                        url: "#{tournament.tournamentId}/leave",
-                        success: updateView
-                    });
-                    return false;
-                });
-            }else{
-                $('#subscribe').html("Je participe!");
-                $('#subscribe').removeClass("unsubscribe");
-                $('#subscribe').addClass("subscribe");
-                $('#subscribe').on("click", function(e) {
-                    //ajouter l'utilisateur courant à la liste des participants du tournoi.
-                    $.ajax({
-                        type: 'GET',
-                        url: "#{tournament.tournamentId}/join",
-                        success: updateView
-                    }).always(function (jqXHR) {
-                        console.log(jqXHR.status);
-                    });
-                    return false;
-                });
-            }
-            //Et on liste les participants
-          } else {
-            //On ne crée le bracket qu'une fois le tournoi commencé
-            if(Tourney.participants && Tourney.participants.length > 0) {
-                MyTourney.drawBracket({
-                    participants: Tourney.participants, 
-                    rounds: Tourney.rounds, 
-                    container: $('.bracket'),
-                    baseProfileUrl: "#{baseUrl}/profile"
-                });
-            }
-            //pareil pour l'agenda des matchs
-            var events_array = [];
-            $.each(Tourney.matches,function(index, match){
-            var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
-            var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
-                events_array.push({
-                    startDate: new Date(match.eventDate),
-                    title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
-                    description: "Tour : " + match.round,
-                    priority: 1
-                });
-            });
-            
-            $("#calendar").dp_calendar({
-                events_array: events_array,
-                order_by: 1 //1 = Time, 2 = Title, 3 = Priority 
-            });
-          }
-      });*/
