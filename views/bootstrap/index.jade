@@ -1,0 +1,118 @@
+extends layout
+
+block home
+  h2 Derniers tournois
+    |         
+    - if(tournaments.length===0)
+      p(class='no-tournaments') Aucun tournoi ne se déroule en ce moment.
+    - else
+      #myCarousel.carousel.slide(data-ride='carousel')
+        ol.carousel-indicators
+          - each tournament,i in tournaments
+            li(class="#{i==0?'active':''}", data-target='#myCarousel', data-slide-to='#{i}')
+        .carousel-inner(role='listbox')
+          - each tournament,i in tournaments
+            div(class="item#{i==0?' active':''}")
+              a(href='/tournaments/#{tournament.tournamentId}', title='#{tournament.title}')
+                img.first-slide.img-responsive.center-block(src='#{tournament.imageRelPath}', alt='Tournament Slide')
+        a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+          span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+          |             
+          span.sr-only Previous
+        |           
+        a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+          span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+          |             
+          span.sr-only Next
+  .wrapper
+    figure.img-indent2
+      img(src='#{staticsPrefixPath}/img/page1-img1.png', alt='')
+    .extra-wrap
+      strong.text-1.
+        N'hésitez pas à vous inscrire sur le forum pour échanger avec vos adversaires.
+
+block aside
+
+block content
+  .row
+    // Left pannel
+    .col-md-8.left-panel
+      article.row
+        h3 Les news
+        |                     
+        - if(newsCollection.length===0)
+          p(class='no-tournaments') Aucune news n'est disponible.
+        - else
+            ul.news-list.list-unstyled
+              - each news in newsCollection
+                  li.row
+                    .news-container
+                      .news-img.col-md-4
+                        img(src='#{news.thumbnailRelPath}', alt='#{news.title}')
+                      |                                 
+                      .col-md-8
+                        a.news-title(href='/news/#{news.newsId}') #{news.title}
+                        |                                   
+                        .news-content
+                          | !{news.content}
+                  | 
+            .row
+                a(href='#') 1
+                | ...
+                a(href='#') n
+                br
+                |                 
+                a.small-link-left(href='/news') Toutes les news...
+    // Right pannel
+    .col-md-4.right-panel
+      aside.row
+        h3 Tournois
+        |                 
+        a.filter(href='#') En ce moment
+        | /
+        a.filter(href='#') Populaires
+        | /
+        a.filter(href='#') A venir
+        | /
+        a.filter(href='#') J&apos;y participe
+        |                 
+        ul.tournaments
+          li.row
+            img.img-responsive.pull-left(src='#{staticsPrefixPath}/images/hearthstone_icon.png')
+            a.pull-left(href='#') Tournoi 1
+            img.img-responsive.pull-left(alt='inscriptions closes', src='#{staticsPrefixPath}/images/lock.png')
+          |                     
+          li.row
+            img.img-responsive.pull-left(src='#{staticsPrefixPath}/images/hearthstone_icon.png')
+            a.pull-left(href='#') Tournoi 1
+            img.img-responsive.pull-left(alt='inscriptions closes', src='#{staticsPrefixPath}/images/lock.png')
+          |                     
+          li.row
+            img.img-responsive.pull-left(src='#{staticsPrefixPath}/images/hearthstone_icon.png')
+            a.pull-left(href='#') Tournoi 1
+            img.img-responsive.pull-left(alt='inscriptions closes', src='#{staticsPrefixPath}/images/lock.png')
+          |                     
+          li.row
+            img.img-responsive.pull-left(src='#{staticsPrefixPath}/images/hearthstone_icon.png')
+            a.pull-left(href='#') Tournoi 1
+            img.img-responsive.pull-left(alt='inscriptions closes', src='#{staticsPrefixPath}/images/lock.png')
+      |             
+      aside.row
+        h3 Feeds
+        ul#feeds
+      .row
+        img(src='#{staticsPrefixPath}/images/banner_design.png', alt='ads')
+
+block js
+  script(type='text/javascript', src='#{staticsPrefixPath}/js/jquery.feeds.min.js')
+  script(type='text/javascript').
+    $(function() {
+      $('ul#feeds').feeds({
+          feeds: {
+              recent: '#{forumUrl}/recent.rss',
+          },
+          entryTemplate: function(entry) {
+              return '<li class="row"><a href="' + entry.link + '">' + entry.title + '</a></li>';
+          }
+      });
+    });

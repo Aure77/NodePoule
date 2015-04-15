@@ -1,0 +1,18 @@
+.carousel {
+    height: 300px;
+    margin-bottom: 15px;
+}
+.carousel-caption {
+    z-index: 10;
+}
+.carousel .item {
+    background-color: #777;
+    height: 300px;
+}
+.carousel-inner > .item > img {
+    height: 300px;
+    min-width: 100%;
+    left: 0;    
+    position: absolute;
+    top: 0;
+}
