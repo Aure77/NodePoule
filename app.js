@@ -59,7 +59,7 @@ app.locals.baseUrl = nconf.get('base_url');
 app.locals.forumUrl = nconf.get('forum_url');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/bootstrap'));
 app.set('view engine', 'jade');
 
 // setup middlewares
@@ -68,7 +68,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(nconf.get('secret')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/bootstrap')));
 
 if(nconf.get('database') === 'mongo') {
   app.use(require('./middlewares/mongo-session-store')());

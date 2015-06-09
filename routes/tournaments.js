@@ -125,8 +125,8 @@ router.get('/:id/participants', function(req, res, next) {
       var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isNaN(uid) /* || userIsRegistered*/;
       winston.info('closedRegistrations : %s', closedRegistrations);
 
-      //res.render('participants', { title: "Participants", participants: participants }); // return html
-      res.json({ participants: participants, userIsRegistered: userIsRegistered, closedRegistrations: closedRegistrations }); // return json
+      res.render('participants', { title: "Participants", participants: participants }); // return html
+      //res.json({ participants: participants, userIsRegistered: userIsRegistered, closedRegistrations: closedRegistrations }); // return json
     });
   });
 });

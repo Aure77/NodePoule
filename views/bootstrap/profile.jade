@@ -1,0 +1,85 @@
+extends layout
+
+block home
+  img.avatar(src='#{staticsPrefixPath}/img/avatar.png')
+  span.pseudo-header #{profil.user.username}
+
+block content
+      .mid-left
+        span.section-title Pseudos
+          ul.list-pseudos
+            -each gamerTag in profil.gamerTags
+              li
+                img(src='#{gamerTag.game.iconRelPath}', alt='#{gamerTag.game.name}', title='#{gamerTag.game.name}')
+                | #{gamerTag.tag}
+      .mid-left
+        span.section-title Agenda
+        #mini-clndr.cal2
+          script#mini-clndr-template(type='text/template')
+            <div class="controls">
+            <div class="clndr-previous-button">‹</div><div class="month"><%= month %></div><div class="clndr-next-button">›</div>
+            </div>
+            <div class="days-container">
+            <div class="days">
+            <div class="headers">
+            <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
+            </div>
+            <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
+            </div>
+            <div class="events">
+            <div class="headers">
+            <div class="x-button">x</div>
+            <div class="event-header">EVENTS</div>
+            </div>
+            <div class="events-list">
+            <% _.each(eventsThisMonth, function(event) { %>
+            <div class="event">
+            <a href="<%= event.url %>"><%= moment(event.date).format('MMMM Do') %>: <%= event.title %></a>
+            </div>
+            <% }); %>
+            </div>
+            </div>
+            </div>
+      div(style='width: 100%;')
+        span.section-title Palmarès
+        ul.list-palmares
+          li
+            img.palmares-icon(src='#{staticsPrefixPath}/img/hearthstone_icon.png')
+            .palmares-infos
+              a(href='#') Titre du tournoi - xx/xx/xxxx
+              br
+              span Classement : xxe
+
+
+block js
+  link(rel='stylesheet', href='#{staticsPrefixPath}/css/clndr.css' type='text/css', media='all')
+  script(type='text/javascript', src='#{staticsPrefixPath}/js/underscore-min.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/js/moment-2.5.1.js')
+  script(type='text/javascript', src='#{staticsPrefixPath}/js/clndr.js')
+  script(type='text/javascript').
+    var currentMonth = moment().format('YYYY-MM');
+    var nextMonth    = moment().add('month', 1).format('YYYY-MM');
+    var events = [
+      { date: currentMonth + '-' + '10', title: 'Persian Kitten Auction', location: 'Center for Beautiful Cats' },
+      { date: currentMonth + '-' + '19', title: 'Cat Frisbee', location: 'Jefferson Park' },
+      { date: currentMonth + '-' + '23', title: 'Kitten Demonstration', location: 'Center for Beautiful Cats' },
+      { date: nextMonth + '-' + '07',    title: 'Small Cat Photo Session', location: 'Center for Cat Photography' }
+    ];
+    $(function () {
+      $('#mini-clndr').clndr({
+         template: $('#mini-clndr-template').html(),
+         events: events,
+         clickEvents: {
+           click: function(target) {
+             if(target.events.length) {
+               var daysContainer = $('#mini-clndr').find('.days-container');
+               daysContainer.toggleClass('show-events', true);
+               $('#mini-clndr').find('.x-button').click( function() {
+                 daysContainer.toggleClass('show-events', false);
+               });
+             }
+           }
+         },
+         adjacentDaysChangeMonth: true
+      });
+    });

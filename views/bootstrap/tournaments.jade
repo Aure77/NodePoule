@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .row
+      - if(tournaments.length===0)
+        p Pas de tournois en cours...
+      - else
+        - each tournament in tournaments
+          .competition-list-item
+            a(href='/tournaments/#{tournament.tournamentId}')
+              span
+                | #{tournament.title}
+            span(class='#{tournament.cssStatus}')
+                | #{tournament.status}
+            a(href='/tournaments/#{tournament.tournamentId}')
+              img(src='#{tournament.imageRelPath}', style='width: 100%;')
+        div.paginate
+          include _paginate
