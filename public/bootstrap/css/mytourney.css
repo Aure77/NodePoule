@@ -7,7 +7,7 @@ p{
 }
 .mytourney-block{
 	margin:0px 20px 0px 0px;
-	border-bottom:1px solid #fff;
+	border-bottom:1px solid transparent;
 }
 .mytourney-block p:first-child{
 	border-bottom:1px solid #000;
