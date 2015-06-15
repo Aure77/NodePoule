@@ -1,8 +1,9 @@
 extends layout
 
 block home
-  img.avatar(src='#{staticsPrefixPath}/img/avatar.png')
+  img.avatar(src='#{profil.user.picture}')
   span.pseudo-header #{profil.user.username}
+  span.user-status #{profil.user.status}
 
 block content
       .mid-left
