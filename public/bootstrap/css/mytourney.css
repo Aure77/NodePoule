@@ -6,8 +6,8 @@ p{
 	float:left;
 }
 .mytourney-block{
-	margin:0px 20px 0px 0px;
-	border-bottom:1px solid transparent;
+	margin:5px 20px 5px 0px;
+	/*border-bottom:1px solid transparent;*/
 }
 .mytourney-block p:first-child{
 	border-bottom:1px solid #000;

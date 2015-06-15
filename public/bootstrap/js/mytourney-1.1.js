@@ -172,7 +172,7 @@ MyTourney = function() {
     var drawBracket = function(opt) {
         // Le tournoi aura un tour préliminaire si le nombre de participants n'est pas une puissance de 2.
         var containsPreliminary = !isPowerOfTwo(opt.participants.length);
-        var offsetTour = 28;
+        var offsetTour = 34;
         var padding = 0;
         var paddingStyle = '';
         var prevNextMatchId = -1;
@@ -198,7 +198,7 @@ MyTourney = function() {
                 */
                 if (nTour > 0) {
                     padding = offsetTour * Math.pow(2, nTour) - offsetTour;
-                    paddingStyle = 'padding-top:' + padding + 'px;padding-bottom:' + padding + 'px;';
+                    paddingStyle = 'padding-top:' + padding + 'px;padding-bottom:' + padding + 'px;margin-top:0px; margin-bottom:0px;';
                 } else if (containsPreliminary) {
                     if (prevNextMatchId !== -1 && prevMatchDouble % 2 !== 0 && prevNextMatchId !== match.nextMatchId) {
                         paddingStyle = "margin-top:" + offsetTour * 2 + 'px;';
