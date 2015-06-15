@@ -172,7 +172,7 @@ MyTourney = function() {
     var drawBracket = function(opt) {
         // Le tournoi aura un tour préliminaire si le nombre de participants n'est pas une puissance de 2.
         var containsPreliminary = !isPowerOfTwo(opt.participants.length);
-        var offsetTour = 26;
+        var offsetTour = 28;
         var padding = 0;
         var paddingStyle = '';
         var prevNextMatchId = -1;
