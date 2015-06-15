@@ -112,7 +112,7 @@ block js
           if(!$scope.closedRegistrations) {
             $scope.getAllParticipants();
           } else {
-            $scope.getBracket(function() {
+              $scope.getBracket(function() {
               var Tourney = {
                 "participants": $scope.participants,
                 "rounds": $scope.rounds,
@@ -131,8 +131,8 @@ block js
               //pareil pour l'agenda des matchs
               var events_array = [];
               $.each(Tourney.matches, function(index, match) {
-              var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
-              var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
+                  var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
+                  var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
                   events_array.push({
                       startDate: new Date(match.eventDate),
                       title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
