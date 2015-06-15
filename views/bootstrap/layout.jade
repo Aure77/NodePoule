@@ -1,18 +1,18 @@
-doctype html(lang='fr')
-head
+doctype html
+head(lang='fr')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    link(rel='icon', href='favicon.ico')
-    title NodePoule Template for Bootstrap
+    meta(name='description', content='NodePoule game tournaments')
+    meta(name='author', content='Aure77 & Mohye')
+    link(rel='icon', type='image/png', href='#{staticsPrefixPath}/img/favicon.png')
+    title= title
+    link(href='#{staticsPrefixPath}/css/style.css', rel='stylesheet', media='all')
     // Bootstrap core CSS
     link(href='#{staticsPrefixPath}/css/bootstrap.min.css', rel='stylesheet')
     // Custom styles for this template
     link(href='#{staticsPrefixPath}/css/carousel.css', rel='stylesheet')
     link(href='#{staticsPrefixPath}/css/custom.css', rel='stylesheet')
-    link(rel='stylesheet', href='#{staticsPrefixPath}/css/style.css' type='text/css', media='all')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
     //if lt IE 9
       script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
@@ -20,8 +20,13 @@ head
     block head
   body
     nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
+      .container      
         .navbar-header
+          button(aria-controls="navbar",aria-expanded="false",data-target="#navbar",data-toggle="collapse",class="navbar-toggle collapsed",type="button")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
           a.navbar-brand(href='/index.html') NodePoule
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
