@@ -14,7 +14,7 @@ MyTourney = function() {
                     <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
                     <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.username %></a> \
                 </span> \
-                <span class="mytourney-score"><%= user.score ? user.score : \"--\" %></span> \
+                <span class="mytourney-score"><%= user.score >= 0 ? user.score : \"--\" %></span> \
             </p> \
         <% }); %> \
     </div>';
