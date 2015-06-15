@@ -134,7 +134,7 @@ router.get('/:id/participants', function(req, res, next) {
 router.get('/:id/bracket', function(req, res, next) {
   var tid = escape(req.params.id);
   winston.debug('Find tournament with tid: %s', tid);
-  Tournament.findOne({ tournamentId : tid }).exec(function(err, tournament) {
+  Tournament.findOne({ tournamentId : tid }).lean().exec(function(err, tournament) {
     if (err) { return next(err); }
     
     if(!tournament) {
@@ -163,10 +163,13 @@ router.get('/:id/bracket', function(req, res, next) {
       tournament.matches.forEach(function(match) {
         var roundIndex = match.round-1;
         rounds[roundIndex] = rounds[roundIndex] || [];
-        var user1 = match.pid1 != null ? _.find(users, function (item) { return item.uid === match.pid1; }) : { uid: -1, name: '' };
-        user1.score = match.score1;
-        var user2 = match.pid2 != null ? _.find(users, function (item) { return item.uid === match.pid2; }) : { uid: -1, name: '' };
-        user2.score = match.score2;
+        // find user1 informations
+        var _user1 = match.pid1 != null ? _.find(users, function (item) { return item.uid === match.pid1; }) : null;
+        var user1 = _user1 != null ? { uid: _user1.uid, username: _user1.username, picture: _user1.picture, score: match.score1 } : { uid: -1, username: '', picture: '', score: null };
+        // find user2 informations
+        var _user2 = match.pid2 != null ? _.find(users, function (item) { return item.uid === match.pid2; }) : null;
+        var user2 = _user2 != null ? { uid: _user2.uid, username: _user2.username, picture: _user2.picture, score: match.score2 } : { uid: -1, username: '', picture: '', score: null };
+        // Add round inforamtions
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
       winston.info('rounds nested objects : ', rounds);
