@@ -38,7 +38,7 @@ router.get('/:id', function(req, res, next) {
       return next(new Error("Le tournoi '"+tid+"' est introuvable"));
     }
 
-    var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isNaN(uid) /* || userIsRegistered*/;
+    var closedRegistrations = moment(tournament.startDate).isBefore(/*now*/) || tournament.closedRegistrations || isNaN(uid) || moment(tournament.endDate).isAfter(/*now*/) || /* || userIsRegistered*/;
     winston.info('closedRegistrations : %s', closedRegistrations);
 
     res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, closedRegistrations: closedRegistrations });
