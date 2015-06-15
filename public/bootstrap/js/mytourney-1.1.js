@@ -1,4 +1,5 @@
-﻿var MyTourney = MyTourney || {};
+﻿/* global $, jsPlumb */
+var MyTourney = MyTourney || {};
 
 MyTourney = function() {
 
@@ -53,7 +54,7 @@ MyTourney = function() {
                 Ceci afin de trouver le nombre de combats du tour 1
             */
             var closest = 0;
-            for (i = 0; i < POWERSOFTWO.length; i++) {
+            for (var i = 0; i < POWERSOFTWO.length; i++) {
                 if (POWERSOFTWO[i] < nbParticipants) {
                     closest = POWERSOFTWO[i];
                 } else {
@@ -96,7 +97,7 @@ MyTourney = function() {
         /*
           Générer les matchs du tour 1 avec les participants restants.
         */
-        for (i = 0; i < nbParticipantsTour1; i++) {
+        for (var i = 0; i < nbParticipantsTour1; i++) {
             if (i >= diff) {
                 matches.push({ user1: participants[i], user2: participants[++i], matchId: matchId++, nextMatchId: '' });
             } else {
@@ -111,7 +112,7 @@ MyTourney = function() {
         var nb = nbMatchsType;
         while (nb > 1) {
             matches = [];
-            for (i = 0; i < nb; i += 2) {
+            for (var i = 0; i < nb; i += 2) {
                 matches.push({ user1: { uid: -1, username: '' }, user2: { uid: -1, username: '' }, matchId: matchId++, nextMatchId: '' });
             }
             tours.push(matches);
@@ -123,7 +124,7 @@ MyTourney = function() {
           Si le match contient 2emplacements libres, alors lier à 2matchs du tour précédent
         */
         var matchesTaken = 0;
-        for (i = tours.length - 1; i > 0; i--) {
+        for (var i = tours.length - 1; i > 0; i--) {
             matchesTaken = 0;
             $.each(tours[i], function(nMatch, match) {
                 if (match.user1.uid == -1) {
@@ -272,18 +273,12 @@ MyTourney = function() {
                 //oldColor = color;
             });
         });
+        
+        // repaint connections on window resize
+        $(window).resize(function () {
+            jsPlumb.repaintEverything();
+        });
     };
-
-    //function getRandomColor() {
-    //    var values = '0123456789ABCDEF'.split('');
-    //    var color = '#';
-    //    for (var i = 0; i < 6; i++ ) {
-    //        color += values[Math.floor(Math.random() * 16)];
-    //    }
-    //    return color;
-    //}
-
-
 
     // return public methods
     var oPublic = {
