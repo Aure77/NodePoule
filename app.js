@@ -63,7 +63,7 @@ app.set('views', path.join(__dirname, 'views/bootstrap'));
 app.set('view engine', 'jade');
 
 // setup middlewares
-app.use(favicon(__dirname + '/public/img/favicon.png'));
+app.use(favicon(__dirname + '/public/bootstrap/img/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
