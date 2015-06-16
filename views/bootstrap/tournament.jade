@@ -20,7 +20,7 @@ block content
           - if(tournament.topicId)
             a.button-link(href='#{tournament.topicId}') Topic du tournoi
           a#subscribe.button-link.subscribe(data-ng-if="canSubscribe", data-ng-click="joinTournament()") Je participe!
-          a#subscribe.button-link.unsubscribe(data-ng-if="!canSubscribe", data-ng-click="leaveTournament()") Je ne participe plus
+          a#subscribe.button-link.unsubscribe(data-ng-if="!canSubscribe && !closedRegistrations", data-ng-click="leaveTournament()") Je ne participe plus
           // a.button-link(data-ng-if="closedRegistrations", href='#calendar', id="open-calendar") Agenda
 
         div.row(style='clear:both;')
@@ -73,7 +73,7 @@ block js
             $http.get("#{tournament.tournamentId}/participants").success(function(response) {
               $scope.participants = response.participants;
               $scope.closedRegistrations = response.closedRegistrations;
-              $scope.canSubscribe = !response.closedRegistrations && !response.userIsRegistered;
+              $scope.canSubscribe = !response.closedRegistrations && !response.userHasJoinTournament;
               if(typeof callback === "function") {
                 callback();
               }
@@ -86,7 +86,7 @@ block js
               $scope.rounds = response.rounds;
               $scope.matches = response.matches;
               $scope.closedRegistrations = response.closedRegistrations;
-              $scope.canSubscribe = !response.closedRegistrations && !response.userIsRegistered;
+              $scope.canSubscribe = !response.closedRegistrations && !response.userHasJoinTournament;
               if(typeof callback === "function") {
                 callback();
               }

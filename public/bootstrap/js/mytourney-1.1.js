@@ -1,4 +1,4 @@
-﻿/* global $, jsPlumb */
+﻿/* global _, $, jsPlumb */
 var MyTourney = MyTourney || {};
 
 MyTourney = function() {
