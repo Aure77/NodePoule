@@ -12,7 +12,7 @@ MyTourney = function() {
         <% _.each([ match.user1, match.user2 ], function(user) { %> \
             <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
                 <span class="mytourney-user" title="<%= user.username %>"> \
-                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
+                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar de <%= user.username %>" /><% } %> \
                     <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.username %></a> \
                 </span> \
                 <span class="mytourney-score"><%= user.score >= 0 ? user.score : \"--\" %></span> \
@@ -24,7 +24,7 @@ MyTourney = function() {
         <% _.each([ match.user1, match.user2 ], function(user) { %> \
             <p class="mytourney-player-block" data-mytourney-player-id="<%= user.uid %>"> \
                 <span class="mytourney-user" title="<%= user.username %>"> \
-                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar" /><% } %> \
+                    <% if(user.picture) { %><img class="mytourney-avatar" src="<%= user.picture %>" alt="avatar de <%= user.username %>" /><% } %> \
                     <a href="<%= options.baseProfileUrl + "/" + user.uid %>" target="_blank"><%= user.username %></a> \
                 </span> \
                 <input class="mytourney-score" type="text" placeholder="--" value="<%= user.score %>" /> \

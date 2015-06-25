@@ -9,7 +9,7 @@ block content
       div(data-ng-controller="tournamentCtrl")
         .competition-infos
           p.competition-title
-              img(src='#{tournament.game.iconRelPath}')
+              img(src='#{tournament.game.iconRelPath}', alt='#{tournament.game.name}')
               | #{tournament.game.name}
             p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
 
@@ -35,7 +35,7 @@ block content
             ul
               li(data-ng-repeat="participant in participants")
                 a(data-ng-href='/profile/{{participant.uid}}')
-                    img.user-avatar(data-ng-src='{{participant.picture}}')
+                    img.user-avatar(data-ng-src='{{participant.picture}}', data-ng-alt='avatar de {{participant.name}}')
                     span {{participant.name}}
 
         div.row(style='clear:both;')

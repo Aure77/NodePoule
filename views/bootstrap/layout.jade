@@ -7,12 +7,12 @@ head(lang='fr')
     meta(name='author', content='Aure77 & Mohye')
     link(rel='icon', type='image/png', href='#{staticsPrefixPath}/img/favicon.png')
     title= title
-    link(href='#{staticsPrefixPath}/css/style.css', rel='stylesheet', media='all')
     // Bootstrap core CSS
     link(href='#{staticsPrefixPath}/css/bootstrap.min.css', rel='stylesheet')
     // Custom styles for this template
     link(href='#{staticsPrefixPath}/css/carousel.css', rel='stylesheet')
     link(href='#{staticsPrefixPath}/css/custom.css', rel='stylesheet')
+    link(href='#{staticsPrefixPath}/css/style.css', rel='stylesheet', media='all')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
     //if lt IE 9
       script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
@@ -46,14 +46,14 @@ head(lang='fr')
                 a(href='#{forumUrl}/login?next=#{baseUrl}#{currentReqPath}') Se connecter
         // /.nav-collapse
     // Main jumbotron for a primary marketing message or call to action
-    .jumbotron
+    header.jumbotron
       .container
         h1
           a(href='/index.html')
-            img.img-responsive(src='#{staticsPrefixPath}/img/logo.png')
+            img.img-responsive(src='#{staticsPrefixPath}/img/logo.png', alt="")
         block home
     |     
-    .container
+    main.container
       block aside
       block content
       |       
@@ -66,7 +66,7 @@ head(lang='fr')
       Bootstrap core JavaScript
       ==================================================
     // Placed at the end of the document so the pages load faster
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='#{staticsPrefixPath}/js/bootstrap.min.js')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
     script(src='#{staticsPrefixPath}/js/ie10-viewport-bug-workaround.js')

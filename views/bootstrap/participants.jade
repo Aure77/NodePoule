@@ -9,16 +9,16 @@ block content
           - each participant in participants
             .user-box
               a(href='/profile/#{participant.uid}')
-                  img.user-avatar(src='#{participant.picture}')
+                  img.user-avatar(src='#{participant.picture}', alt='avatar de #{participant.name}')
                   p #{participant.name}
                 p.user-awards
                   | #{participant.nb1stPlace}
-                  img(src='#{staticsPrefixPath}/img/awards/gold.png')
+                  img(src='#{staticsPrefixPath}/img/awards/gold.png', alt='gold awards')
                   | #{participant.nb2ndPlace}
-                  img(src='#{staticsPrefixPath}/img/awards/silver.png')
+                  img(src='#{staticsPrefixPath}/img/awards/silver.png', alt='silver awards')
                   | #{participant.nb3rdPlace}
-                  img(src='#{staticsPrefixPath}/img/awards/bronze.png')
+                  img(src='#{staticsPrefixPath}/img/awards/bronze.png', alt='bronze awards')
                 p.user-separation
                 p.game-icon
-                  img(src='#{staticsPrefixPath}/img/hearthstone_icon.png', title='hearthstone')
+                  img(src='#{staticsPrefixPath}/img/hearthstone_icon.png', alt='hearthstone')
         div(style='clear:both;')

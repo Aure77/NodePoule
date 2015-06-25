@@ -14,7 +14,7 @@ block home
           - each tournament,i in tournaments
             div(class="item#{i==0?' active':''}")
               a(href='/tournaments/#{tournament.tournamentId}', title='#{tournament.title}')
-                img.first-slide.img-responsive.center-block(src='#{tournament.imageRelPath}', alt='Tournament Slide')
+                img.first-slide.img-responsive.center-block(src='#{tournament.imageRelPath}', alt='#{tournament.title}')
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
           |             

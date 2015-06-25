@@ -5,18 +5,18 @@ block content
   .row
       .game-infos
         p.game-title
-          img(src='#{game.iconRelPath}')
+          img(src='#{game.iconRelPath}', alt='#{game.name}', aria-describedby='game-desc-#{game._id}')
           | #{game.name}
         p.game-subtitle
-          a(href='#{game.link}') Obtenir
+          a(href='#{game.link}', title='Obtenir #{game.name}') Obtenir
       div.row(style='width:100%;')
-        a.button-link(href='#{game._id}/tournaments') Tournois
-        a.button-link(href='#faq') FAQ
-        a.button-link(href='#{game.topicId}') Topic
+        a.button-link(href='#{game._id}/tournaments', title='Tournois #{game.name}') Tournois
+        a.button-link(href='#faq', title='FAQ #{game.name}') FAQ
+        a.button-link(href='#{game.topicId}', title='Topic forum #{game.name}') Topic
 
       hr
       h3 Description
-      div(class='game-description') !{game.description}
+      div(id='game-desc-#{game._id}', class='game-description') !{game.description}
 
       - var faq = {};
       - each faqEntry, ind in game.faq

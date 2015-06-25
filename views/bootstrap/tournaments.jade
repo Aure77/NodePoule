@@ -13,6 +13,6 @@ block content
             span(class='#{tournament.cssStatus}')
                 | #{tournament.status}
             a(href='/tournaments/#{tournament.tournamentId}')
-              img(src='#{tournament.imageRelPath}', style='width: 100%;')
+              img(src='#{tournament.imageRelPath}', style='width: 100%;', alt='#{tournament.title}')
         div.paginate
           include _paginate
