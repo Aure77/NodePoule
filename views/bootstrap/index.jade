@@ -37,16 +37,15 @@ block content
   .row
     // Left pannel
     .col-md-8.left-panel
-      article.row
-        h3 Les news
+      section
+        h2 Les news
         |                     
         - if(newsCollection.length===0)
-          p(class='no-tournaments') Aucune news n'est disponible.
+          p.no-tournaments Aucune news n'est disponible.
         - else
-            ul.news-list.list-unstyled
+            .news-list
               - each news in newsCollection
-                  li.row
-                    .news-container
+                  article.news-container.container-fluid
                       .news-img.col-md-4
                         img(src='#{news.thumbnailRelPath}', alt='#{news.title}')
                       |                                 
@@ -56,13 +55,13 @@ block content
                         .news-content
                           | !{news.content}
                   | 
-            .row
+            .news-paginate
                 a(href='#') 1
                 | ...
                 a(href='#') n
     // Right pannel
     .col-md-4.right-panel
-      aside.row
+      aside
         h3 Tournois
         |                 
         a.filter(href='#') En ce moment
@@ -94,10 +93,10 @@ block content
             a.pull-left(href='#') Tournoi 1
             img.img-responsive.pull-left(alt='inscriptions closes', src='#{staticsPrefixPath}/images/lock.png')
       |             
-      aside.row
+      aside
         h3 Feeds
         ul#feeds
-      .row
+      aside
         img(src='#{staticsPrefixPath}/images/banner_design.png', alt='ads')
 
 block js
