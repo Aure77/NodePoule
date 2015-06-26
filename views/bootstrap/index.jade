@@ -38,7 +38,7 @@ block content
     // Left pannel
     .col-md-8.left-panel
       section
-        h2 Les news
+        h3 Les news
         |                     
         - if(newsCollection.length===0)
           p.no-tournaments Aucune news n'est disponible.
@@ -56,9 +56,7 @@ block content
                           | !{news.content}
                   | 
             .news-paginate
-                a(href='#') 1
-                | ...
-                a(href='#') n
+                include _paginate
     // Right pannel
     .col-md-4.right-panel
       aside
