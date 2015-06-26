@@ -56,7 +56,18 @@ block content
                           | !{news.content}
                   | 
             .news-paginate
-                include _paginate
+                    .navigation.well-sm#pagination
+      ul.pager
+        li.previous
+          a(href="#prev").prev
+            i.fa.fa-arrow-circle-left
+            |  Précédent
+        li 1
+        li 2
+        li.next
+          a(href="#next").next
+            | Suivant
+            i.fa.fa-arrow-circle-right
     // Right pannel
     .col-md-4.right-panel
       aside
