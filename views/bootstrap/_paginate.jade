@@ -1,15 +1,21 @@
-#{paginate.hasNextPages(pageCount)}
-#{paginate.hasPreviousPages}
-if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
-  .navigation.well-sm#pagination
-    ul.pager
-      if paginate.hasPreviousPages
-        li.previous
-          a(href="/tournaments" + paginate.href(true)).prev
-            i.fa.fa-arrow-circle-left
-            |  Précédent
-      if paginate.hasNextPages(pageCount)
-        li.next
-          a(href="/tournaments" + paginate.href()).next
-            | Suivant
-            i.fa.fa-arrow-circle-right
+if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)        
+    nav
+      ul.pagination
+        if paginate.hasPreviousPages
+          li
+            a(href=paginate.href(true), aria-label='Précédent')
+              span(aria-hidden='true') &laquo;
+        - for (var i = 1; i <= pageCount; ++i) {
+          if(i == paginate.page)
+            li.active
+              a(href=paginate.href({page: i, limit: paginate.limit}))
+                | #{i}
+                span.sr-only (current)
+          else
+            li
+              a(href=paginate.href({page: i, limit: paginate.limit})) #{i}
+        - }
+        if paginate.hasNextPages(pageCount)
+          li
+            a(href=paginate.href(), aria-label='Suivant')
+              span(aria-hidden='true') &raquo;
