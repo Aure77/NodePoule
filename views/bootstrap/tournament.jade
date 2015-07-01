@@ -9,8 +9,8 @@ block content
       div(data-ng-controller="tournamentCtrl")
         .competition-infos
           p.competition-title
-              img(src='#{tournament.game.iconRelPath}', alt='#{tournament.game.name}')
-              | #{tournament.game.name}
+              img(src='#{tournament.game.iconRelPath}', alt='#{tournament.game.name}', title='#{tournament.game.name}')
+              | #{title}
             p.competition-subtitle #{tournament.prettyStartDate} - #{tournament.prettyEndDate}
 
         div.row(style='width:100%;')
