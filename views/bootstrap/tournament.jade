@@ -21,7 +21,6 @@ block content
             a.button-link(href='#{tournament.topicId}') Topic du tournoi
           a#subscribe.button-link.subscribe(data-ng-if="canSubscribe", data-ng-click="joinTournament()") Je participe!
           a#subscribe.button-link.unsubscribe(data-ng-if="!canSubscribe && !closedRegistrations", data-ng-click="leaveTournament()") Je ne participe plus
-          // a.button-link(data-ng-if="closedRegistrations", href='#calendar', id="open-calendar") Agenda
 
         div.row(style='clear:both;')
         - if(closedRegistrations)
@@ -39,8 +38,6 @@ block content
                     span {{participant.name}}
 
         div.row(style='clear:both;')
-        // - if(closedRegistrations)
-        //   div(id="calendar", class="dp_calendar")
 
         div.row(style='float: left;')
           a(name='rules').section-title Règles
@@ -140,11 +137,6 @@ block js
                       priority: 1
                   });
               });
-              
-              $("#calendar").dp_calendar({
-                  events_array: events_array,
-                  order_by: 1 //1 = Time, 2 = Title, 3 = Priority 
-              });
             });
           }
         });
@@ -154,10 +146,3 @@ block js
               location.href = headers("Location");
             }
         };
-
-        function showCalendar() {
-            $('#calendar').modal({
-                closeClass: 'icon-remove',
-                closeText: '!'
-            });
-        }

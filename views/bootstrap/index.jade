@@ -1,10 +1,10 @@
 extends layout
 
 block home
-  h2 Derniers tournois
+  h2 Annonces
     |         
     - if(tournaments.length===0)
-      p(class='no-tournaments') Aucun tournoi ne se déroule en ce moment.
+      p(class='no-tournaments') Aucune annonce pour le moment.
     - else
       #myCarousel.carousel.slide(data-ride='carousel')
         ol.carousel-indicators
