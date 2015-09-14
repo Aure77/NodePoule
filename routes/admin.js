@@ -11,7 +11,9 @@ router.use(paginate.middleware(4, 50));
 
 /* GET tournaments page. */
 router.get('/', function(req, res, next) {
-  Tournament.paginate({}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
+  var page = escape(req.query.page);
+  var limit = escape(req.query.limit);
+  Tournament.paginate({}, { page: page, limit: limit }, function(err, tournaments, pageCount, itemCount) {
     if (err) { return next(err); }
     res.render('admin/tournament-editor', { 
       title: 'Tous les tournois', 

@@ -11,7 +11,7 @@ router.get(['/', '/index.html'], function(req, res, next) {
   var today = new Date();
   Tournament.find({}).where('startDate').lte(today).where('endDate').gte(today).exec(function(err, tournaments) {
     if (err) { return next(err); }
-    News.paginate({}, page, limit, function(err2, pageCount, newsCollection, itemCount) {
+    News.paginate({}, { page: page, limit: limit }, function(err2, newsCollection, pageCount, itemCount) {
       if (err2) { return next(err2); }
       res.render('index', { 
         title: 'Accueil',

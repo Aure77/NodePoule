@@ -19,7 +19,9 @@ router.get('/:id', function(req, res, next) {
 
 router.get('/:id/tournaments', function(req, res, next) {
     var gameId = escape(req.params.id);
-    Tournament.paginate({"game._id" : gameId}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, tournaments, itemCount) {
+    var page = escape(req.query.page);
+    var limit = escape(req.query.limit);
+    Tournament.paginate({"game._id" : gameId}, { page: page, limit: limit }, function(err, tournaments, pageCount, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', { 
       title: 'Tous les tournois', 

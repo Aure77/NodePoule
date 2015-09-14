@@ -8,7 +8,9 @@ router.use(paginate.middleware(8, 50));
 
 /* GET news page. */
 router.get('/', function(req, res, next) {
-  News.paginate({}, escape(req.query.page), escape(req.query.limit), function(err, pageCount, newsCollection, itemCount) {
+  var page = escape(req.query.page);
+  var limit = escape(req.query.limit);
+  News.paginate({}, { page: page, limit: limit }, function(err, newsCollection, pageCount, itemCount) {
     if (err) { return next(err); }
     res.render('all-news', { 
       title: 'Toutes les news', 

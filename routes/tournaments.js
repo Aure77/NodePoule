@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
   var page = escape(req.query.page);
   var limit = escape(req.query.limit);
   winston.debug('Fetching all tournaments, page:%d, limit:%d', page, limit);
-  Tournament.paginate({}, page, limit, function (err, pageCount, tournaments, itemCount) {
+  Tournament.paginate({}, { page: page, limit: limit }, function (err, tournaments, pageCount, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', {
       title: 'Tous les tournois',
