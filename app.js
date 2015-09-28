@@ -93,7 +93,7 @@ if (nconf.get('database') === 'mongo') {
 
   // Initialize passport like NodeBB (to get authenticated user id)
   var passport = require('passport');
-  var PassportLocalStrategy = require('passport-local').Strategy;
+  //var PassportLocalStrategy = require('passport-local').Strategy;
 
   app.use(passport.initialize());
 	app.use(passport.session());
@@ -119,16 +119,10 @@ if (nconf.get('database') === 'mongo') {
   app.use(function (req, res, next) {
     req.uid = req.user ? parseInt(req.user.uid, 10) : 0;
     res.locals.user = req.user;
-    logger.debug("req.user=", req.user);
     logger.debug("req.uid=%s", req.uid);
     next();
   });
   
-  /*app.dynamicHelpers({
-    user: function (req, res) {
-      return req.user;
-    }
-  });*/
 }
 
 // Middleware for every request
