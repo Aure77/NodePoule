@@ -1,4 +1,4 @@
-var winston = require('winston');
+var logger = require('../modules/logger.js');
 var _ = require('underscore');
 var express = require('express');
 var util = require('util');
@@ -15,7 +15,7 @@ router.use(paginate.middleware(4, 50));
 router.get('/', function (req, res, next) {
   var page = escape(req.query.page);
   var limit = escape(req.query.limit);
-  winston.debug('Fetching all tournaments, page:%d, limit:%d', page, limit);
+  logger.debug('Fetching all tournaments, page:%d, limit:%d', page, limit);
   Tournament.paginate({}, { page: page, limit: limit }, function (err, tournaments, pageCount, itemCount) {
     if (err) { return next(err); }
     res.render('tournaments', {
@@ -30,20 +30,20 @@ router.get('/', function (req, res, next) {
 
 function isTournamentRegistrationsClosed(tournament, uid) {
   var isTournamentRegistrationsClosed = tournament.closedRegistrations || isNaN(uid) || moment(tournament.startDate).isBefore(/*now*/) /*|| moment(tournament.endDate).isAfter(/*now*//*) || userIsRegistered*/;
-  winston.debug('tournament.closedRegistrations=%s || isNaN(uid)=%s || moment(tournament.startDate).isBefore(/*now*/)=%s', tournament.closedRegistrations, isNaN(uid), moment(tournament.startDate).isBefore(/*now*/));
-  winston.info('Tournament "%s" registrations closed : %s', tournament.tournamentId, isTournamentRegistrationsClosed);
+  logger.debug('tournament.closedRegistrations=%s || isNaN(uid)=%s || moment(tournament.startDate).isBefore(/*now*/)=%s', tournament.closedRegistrations, isNaN(uid), moment(tournament.startDate).isBefore(/*now*/));
+  logger.info('Tournament "%s" registrations closed : %s', tournament.tournamentId, isTournamentRegistrationsClosed);
   return isTournamentRegistrationsClosed;
 }
 
 function isUserHasJoinTournament(registeredUsers, uid) {
   var userHasJoinTournament = uid > 0 ? _.find(registeredUsers, function (item) { return item.uid === uid; }) != null : false;
-  winston.info('userHasJoinTournament : %s', userHasJoinTournament);
+  logger.info('userHasJoinTournament : %s', userHasJoinTournament);
   return userHasJoinTournament;
 }
 
 router.get('/:id', function (req, res, next) {
   var tid = escape(req.params.id);
-  winston.debug('Find tournament with tid: %s', tid);
+  logger.debug('Find tournament with tid: %s', tid);
   Tournament.findOne({ tournamentId: tid }).populate("game").exec(function (err, tournament) {
     if (err) { return next(err); }
 
@@ -51,7 +51,7 @@ router.get('/:id', function (req, res, next) {
       return next(new Error("Le tournoi '" + tid + "' est introuvable"));
     }
 
-    var uid = parseInt(res.locals.user);
+    var uid = req.uid;
     var closedRegistrations = isTournamentRegistrationsClosed(tournament, uid);
 
     res.render('tournament', { title: tournament.name, htitle: tournament.name, tournament: tournament, closedRegistrations: closedRegistrations });
@@ -67,19 +67,19 @@ router.get('/:id/join', function (req, res, next) {
       return next(new Error("Le tournoi '" + tid + "' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)
-    var uid = parseInt(res.locals.user);
+    var uid = req.uid;
     var closedRegistrations = isTournamentRegistrationsClosed(tournament, uid);
     if (uid > 0) {
       Tournament.update({ tournamentId: tid }, { $addToSet: { participants: { pid: uid, name: null, /* team ? */ excluded: false } } }, function (err, tnmt) {
         if (err) return next(err);
-        winston.info('Registering user:%d to tournament:%s', uid, tid);
+        logger.info('Registering user:%d to tournament:%s', uid, tid);
         res.json({ "msg": "OK", uid: uid });
       });
     } else if(closedRegistrations) {
-      winston.warn('Registering: Tournament registrations closed !');
+      logger.warn('Registering: Tournament registrations closed !');
       res.status(403).json({ "error": "Tournament registrations closed !" });
     } else {
-      winston.info('Registering: User not found');
+      logger.info('Registering: User not found');
       res.status(401).json({ "error": "User not found" });
     }
   });
@@ -94,19 +94,19 @@ router.get('/:id/leave', function (req, res, next) {
       return next(new Error("Le tournoi '" + tid + "' est introuvable"));
     }
     //TODO : Faire toutes les verifs qui vont bien (Date, etc)    
-    var uid = parseInt(res.locals.user);
+    var uid = req.uid;
     var closedRegistrations = isTournamentRegistrationsClosed(tournament, uid);
     if (uid > 0 && !closedRegistrations) {
       Tournament.update({ tournamentId: tid }, { $pull: { participants: { pid: uid } } }, function (err, tnmt) {
         if (err) return next(err);
-        winston.info('Unregistering user:%d from tournament:%s', uid, tid);
+        logger.info('Unregistering user:%d from tournament:%s', uid, tid);
         res.json({ "msg": "OK", uid: uid });
       });
     } else if(closedRegistrations) {
-      winston.warn('Unregistering: Tournament registrations closed !');
+      logger.warn('Unregistering: Tournament registrations closed !');
       res.status(403).json({ "error": "Tournament registrations closed !" });
     } else {
-      winston.info('Unregistering: User not found');
+      logger.info('Unregistering: User not found');
       res.status(401).json({ "error": "User not found" });
     }
   });
@@ -114,7 +114,7 @@ router.get('/:id/leave', function (req, res, next) {
 
 router.get('/:id/participants', function (req, res, next) {
   var tid = escape(req.params.id);
-  winston.info('Fetching all participants for tournament: %s', tid);
+  logger.info('Fetching all participants for tournament: %s', tid);
   Tournament.findOne({ tournamentId: tid }).exec(function (err, tournament) {
     if (err) { return next(err); }
 
@@ -126,7 +126,7 @@ router.get('/:id/participants', function (req, res, next) {
     tournament.participants.forEach(function (participant) {
       participantIds.push(participant.pid);
     });
-    winston.info('participants id found: ', participantIds);
+    logger.info('participants id found: ', participantIds);
 
     User.find({ 'uid': { $in: participantIds } }, 'uid username picture').lean().exec(function (err, users) {
       if (err) { return next(err); }
@@ -140,7 +140,7 @@ router.get('/:id/participants', function (req, res, next) {
         }
       });
 
-      var uid = parseInt(res.locals.user);
+      var uid = req.uid;
       var userHasJoinTournament = isUserHasJoinTournament(users, uid);
       var closedRegistrations = isTournamentRegistrationsClosed(tournament, uid);
 
@@ -152,7 +152,7 @@ router.get('/:id/participants', function (req, res, next) {
 
 router.get('/:id/bracket', function (req, res, next) {
   var tid = escape(req.params.id);
-  winston.debug('Find tournament with tid: %s', tid);
+  logger.debug('Find tournament with tid: %s', tid);
   Tournament.findOne({ tournamentId: tid }).lean().exec(function (err, tournament) {
     if (err) { return next(err); }
 
@@ -164,7 +164,7 @@ router.get('/:id/bracket', function (req, res, next) {
     tournament.participants.forEach(function (participant) {
       participantIds.push(participant.pid);
     });
-    winston.info('participants id found: ', participantIds);
+    logger.info('participants id found: ', participantIds);
 
     User.find({ 'uid': { $in: participantIds } }, 'uid username picture').lean().exec(function (err, users) {
       if (err) { return next(err); }
@@ -191,9 +191,9 @@ router.get('/:id/bracket', function (req, res, next) {
         // Add round inforamtions
         rounds[roundIndex].push({ user1: user1, user2: user2, matchId: match.matchId, nextMatchId: match.nextMatchId });
       });
-      winston.info('rounds nested objects : ', rounds);
+      logger.info('rounds nested objects : ', rounds);
 
-      var uid = parseInt(res.locals.user);
+      var uid = req.uid;
       var userHasJoinTournament = isUserHasJoinTournament(users, uid);
       var closedRegistrations = isTournamentRegistrationsClosed(tournament, uid);
 

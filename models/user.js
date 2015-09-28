@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 /**
 * Schemas definitions
@@ -28,6 +29,8 @@ var UserSchema = new Schema({
   "password" : String,
   "lastonline" : Number
 }, { collection: 'objects' });
+
+UserSchema.plugin(passportLocalMongoose, { usernameField: 'uid', selectFields: 'uid username userslug fullname location birthday birthday website email signature joindate picture gravatarpicture uploadedpicture profileviews reputation postcount lastposttime banned status lastonline' });
 
 /**
 * Register schema

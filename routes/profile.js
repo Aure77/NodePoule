@@ -6,7 +6,7 @@ var mongoose = require('mongoose'), UserProfil = mongoose.model('UserProfil'), U
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  findOrCreateUserProfilByUserId(res.locals.user, function(err, userProfil) {
+  findOrCreateUserProfilByUserId(req.uid, function(err, userProfil) {
     if (err) { return next(err); }
     res.render('profile', { title: util.format('Profil de %s', userProfil.user.username), profil: userProfil });
   });
