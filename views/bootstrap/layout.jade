@@ -40,7 +40,9 @@ head(lang='fr')
               a(href='/faq') FAQ
             - if(user)
               li
-                a(href='/profile') Mon Profil
+                a(href='/profile', title='Profil de !{user.userslug}', aria-label='Profil de !{user.userslug}')
+                  img(class="nav-avatar", src='#{user.picture}')
+                  span !{user.username}
             - else
               li
                 a(href='#{forumUrl}/login?next=#{baseUrl}#{currentReqPath}') Se connecter

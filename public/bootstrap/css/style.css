@@ -340,3 +340,8 @@ font-weight: bold;
 a[ng-click],a[data-ng-click]{
     cursor: pointer;
 }
+.nav-avatar {
+	height: 19px; 
+	width: 19px; 
+	margin-right: 10px;
+}
