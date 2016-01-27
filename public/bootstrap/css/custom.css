@@ -7,3 +7,10 @@ ul.tournaments {
 .news-list li {
 	margin-top:20px;
 }
+a.action{
+    text-decoration: none;    
+}
+a.action img{
+    text-decoration: none;
+    width: 20px;
+}
