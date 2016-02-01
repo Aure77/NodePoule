@@ -1,0 +1,9 @@
+extends ../layout
+block home
+  span.news-date Le #{news.prettyDate}
+
+block content
+       .row
+          - if(!news.hideThumbnail)
+             img(src='#{news.thumbnailRelPath}', alt='#{news.title}', align='left', style='margin-right: 20px;')
+          p(style='text-align: justify;')!{news.content}

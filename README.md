@@ -1,4 +1,3 @@
-NodePoule
-=========
+# NodePoule2
 
-NodePoule website
+a [Sails](http://sailsjs.org) application
