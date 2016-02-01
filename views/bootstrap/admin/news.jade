@@ -1,63 +1,43 @@
-extends ../layout
+extends layout
 block head
   script(type='text/javascript', src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
 
 block content
-    .container
-        .row
-            .col-md-3
-            div
-                span Management
-                |                     
-                ul
-                li
-                    a(href='#') News
-                |                       
-                li
-                    a(href='#') Users
-                |                       
-                li
-                    a(href='#') Tourneys
-                |                       
-                li
-                    a(href='#') Stats
-            |                 
-            .col-md-9
-            span
-                | News management
-            |                     
-            table
-                tr
-                th Titre
-                |                             
-                th Contenu
-                |                             
-                th Date
-                |                             
-                th Editer
-                |                             
-                th Archiver
-                |                             
-                th Supprimer
-                |                         
-                tr
-                td Premi&egrave;re news
-                |                             
-                td
-                    a(href='#') Blablabla... (x premiers caract&egrave;res + click --&gt; aper&ccedil;u news dans popup)
-                |                             
-                td 31-01-2016
-                |                             
-                td
-                    a.action(href='#gotoeditpage')
-                    img(src='bootstrap/img/edit.png')
-                |                             
-                td
-                    a.action(href='#')
-                    img(src='bootstrap/img/hide.png')
-                |                             
-                td
-                    a.action(href='#')
-                    img(src='bootstrap/img/delete.png')
+        span
+            | News management
+        |                     
+        table
+            tr
+            th Titre
+            |                             
+            th Contenu
+            |                             
+            th Date
+            |                             
+            th Editer
+            |                             
+            th Archiver
+            |                             
+            th Supprimer
+            |                         
+            tr
+            td Premi&egrave;re news
+            |                             
+            td
+                a(href='#') Blablabla... (x premiers caract&egrave;res + click --&gt; aper&ccedil;u news dans popup)
+            |                             
+            td 31-01-2016
+            |                             
+            td
+                a.action(href='#gotoeditpage')
+                img(src='bootstrap/img/edit.png')
+            |                             
+            td
+                a.action(href='#')
+                img(src='bootstrap/img/hide.png')
+            |                             
+            td
+                a.action(href='#')
+                img(src='bootstrap/img/delete.png')
 
 
