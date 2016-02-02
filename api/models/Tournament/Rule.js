@@ -1,25 +1,23 @@
 /**
- * Faq.js
+ * Tournament/Rule.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
  */
 
 module.exports = {
-
+	identity : 'TournamentRule',
 	attributes : {
-		letter : { // A-Z#
+		title : {
 			type : 'string',
-			required : true,
-			regex : '^([A-Z]|#)$'
+			required : true
 		},
-		responses : {
-			collection : 'FaqResponse',
-			via : 'faq'
+		description : {
+			type : 'string',
+			required : true
 		},
-		game : {
-			model : 'game'
+		tournament : {
+			model : 'tournament'
 		}
 	}
-
 };

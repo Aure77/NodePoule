@@ -11,33 +11,33 @@ module.exports = {
 		name : {
 			type : 'string',
 			required : true,
-			unique: true
+			unique : true
 		},
 		description : {
 			type : 'text',
 			required : true
 		},
 		link : {
-			type : 'string'
+			type : 'url'
 		},
 		iconRelPath : {
 			type : 'string'
 		},
 		type : {
 			type : 'string',
-			enum: ['game', 'platform'],
+			enum : ['game', 'platform'],
 			required : true
 		},
 		topicId : {
 			type : 'integer'
 		},
 		faqs : {
-            collection: 'faq',
-            via: 'game'
-        },
+			collection : 'Faq',
+			via : 'game'
+		},
 		tournaments : {
-            collection: 'tournament',
-            via: 'game'
-        }
+			collection : 'Tournament',
+			via : 'game'
+		}
 	}
 };

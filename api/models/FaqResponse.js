@@ -1,5 +1,5 @@
 /**
- * Faq.js
+ * FaqResponse.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,18 +8,16 @@
 module.exports = {
 
 	attributes : {
-		letter : { // A-Z#
+		name : {
 			type : 'string',
-			required : true,
-			regex : '^([A-Z]|#)$'
+			required : true
 		},
-		responses : {
-			collection : 'FaqResponse',
-			via : 'faq'
+		description : {
+			type : 'text',
+			required : true
 		},
-		game : {
-			model : 'game'
+		faq : {
+			model : 'Faq'
 		}
 	}
-
 };
