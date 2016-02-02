@@ -6,13 +6,12 @@
  */
 
 module.exports = {
-	
+
    /**
    * `HomeController.index()`
    */
   index: function (req, res) {
     return res.view({title: "Accueil"});
   }
-	
-};
 
+};

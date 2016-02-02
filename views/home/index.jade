@@ -1,20 +1,17 @@
-extends layout
+extends ../layout
 
 block home
-  h2 Annonces
-    |         
-    - if(tournaments.length===0)
-      p(class='no-tournaments') Aucune annonce pour le moment.
-    - else
-      #myCarousel.carousel.slide(data-ride='carousel')
+  div(data-ng-controller='tournamentCtrl')
+    h2 Annonces
+      |         
+      p(class='no-tournaments', data-ng-hide="tournaments.length") Aucune annonce pour le moment.
+      #myCarousel.carousel.slide(data-ride='carousel', data-ng-if="tournaments.length")
         ol.carousel-indicators
-          - each tournament,i in tournaments
-            li(class="#{i==0?'active':''}", data-target='#myCarousel', data-slide-to='#{i}')
+          li(data-ng-repeat="tournament in tournaments track by $index" data-ng-class="{'active': $index==0}", data-ng-attr-data-target='#myCarousel', data-ng-attr-data-slide-to='{$index}')
         .carousel-inner(role='listbox')
-          - each tournament,i in tournaments
-            div(class="item#{i==0?' active':''}")
-              a(href='/tournaments/#{tournament.tournamentId}', title='#{tournament.title}')
-                img.first-slide.img-responsive.center-block(src='#{tournament.imageRelPath}', alt='#{tournament.title}')
+          div(data-ng-repeat="tournament in tournaments track by $index" data-ng-class="{'active': $index==0}")
+            a(data-ng-href='/tournaments/{{tournament.id}}', data-ng-title='{{tournament.title}}')
+              img.first-slide.img-responsive.center-block(data-ng-src='{{tournament.imageRelPath}}', data-ng-alt='{{tournament.title}}')
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
           |             
@@ -24,12 +21,12 @@ block home
           span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
           |             
           span.sr-only Next
-  .wrapper
-    figure.img-indent2
-      img(src='/images/page1-img1.png', alt='')
-    .extra-wrap
-      strong.text-1.
-        N'hésitez pas à vous inscrire sur le forum pour échanger avec vos adversaires.
+    .wrapper
+      figure.img-indent2
+        img(src='/images/page1-img1.png', alt='')
+      .extra-wrap
+        strong.text-1.
+          N'hésitez pas à vous inscrire sur le forum pour échanger avec vos adversaires.
 
 block aside
 
@@ -37,26 +34,23 @@ block content
   .row
     // Left pannel
     .col-md-8.left-panel
-      section
+      section(data-ng-controller='newsCtrl')
         h3 Les news
         |                     
-        - if(newsCollection.length===0)
-          p.no-tournaments Aucune news n'est disponible.
-        - else
-            .news-list
-              - each news in newsCollection
-                  article.news-container.container-fluid
-                      .news-img.col-md-4
-                        img(src='#{news.thumbnailRelPath}', alt='#{news.title}')
-                      |                                 
-                      .col-md-8
-                        a.news-title(href='/news/#{news.newsId}') #{news.title}
-                        |                                   
-                        .news-content
-                          | !{news.content}
-                  | 
-            .news-paginate
-               include _paginate
+        p.no-tournaments(data-ng-hide="newsCollection.length") Aucune news n'est disponible.
+        .news-list(data-ng-if="newsCollection.length")
+          article.news-container.container-fluid(data-ng-repeat="news in newsCollection track by $index")
+              .news-img.col-md-4
+                img(data-ng-src='{{news.thumbnailRelPath}}', data-ng-alt='{{news.title}}')
+              |                                 
+              .col-md-8
+                a.news-title(data-ng-href='/news/{{news.id}}') {{news.title}}
+                |                                   
+                .news-content
+                  | {{news.content}}
+          | 
+        -//.news-paginate
+           -//include _paginate
     // Right pannel
     .col-md-4.right-panel
       aside
@@ -109,4 +103,31 @@ block js
               return '<li><a href="' + entry.link + '">' + entry.title + '</a></li>';
           }
       });
+    });
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js')
+  script(type='text/javascript').
+    var app = angular.module('npApp', []);
+    app.controller('tournamentCtrl', function ($scope, $http, $timeout) {
+      $scope.tournaments = [];
+      $scope.getAllTournaments = function(callback) {
+        $http.get("/api/rest/tournament").success(function(response) {
+          $scope.tournaments = response;
+          if(typeof callback === "function") {
+            callback();
+          }
+        });
+      };
+      $scope.getAllTournaments();
+    });
+    app.controller('newsCtrl', function ($scope, $http, $timeout) {
+      $scope.newsCollection = [];
+      $scope.getAllNews = function(callback) {
+        $http.get("/api/rest/news").success(function(response) {
+          $scope.newsCollection = response;
+          if(typeof callback === "function") {
+            callback();
+          }
+        });
+      };
+      $scope.getAllNews();
     });

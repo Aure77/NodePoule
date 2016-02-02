@@ -5,7 +5,8 @@ block head
   link(rel="stylesheet" href='/styles/jquery.modal.css', type='text/css', media='all')
 
 block content
-    .row(data-ng-app="npApp")
+    -//.row(data-ng-app="npApp")
+    .row
       div(data-ng-controller="tournamentCtrl")
         .competition-infos
           p.competition-title
@@ -16,7 +17,7 @@ block content
         div.row(style='width:100%;')
           a.button-link(href='#{tournament.tournamentId}/participants') Les participants
           a.button-link(href='#rules', target='_self') Les règles
-          a.button-link(href='/games/#{tournament.game._id}') Infos sur le jeu
+          a.button-link(href='/games/#{tournament.game.id}') Infos sur le jeu
           - if(tournament.topicId)
             a.button-link(href='#{tournament.topicId}') Topic du tournoi
           a#subscribe.button-link.subscribe(data-ng-if="canSubscribe", data-ng-click="joinTournament()") Je participe!
