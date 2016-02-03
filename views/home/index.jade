@@ -1,15 +1,15 @@
 extends ../layout
 
 block home
-  div(data-ng-controller='tournamentCtrl')
+  div(data-ng-controller='tournamentCtrl as tCtrl')
     h2 Annonces
       |         
-      p(class='no-tournaments', data-ng-hide="tournaments.length") Aucune annonce pour le moment.
-      #myCarousel.carousel.slide(data-ride='carousel', data-ng-if="tournaments.length")
+      p(class='no-tournaments', data-ng-hide="tCtrl.tournaments.length") Aucune annonce pour le moment.
+      #myCarousel.carousel.slide(data-ride='carousel', data-ng-if="tCtrl.tournaments.length")
         ol.carousel-indicators
-          li(data-ng-repeat="tournament in tournaments track by $index" data-ng-class="{'active': $index==0}", data-ng-attr-data-target='#myCarousel', data-ng-attr-data-slide-to='{$index}')
+          li(data-ng-repeat="tournament in tCtrl.tournaments track by $index" data-ng-class="{'active': $index==0}", data-target='#myCarousel', data-slide-to='{{$index}}')
         .carousel-inner(role='listbox')
-          div(data-ng-repeat="tournament in tournaments track by $index" data-ng-class="{'active': $index==0}")
+          div(class="item", data-ng-repeat="tournament in tCtrl.tournaments track by $index" data-ng-class="{'active': $index==0}")
             a(data-ng-href='/tournaments/{{tournament.id}}', data-ng-title='{{tournament.title}}')
               img.first-slide.img-responsive.center-block(data-ng-src='{{tournament.imageRelPath}}', data-ng-alt='{{tournament.title}}')
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
@@ -34,12 +34,12 @@ block content
   .row
     // Left pannel
     .col-md-8.left-panel
-      section(data-ng-controller='newsCtrl')
+      section(data-ng-controller='newsCtrl as nCtrl')
         h3 Les news
         |                     
-        p.no-tournaments(data-ng-hide="newsCollection.length") Aucune news n'est disponible.
-        .news-list(data-ng-if="newsCollection.length")
-          article.news-container.container-fluid(data-ng-repeat="news in newsCollection track by $index")
+        p.no-tournaments(data-ng-hide="nCtrl.newsCollection.length") Aucune news n'est disponible.
+        .news-list(data-ng-if="nCtrl.newsCollection.length")
+          article.news-container.container-fluid(data-ng-repeat="news in nCtrl.newsCollection track by $index")
               .news-img.col-md-4
                 img(data-ng-src='{{news.thumbnailRelPath}}', data-ng-alt='{{news.title}}')
               |                                 
@@ -104,30 +104,33 @@ block js
           }
       });
     });
-  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js')
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
   script(type='text/javascript').
     var app = angular.module('npApp', []);
-    app.controller('tournamentCtrl', function ($scope, $http, $timeout) {
-      $scope.tournaments = [];
-      $scope.getAllTournaments = function(callback) {
-        $http.get("/api/rest/tournament").success(function(response) {
-          $scope.tournaments = response;
-          if(typeof callback === "function") {
-            callback();
-          }
+    app.controller('tournamentCtrl', function ($scope, $http) {
+      var _this = this;
+      this.tournaments = [];
+      this.getAllTournaments = function() {
+        -// using angular ajax request
+        $http.get("/api/rest/tournament", {params: { populate: false, sort: 'startDate ASC', limit: 5, where: "{'startDate': {'>': '2016-04-04T10:57:08.976Z' }}" }}).success(function(response) {
+          _this.tournaments = response;
         });
+        // using sails websocket request
+        // io.socket.get("/api/rest/tournament", function(tournaments) {
+        //   $scope.$apply(function() { // ask angular to update view
+        //     _this.tournaments = tournaments;
+        //   });
+        // });
       };
-      $scope.getAllTournaments();
+      this.getAllTournaments();
     });
-    app.controller('newsCtrl', function ($scope, $http, $timeout) {
-      $scope.newsCollection = [];
-      $scope.getAllNews = function(callback) {
+    app.controller('newsCtrl', function ($http) {
+      var _this = this;
+      this.newsCollection = [];
+      this.getAllNews = function() {
         $http.get("/api/rest/news").success(function(response) {
-          $scope.newsCollection = response;
-          if(typeof callback === "function") {
-            callback();
-          }
+          _this.newsCollection = response;
         });
       };
-      $scope.getAllNews();
+      this.getAllNews();
     });
