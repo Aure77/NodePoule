@@ -30,11 +30,10 @@ module.exports = {
   * `TournamentController.tournamentsPaginateJSON()`
   */
   tournamentsPaginateJSON: function (req, res) {
-    var limit = req.param('limit', 2);
+    var limit = req.param('limit', 5);
     var page = escape(req.params.page);
     Tournament.find().paginate({ page: page, limit: limit }).exec(function(err, tournaments) {
       if (err) { return res.serverError(err); }
-      console.log(tournaments);
       Tournament.count().exec(function(err, count) {
         if (err) return res.serverError(err);
         var contentRange = {
