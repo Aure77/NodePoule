@@ -25,7 +25,7 @@ module.exports = {
 		},
 		type : {
 			type : 'string',
-			enum : ['game', 'platform'],
+			enum : ['game', 'platform', 'other'],
 			required : true
 		},
 		topicId : {

@@ -10,12 +10,12 @@ module.exports = {
   /**
    * `NewsController.detail()`
    */
-  detail : function (req, res, next) {
+  detail : function (req, res) {
     var newsId = escape(req.params.id);
     News.findOneById(newsId).exec(function (err, news) {
       if (err) { return res.serverError(err);  }
       if (!news) {
-        return next("La news '" + newsId + "' est introuvable");
+        return res.notFound("La news '" + newsId + "' est introuvable");
       }
 
       return res.view({
