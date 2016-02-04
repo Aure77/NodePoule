@@ -38,6 +38,7 @@ module.exports = {
 			collection : 'TournamentMatch',
 			via : 'tournament'
 		},
+		// Associations (aka relational attributes)
 		participants : {
 			collection : 'TournamentParticipant',
 			via : 'tournament'
@@ -45,43 +46,43 @@ module.exports = {
 		rules : {
 			collection : 'TournamentRule',
 			via : 'tournament'
+		},
+		// Attribute methods
+		//TODO déplacer la logique dans la view
+		getTitle : function () {
+			return this.name + ' - ' + moment(this.startDate).format('DD/MM/YYYY');
+		},
+		//TODO déplacer la logique dans la view
+		getPrettyStartDate : function () {
+			return moment(this.startDate).format('DD/MM/YYYY');
+		},
+		//TODO déplacer la logique dans la view
+		getPrettyEndDate : function () {
+			return moment(this.endDate).format('DD/MM/YYYY');
+		},
+		//TODO déplacer la logique dans la view
+		getStatus : function () {
+			var today = moment();
+			var end = moment(this.endDate);
+			var start = moment(this.startDate);
+			if ((today <= end) && (today >= start))
+				return 'en cours';
+			if (today < start)
+				return 'a venir';
+			if (today > end)
+				return 'termine';
+		},
+		//TODO déplacer la logique dans la view
+		getCssStatus : function () {
+			var today = moment();
+			var end = moment(this.endDate);
+			var start = moment(this.startDate);
+			if ((today <= end) && (today >= start))
+				return 'competition-statut encours';
+			if (today < start)
+				return 'competition-statut avenir';
+			if (today > end)
+				return 'competition-statut termine';
 		}
-	},
-	//TODO déplacer la logique dans la view
-	title : function () {
-		return this.name + ' - ' + moment(this.startDate).format('DD/MM/YYYY');
-	},
-	//TODO déplacer la logique dans la view
-	prettyStartDate : function () {
-		return moment(this.startDate).format('DD/MM/YYYY');
-	},
-	//TODO déplacer la logique dans la view
-	prettyEndDate : function () {
-		return moment(this.endDate).format('DD/MM/YYYY');
-	},
-	//TODO déplacer la logique dans la view
-	status : function () {
-		var today = moment();
-		var end = moment(this.endDate);
-		var start = moment(this.startDate);
-		if ((today <= end) && (today >= start))
-			return 'en cours';
-		if (today < start)
-			return 'a venir';
-		if (today > end)
-			return 'termine';
-	},
-	//TODO déplacer la logique dans la view
-	cssStatus : function () {
-		var today = moment();
-		var end = moment(this.endDate);
-		var start = moment(this.startDate);
-		if ((today <= end) && (today >= start))
-			return 'competition-statut encours';
-		if (today < start)
-			return 'competition-statut avenir';
-		if (today > end)
-			return 'competition-statut termine';
 	}
-	
 };

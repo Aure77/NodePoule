@@ -23,6 +23,27 @@ module.exports = {
         news : news
       });
     });
+  },
+
+  /**
+  * `NewsController.newsPaginateJSON()`
+  */
+  newsPaginateJSON: function (req, res) {
+    var limit = 2;
+    var page = escape(req.params.page);
+    News.find().paginate({ page: page, limit: limit }).exec(function(err, newsCollection) {
+      if (err) { return res.serverError(err); }
+      News.count().exec(function(err, count) {
+  			if (err) return res.serverError(err);
+  			var contentRange = {
+  				start: (page-1) * limit,
+  				end: ((page-1) * limit) + limit,
+  				total: count
+  			};
+  			sails.log.silly('newsPaginateJSON->Content-Range :: ' + contentRange.start + '-' + contentRange.end + '/' + contentRange.total);
+  			return res.ok({newsCollection: newsCollection, contentRange: contentRange});
+  		});
+    });
   }
 
 };

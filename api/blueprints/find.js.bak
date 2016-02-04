@@ -1,0 +1,61 @@
+var actionUtil = require('sails/lib/hooks/blueprints/actionUtil'),
+	_ = require('lodash');
+
+/**
+ * This adds a content range header to each find response.
+ * That allows us to implement a pagination client side.
+ */
+module.exports = function(req, res) {
+
+	// Look up the model
+  var Model = actionUtil.parseModel(req);
+
+
+  // If an `id` param was specified, use the findOne blueprint action
+  // to grab the particular instance with its primary key === the value
+  // of the `id` param.   (mainly here for compatibility for 0.9, where
+  // there was no separate `findOne` action)
+  if ( actionUtil.parsePk(req) ) {
+    return require('./findOne')(req,res);
+  }
+
+	// Lookup for records that match the specified criteria
+	var where = actionUtil.parseCriteria(req);
+	var limit = actionUtil.parseLimit(req);
+	var skip = actionUtil.parseSkip(req);
+  var query = Model.find()
+  .where(where)
+  .limit(limit)
+  .skip(skip)
+  .sort( actionUtil.parseSort(req) );
+	query = actionUtil.populateRequest(query, req);
+	query.exec(function(err, matchingRecords) {
+		if (err) return res.serverError(err);
+
+    // Only `.watch()` for new instances of the model if
+    // `autoWatch` is enabled.
+    if (req._sails.hooks.pubsub && req.isSocket) {
+      Model.subscribe(req, matchingRecords);
+      if (req.options.autoWatch) { Model.watch(req); }
+      // Also subscribe to instances of all associated models
+      _.each(matchingRecords, function (record) {
+        actionUtil.subscribeDeep(req, record);
+      });
+    }
+
+		Model.count(where).exec(function(err, count) {
+			if (err) return res.serverError(err);
+
+			var metaInfo = {
+				start: skip,
+				end: skip + limit,
+				total: count
+			};
+
+			sails.log.silly('find->Content-Range :: items ' + metaInfo.start + '-' + metaInfo.end + '/' + metaInfo.total);
+
+			res.set('Content-Range', metaInfo.start + '-' + metaInfo.end + '/' + metaInfo.total);
+			return res.ok(matchingRecords);
+		});
+	});
+};

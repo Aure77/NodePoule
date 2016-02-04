@@ -49,6 +49,8 @@ block content
                 .news-content
                   | {{news.content}}
           | 
+          -// ui-bootstrap pagination directive
+          uib-pagination(total-items="nCtrl.newsTotalItems", ng-change="nCtrl.pageChanged()", ng-model="nCtrl.newsCurrentPage", items-per-page="nCtrl.newsItemsPerPage", max-size="nCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages")
         -//.news-paginate
            -//include _paginate
     // Right pannel
@@ -105,14 +107,16 @@ block js
       });
     });
   script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
+  script(type='text/javascript', src='/js/ui-bootstrap-tpls-1.1.2.min.js')
   script(type='text/javascript').
-    var app = angular.module('npApp', []);
+    var app = angular.module('npApp', ['ui.bootstrap']);
     app.controller('tournamentCtrl', function ($scope, $http) {
       var _this = this;
       this.tournaments = [];
       this.getAllTournaments = function() {
         -// using angular ajax request
-        $http.get("/api/rest/tournament", {params: { populate: false, sort: 'startDate ASC', limit: 5, where: "{'startDate': {'>': '2016-04-04T10:57:08.976Z' }}" }}).success(function(response) {
+        //$http.get("/api/rest/tournament", {params: { populate: false, sort: 'startDate ASC', limit: 5, where: "{'startDate': {'>': '2016-04-04T10:57:08.976Z' }}" }}).success(function(response) {
+        $http.get("/json/tournament/currents").success(function(response) {
           _this.tournaments = response;
         });
         // using sails websocket request
@@ -124,13 +128,46 @@ block js
       };
       this.getAllTournaments();
     });
-    app.controller('newsCtrl', function ($http) {
+    app.service('NewsService', function($http, $q) {
+      this.getNewsByPage = function(page) {
+        var deferred = $q.defer(); // to handle async response
+        $http.get("/json/news/p/"+page).success(function(data, status, headers) {
+          var contentRange = data.contentRange;
+          deferred.resolve({
+            newsCollection: data.newsCollection,
+            newsTotalItems: contentRange.total,
+            newsCurrentPage: page,
+            newsItemsPerPage: (contentRange.end - contentRange.start)
+          });
+        }).error(deferred.reject);
+        return deferred.promise;
+      };
+    });
+    app.controller('newsCtrl', function (NewsService, $location) {
       var _this = this;
       this.newsCollection = [];
-      this.getAllNews = function() {
-        $http.get("/api/rest/news").success(function(response) {
-          _this.newsCollection = response;
-        });
+      this.maxSize = 5; // max pagination buttons to show
+      this.newsTotalItems = 0;
+      this.newsCurrentPage = 0;
+      this.newsItemsPerPage = 0;
+      
+      this.setPage = function (pageNo) {
+        _this.newsCurrentPage = pageNo;
       };
-      this.getAllNews();
+
+      this.pageChanged = function() {
+        console.log('Page changed to: ' + _this.newsCurrentPage);
+        NewsService.getNewsByPage(_this.newsCurrentPage).then(function(newsByPage) {
+          _this.newsCollection = newsByPage.newsCollection;
+          _this.newsTotalItems = newsByPage.newsTotalItems;
+          _this.newsCurrentPage = newsByPage.newsCurrentPage;
+          _this.newsItemsPerPage = newsByPage.newsItemsPerPage;
+          $location.search('news-p', newsByPage.newsCurrentPage); // set news page in hash
+        }).catch(function(data, status) {
+          console.error('News error', data, status);
+        });
+      };      
+      
+      this.setPage($location.search()['news-p'] || 1); // set current page using hash
+      this.pageChanged(); // notify page changed to load news
     });

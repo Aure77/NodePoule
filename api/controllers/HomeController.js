@@ -12,6 +12,13 @@ module.exports = {
    */
   index: function (req, res) {
     return res.view({title: "Accueil"});
+  },
+
+  /**
+  * `HomeController.contact()`
+  */
+  contact: function (req, res) {
+    return res.view({title: "Contactez-nous"});
   }
 
 };

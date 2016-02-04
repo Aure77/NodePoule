@@ -22,12 +22,6 @@
 
 module.exports.routes = {
 
-
-  '/' : {
-    controller: 'HomeController',
-	action: 'index'
-  },
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -37,8 +31,24 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-  
-  'GET /news/:id': { controller: 'NewsController', action: 'detail', skipAssets: true },
-  'GET /game/:id': { controller: 'GameController', action: 'detail', skipAssets: true }
+
+  /*
+  * HomeController routes
+  */
+  '/' : { controller: 'HomeController', action: 'index' },
+  'GET /contactez-nous': { controller: 'HomeController', action: 'contact' },
+  /*
+  * NewsController routes
+  */
+  'GET /news/:id': { controller: 'NewsController routes', action: 'detail' },
+  'GET /json/news/p/:page': { controller: 'NewsController', action: 'newsPaginateJSON' },
+  /*
+  * GameController routes
+  */
+  'GET /game/:id': { controller: 'GameController', action: 'detail' },
+  /*
+  * TournamentController routes
+  */
+  'GET /json/tournament/currents': { controller: 'TournamentController', action: 'currentTournamentsJSON' }
 
 };
