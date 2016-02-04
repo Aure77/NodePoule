@@ -83,6 +83,16 @@ module.exports = {
 				return 'competition-statut avenir';
 			if (today > end)
 				return 'competition-statut termine';
+		},
+		// Override the default toJSON method
+		toJSON: function() {
+			var obj = this.toObject();
+			obj.title = this.getTitle();
+			obj.prettyStartDate = this.getPrettyStartDate();
+			obj.prettyEndDate = this.getPrettyEndDate();
+			obj.status = this.getStatus();
+			obj.cssStatus = this.getCssStatus();
+			return obj;
 		}
 	}
 };

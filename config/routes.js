@@ -49,6 +49,8 @@ module.exports.routes = {
   /*
   * TournamentController routes
   */
-  'GET /json/tournament/currents': { controller: 'TournamentController', action: 'currentTournamentsJSON' }
+  'GET /tournaments': { controller: 'TournamentController', action: 'all' },
+  'GET /json/tournaments/p/:page': { controller: 'TournamentController', action: 'tournamentsPaginateJSON' },  
+  'GET /json/tournaments/currents': { controller: 'TournamentController', action: 'currentTournamentsJSON' }
 
 };

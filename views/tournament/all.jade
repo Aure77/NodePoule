@@ -1,0 +1,64 @@
+extends ../layout
+
+block content
+    .row(data-ng-controller="tournamentCtrl as tCtrl")
+        p.no-tournaments(data-ng-hide="tCtrl.tournaments.length") Pas de tournois en cours...
+        .competition-list(data-ng-if="tCtrl.tournaments.length")
+          .competition-list-item(data-ng-repeat="tournament in tCtrl.tournaments track by $index")
+            a(data-ng-href='/tournaments/{{tournament.id}}')
+              span
+                | {{tournament.title}}
+              span(class='{{tournament.cssStatus}}')
+                  | {{tournament.status}}
+              img(data-ng-src='{{tournament.imageRelPath}}', style='width: 100%;', data-ng-alt='{{tournament.title}}')
+          -// ui-bootstrap pagination directive
+          uib-pagination(total-items="tCtrl.tnmtTotalItems", ng-change="tCtrl.pageChanged()", ng-model="tCtrl.tnmtCurrentPage", items-per-page="tCtrl.tnmtItemsPerPage", max-size="tCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages", previous-text="‹", next-text="›", first-text="«", last-text="»")
+
+block js
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
+  script(type='text/javascript', src='/js/ui-bootstrap-tpls-1.1.2.min.js')
+  script(type='text/javascript').
+    var app = angular.module('npApp', ['ui.bootstrap']);
+    app.service('TournamentService', function($http, $q) {
+      this.getTournamentsByPage = function(page) {
+        var deferred = $q.defer(); // to handle async response
+        $http.get("/json/tournaments/p/"+page).success(function(data, status, headers) {
+          var contentRange = data.contentRange;
+          deferred.resolve({
+            items: data.tournaments,
+            totalItems: contentRange.total,
+            currentPage: page,
+            itemsPerPage: (contentRange.end - contentRange.start)
+          });
+        }).error(deferred.reject);
+        return deferred.promise;
+      };
+    });
+    app.controller('tournamentCtrl', function (TournamentService, $location) {
+      var _this = this;
+      this.tournaments = [];
+      this.maxSize = 5; // max pagination buttons to show
+      this.tnmtTotalItems = 0;
+      this.tnmtCurrentPage = 0;
+      this.tnmtItemsPerPage = 0;
+      
+      this.setPage = function (pageNo) {
+        _this.tnmtCurrentPage = pageNo;
+      };
+
+      this.pageChanged = function() {
+        console.log('Page changed to: ' + _this.tnmtCurrentPage);
+        TournamentService.getTournamentsByPage(_this.tnmtCurrentPage).then(function(tournamentsByPage) {
+          _this.tournaments = tournamentsByPage.items;
+          _this.tnmtTotalItems = tournamentsByPage.totalItems;
+          _this.tnmtCurrentPage = tournamentsByPage.currentPage;
+          _this.tnmtItemsPerPage = tournamentsByPage.itemsPerPage;
+          $location.search('page', tournamentsByPage.currentPage); // set tournaments page in hash
+        }).catch(function(data, status) {
+          console.error('Tournaments error', data, status);
+        });
+      };      
+      
+      this.setPage($location.search()['page'] || 1); // set current page using hash
+      this.pageChanged(); // notify page changed to load tournaments
+    });

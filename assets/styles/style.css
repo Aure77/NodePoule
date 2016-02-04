@@ -141,7 +141,7 @@
 	vertical-align:middle;
 	margin-left:10px;
 }
-.no-tournaments{
+.no-tournaments, .no-news {
 	font-family:verdana,arial,sans serif;
 	text-align:center;
 	font-weight:bold;

@@ -4,12 +4,12 @@ block home
   div(data-ng-controller='tournamentCtrl as tCtrl')
     h2 Annonces
       |         
-      p(class='no-tournaments', data-ng-hide="tCtrl.tournaments.length") Aucune annonce pour le moment.
+      p.no-tournaments(data-ng-hide="tCtrl.tournaments.length") Aucune annonce pour le moment.
       #myCarousel.carousel.slide(data-ride='carousel', data-ng-if="tCtrl.tournaments.length")
         ol.carousel-indicators
-          li(data-ng-repeat="tournament in tCtrl.tournaments track by $index" data-ng-class="{'active': $index==0}", data-target='#myCarousel', data-slide-to='{{$index}}')
+          li(data-ng-repeat="tournament in tCtrl.tournaments track by $index", data-ng-class="{'active': $index==0}", data-target='#myCarousel', data-slide-to='{{$index}}')
         .carousel-inner(role='listbox')
-          div(class="item", data-ng-repeat="tournament in tCtrl.tournaments track by $index" data-ng-class="{'active': $index==0}")
+          div(class="item", data-ng-repeat="tournament in tCtrl.tournaments track by $index", data-ng-class="{'active': $index==0}")
             a(data-ng-href='/tournaments/{{tournament.id}}', data-ng-title='{{tournament.title}}')
               img.first-slide.img-responsive.center-block(data-ng-src='{{tournament.imageRelPath}}', data-ng-alt='{{tournament.title}}')
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
@@ -37,7 +37,7 @@ block content
       section(data-ng-controller='newsCtrl as nCtrl')
         h3 Les news
         |                     
-        p.no-tournaments(data-ng-hide="nCtrl.newsCollection.length") Aucune news n'est disponible.
+        p.no-news(data-ng-hide="nCtrl.newsCollection.length") Aucune news n'est disponible.
         .news-list(data-ng-if="nCtrl.newsCollection.length")
           article.news-container.container-fluid(data-ng-repeat="news in nCtrl.newsCollection track by $index")
               .news-img.col-md-4
@@ -50,7 +50,7 @@ block content
                   | {{news.content}}
           | 
           -// ui-bootstrap pagination directive
-          uib-pagination(total-items="nCtrl.newsTotalItems", ng-change="nCtrl.pageChanged()", ng-model="nCtrl.newsCurrentPage", items-per-page="nCtrl.newsItemsPerPage", max-size="nCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages")
+          uib-pagination(total-items="nCtrl.newsTotalItems", ng-change="nCtrl.pageChanged()", ng-model="nCtrl.newsCurrentPage", items-per-page="nCtrl.newsItemsPerPage", max-size="nCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages", previous-text="‹", next-text="›", first-text="«", last-text="»")
         -//.news-paginate
            -//include _paginate
     // Right pannel
@@ -110,21 +110,17 @@ block js
   script(type='text/javascript', src='/js/ui-bootstrap-tpls-1.1.2.min.js')
   script(type='text/javascript').
     var app = angular.module('npApp', ['ui.bootstrap']);
-    app.controller('tournamentCtrl', function ($scope, $http) {
+    app.controller('tournamentCtrl', function ($http) {
       var _this = this;
       this.tournaments = [];
       this.getAllTournaments = function() {
         -// using angular ajax request
         //$http.get("/api/rest/tournament", {params: { populate: false, sort: 'startDate ASC', limit: 5, where: "{'startDate': {'>': '2016-04-04T10:57:08.976Z' }}" }}).success(function(response) {
-        $http.get("/json/tournament/currents").success(function(response) {
+        $http.get("/json/tournaments/currents").success(function(response) {
           _this.tournaments = response;
+        }).error(function(data, status) {
+          console.error('Tournament error', data, status);
         });
-        // using sails websocket request
-        // io.socket.get("/api/rest/tournament", function(tournaments) {
-        //   $scope.$apply(function() { // ask angular to update view
-        //     _this.tournaments = tournaments;
-        //   });
-        // });
       };
       this.getAllTournaments();
     });
@@ -134,10 +130,10 @@ block js
         $http.get("/json/news/p/"+page).success(function(data, status, headers) {
           var contentRange = data.contentRange;
           deferred.resolve({
-            newsCollection: data.newsCollection,
-            newsTotalItems: contentRange.total,
-            newsCurrentPage: page,
-            newsItemsPerPage: (contentRange.end - contentRange.start)
+            items: data.newsCollection,
+            totalItems: contentRange.total,
+            currentPage: page,
+            itemsPerPage: (contentRange.end - contentRange.start)
           });
         }).error(deferred.reject);
         return deferred.promise;
@@ -158,11 +154,11 @@ block js
       this.pageChanged = function() {
         console.log('Page changed to: ' + _this.newsCurrentPage);
         NewsService.getNewsByPage(_this.newsCurrentPage).then(function(newsByPage) {
-          _this.newsCollection = newsByPage.newsCollection;
-          _this.newsTotalItems = newsByPage.newsTotalItems;
-          _this.newsCurrentPage = newsByPage.newsCurrentPage;
-          _this.newsItemsPerPage = newsByPage.newsItemsPerPage;
-          $location.search('news-p', newsByPage.newsCurrentPage); // set news page in hash
+          _this.newsCollection = newsByPage.items;
+          _this.newsTotalItems = newsByPage.totalItems;
+          _this.newsCurrentPage = newsByPage.currentPage;
+          _this.newsItemsPerPage = newsByPage.itemsPerPage;
+          $location.search('news-p', newsByPage.currentPage); // set news page in hash
         }).catch(function(data, status) {
           console.error('News error', data, status);
         });

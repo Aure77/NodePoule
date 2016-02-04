@@ -24,6 +24,28 @@ module.exports = {
 			if (err) { return res.serverError(err); }
 			return res.json(tournaments);
     });
+  },
+
+  /**
+  * `TournamentController.tournamentsPaginateJSON()`
+  */
+  tournamentsPaginateJSON: function (req, res) {
+    var limit = req.param('limit', 2);
+    var page = escape(req.params.page);
+    Tournament.find().paginate({ page: page, limit: limit }).exec(function(err, tournaments) {
+      if (err) { return res.serverError(err); }
+      console.log(tournaments);
+      Tournament.count().exec(function(err, count) {
+        if (err) return res.serverError(err);
+        var contentRange = {
+          start: (page-1) * limit,
+          end: ((page-1) * limit) + limit,
+          total: count
+        };
+        sails.log.silly('tournamentsPaginateJSON->Content-Range :: ' + contentRange.start + '-' + contentRange.end + '/' + contentRange.total);
+        return res.json({tournaments: tournaments, contentRange: contentRange});
+      });
+    });
   }
 
 };

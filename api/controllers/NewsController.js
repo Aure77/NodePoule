@@ -29,7 +29,7 @@ module.exports = {
   * `NewsController.newsPaginateJSON()`
   */
   newsPaginateJSON: function (req, res) {
-    var limit = 2;
+    var limit = req.param('limit', 3);
     var page = escape(req.params.page);
     News.find().paginate({ page: page, limit: limit }).exec(function(err, newsCollection) {
       if (err) { return res.serverError(err); }
@@ -41,7 +41,7 @@ module.exports = {
   				total: count
   			};
   			sails.log.silly('newsPaginateJSON->Content-Range :: ' + contentRange.start + '-' + contentRange.end + '/' + contentRange.total);
-  			return res.ok({newsCollection: newsCollection, contentRange: contentRange});
+  			return res.json({newsCollection: newsCollection, contentRange: contentRange});
   		});
     });
   }
