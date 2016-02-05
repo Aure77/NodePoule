@@ -1,4 +1,5 @@
-extends layout
+extends ../layout
+
 block head
   link(rel='stylesheet', href='/styles/mytourney.css', type='text/css', media='all')
   link(rel='stylesheet', href='/styles/dp_calendar.css', type='text/css', media='all')
@@ -7,7 +8,7 @@ block head
 block content
     -//.row(data-ng-app="npApp")
     .row
-      div(data-ng-controller="tournamentCtrl")
+      div(data-ng-controller="tournamentCtrl as tCtrl")
         .competition-infos
           p.competition-title
               img(src='#{tournament.game.iconRelPath}', alt='#{tournament.game.name}', title='#{tournament.game.name}')
@@ -20,20 +21,18 @@ block content
           a.button-link(href='/games/#{tournament.game.id}') Infos sur le jeu
           - if(tournament.topicId)
             a.button-link(href='#{tournament.topicId}') Topic du tournoi
-          a#subscribe.button-link.subscribe(data-ng-if="canSubscribe", data-ng-click="joinTournament()") Je participe!
-          a#subscribe.button-link.unsubscribe(data-ng-if="!canSubscribe && !closedRegistrations", data-ng-click="leaveTournament()") Je ne participe plus
+          a#subscribe.button-link.subscribe(data-ng-if="tCtrl.canSubscribe", data-ng-click="tCtrl.joinTournament()") Je participe!
+          a#subscribe.button-link.unsubscribe(data-ng-if="!tCtrl.canSubscribe && !tCtrl.closedRegistrations", data-ng-click="tCtrl.leaveTournament()") Je ne participe plus
 
         div.row(style='clear:both;')
-        - if(closedRegistrations)
-          div(class="bracket-wrapper")
+          div(class="bracket-wrapper", data-ng-if="tCtrl.closedRegistrations")
             a(name='participants').section-title Participants
             .competition-brackets
               .bracket    
-        - else
-          div(class="participants")
+          div(class="participants", data-ng-hide="tCtrl.closedRegistrations")
             a(name='inscrits').section-title Inscrits
             ul
-              li(data-ng-repeat="participant in participants")
+              li(data-ng-repeat="participant in tCtrl.participants")
                 a(data-ng-href='/profile/{{participant.uid}}')
                     img.user-avatar(data-ng-src='{{participant.picture}}', data-ng-alt='avatar de {{participant.name}}')
                     span {{participant.name}}
@@ -48,7 +47,7 @@ block content
             dd.rule-description !{rule.description}
 
 block js
-      script(type='text/javascript', src='//code.jquery.com/ui/1.12.0/jquery-ui.min.js')
+      script(type='text/javascript', src='/js/jquery-ui-1.11.4.min.js')
       script(type='text/javascript', src='/js/date.js')
       script(type='text/javascript', src='/js/jquery.dp_calendar.min.js')
       script(type='text/javascript', src='/js/jquery.dp_calendar-fr.js')
@@ -56,94 +55,111 @@ block js
       script(type='text/javascript', src='/js/jquery.jsPlumb-1.7.5-min.js')
       script(type='text/javascript', src='/js/mytourney-1.1.js')
       script(type='text/javascript', src='/js/jquery.modal.min.js')
-      script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js')
+      script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
       script(type='text/javascript').
         var app = angular.module('npApp', []);
-
-        app.controller('tournamentCtrl', function ($scope, $http, $location) {
-          $scope.participants = [];
-          $scope.rounds = [];
-          $scope.matches = [];
-          $scope.closedRegistrations = #{closedRegistrations};
-          $scope.canSubscribe = false;
-
-          $scope.getAllParticipants = function(callback) {
-            $http.get("#{tournament.tournamentId}/participants").success(function(response) {
-              $scope.participants = response.participants;
-              $scope.closedRegistrations = response.closedRegistrations;
-              $scope.canSubscribe = !response.closedRegistrations && !response.userHasJoinTournament;
-              if(typeof callback === "function") {
-                callback();
-              }
-            }).error(errorCallback);
-          };
-
-          $scope.getBracket = function(callback) {
-            $http.get("#{tournament.tournamentId}/bracket").success(function(response) {
-              $scope.participants = response.participants;
-              $scope.rounds = response.rounds;
-              $scope.matches = response.matches;
-              $scope.closedRegistrations = response.closedRegistrations;
-              $scope.canSubscribe = !response.closedRegistrations && !response.userHasJoinTournament;
-              if(typeof callback === "function") {
-                callback();
-              }
-            }).error(errorCallback);
-          };
-
-          $scope.joinTournament = function() {
+        app.service('TournamentService', function($http, $q) {
+          this.getAllParticipants = function(tid) {
+            var deferred = $q.defer(); // to handle async response
+            $http.get("/json/tournaments/"+tid+"/participants").success(function(response) {
+              deferred.resolve({
+                participants: response.participants,
+                closedRegistrations: response.closedRegistrations,
+                canSubscribe: !response.closedRegistrations && !response.userHasJoinTournament
+              });
+            }).error(deferred.reject);
+            return deferred.promise;
+          },
+          this.getBracket = function(tid) {
+            var deferred = $q.defer(); // to handle async response
+            $http.get("/json/tournaments/"+tid+"/bracket").success(function(response) {
+              deferred.resolve({
+                participants: response.participants,
+                rounds: response.rounds,
+                matches: response.matches,
+                closedRegistrations: response.closedRegistrations,
+                canSubscribe: !response.closedRegistrations && !response.userHasJoinTournament
+              });
+            }).error(deferred.reject);
+            return deferred.promise;
+          },
+          this.joinTournament = function(tid) {
+            var deferred = $q.defer(); // to handle async response
+            $http.get("/json/tournaments/"+tid+"/join").success(function(response) {
+              deferred.resolve({canSubscribe: false});
+            }).error(deferred.reject);
+            return deferred.promise;
+          },
+          this.leaveTournament = function(tid) {
+            var deferred = $q.defer(); // to handle async response
+            $http.get("/json/tournaments/"+tid+"/leave").success(function(response) {
+              deferred.resolve({canSubscribe: true});
+            }).error(deferred.reject);
+            return deferred.promise;
+          }
+        });
+        app.controller('tournamentCtrl', function (TournamentService) {
+          var _this = this;
+          this.tid = '#{tournament.id}';
+          this.participants = [];
+          this.rounds = [];
+          this.matches = [];
+          this.closedRegistrations = false;
+          this.canSubscribe = false;
+          
+          this.joinTournament = function() {
             console.log("joinTournament");
-            $scope.canSubscribe = false;
-            $http.get("#{tournament.tournamentId}/join").success(function(response) {
-              $scope.getAllParticipants();
-            }).error(errorCallback);
+            _this.canSubscribe = false;
+            TournamentService.joinTournament(_this.tid).then(function(data) {
+              //TODO refresh participants
+            }).catch(errorCallback);
           };
 
-          $scope.leaveTournament = function() {
+          this.leaveTournament = function() {
             console.log("leaveTournament");
-            $scope.canSubscribe = true;
-            $http.get("#{tournament.tournamentId}/leave").success(function(response) {
-              $scope.getAllParticipants();
-            }).error(errorCallback);
+            _this.canSubscribe = true;
+            TournamentService.leaveTournament(_this.tid).then(function() {
+              //TODO refresh participants
+            }).catch(errorCallback);
           };
 
-          if(!$scope.closedRegistrations) {
-            $scope.getAllParticipants();
-          } else {
-              $scope.getBracket(function() {
-              var Tourney = {
-                "participants": $scope.participants,
-                "rounds": $scope.rounds,
-                "matches": $scope.matches
-              };
-
-              //On ne crée le bracket qu'une fois le tournoi commencé
-              if(Tourney.participants && Tourney.participants.length > 0) {
-                  MyTourney.drawBracket({
-                      participants: Tourney.participants, 
-                      rounds: Tourney.rounds, 
-                      container: $('.bracket'),
-                      baseProfileUrl: "#{sails.config.nodepoule.baseUrl}/profile"
-                  });
-              }
-              //pareil pour l'agenda des matchs
-              var events_array = [];
-              $.each(Tourney.matches, function(index, match) {
-                  var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
-                  var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
-                  events_array.push({
-                      startDate: new Date(match.eventDate),
-                      title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
-                      description: "Tour : " + match.round,
-                      priority: 1
-                  });
+          TournamentService.getBracket(_this.tid).then(function(tournament) {
+            _this.participants = tournament.participants;
+            _this.closedRegistrations = tournament.closedRegistrations;
+            _this.canSubscribe = tournament.canSubscribe;
+            var Tourney = {
+              participants: tournament.participants,
+              rounds: tournament.rounds,
+              matches: tournament.matches
+            };
+            //On ne crée le bracket qu'une fois le tournoi commencé
+            if(Tourney.participants && Tourney.participants.length > 0) {
+              MyTourney.drawBracket({
+                participants: Tourney.participants, 
+                rounds: Tourney.rounds, 
+                container: $('.bracket'),
+                baseProfileUrl: "#{sails.config.nodepoule.baseUrl}/profile"
+              });
+            }
+            //pareil pour l'agenda des matchs
+            var events_array = [];
+            $.each(Tourney.matches, function(index, match) {
+              var player1 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid1; });
+              var player2 = _.find(Tourney.participants, function (participant) { return participant.uid === match.pid2; });
+              events_array.push({
+                startDate: new Date(match.eventDate),
+                title: (player1 ? player1.name : "?") + " vs " + (player2 ? player2.name : "?"),
+                description: "Tour : " + match.round,
+                priority: 1
               });
             });
-          }
+          }).catch(errorCallback);
         });
         
         var errorCallback = function(err, status, headers, config) {
-            if (status == 302 || status == 401) {
-              location.href = headers("Location");
-            }
+          if (status == 302 || status == 401) {
+            location.href = headers("Location");
+          } else {
+            console.error("TournamentController error", err, status);
+          }
         };

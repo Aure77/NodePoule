@@ -40,7 +40,7 @@ module.exports.routes = {
   /*
   * NewsController routes
   */
-  'GET /news/:id': { controller: 'NewsController routes', action: 'detail' },
+  'GET /news/:id': { controller: 'NewsController', action: 'detail' },
   'GET /json/news/p/:page': { controller: 'NewsController', action: 'newsPaginateJSON' },
   /*
   * GameController routes
@@ -51,6 +51,10 @@ module.exports.routes = {
   * TournamentController routes
   */
   'GET /tournaments': { controller: 'TournamentController', action: 'all' },
+  'GET /tournaments/:id': { controller: 'TournamentController', action: 'detail' },
+  'GET /json/tournaments/:id/bracket': { controller: 'TournamentController', action: 'getTournamentBracketJSON' },
+  'GET /json/tournaments/:id/join': { controller: 'TournamentController', action: 'joinTournamentJSON' },
+  'GET /json/tournaments/:id/leave': { controller: 'TournamentController', action: 'leaveTournamentJSON' },
   'GET /json/tournaments/p/:page': { controller: 'TournamentController', action: 'tournamentsPaginateJSON' },
   'GET /json/tournaments/currents': { controller: 'TournamentController', action: 'currentTournamentsJSON' }
 
