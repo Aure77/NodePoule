@@ -50,7 +50,7 @@ block content
                   | {{news.content}}
           | 
           -// ui-bootstrap pagination directive
-          uib-pagination(total-items="nCtrl.newsTotalItems", ng-change="nCtrl.pageChanged()", ng-model="nCtrl.newsCurrentPage", items-per-page="nCtrl.newsItemsPerPage", max-size="nCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages", previous-text="‹", next-text="›", first-text="«", last-text="»")
+          uib-pagination(data-total-items="nCtrl.newsTotalItems", data-ng-change="nCtrl.pageChanged()", data-ng-model="nCtrl.newsCurrentPage", data-items-per-page="nCtrl.newsItemsPerPage", data-max-size="nCtrl.maxSize", class="pagination-sm", data-boundary-links="true", data-ng-hide="nCtrl.newsTotalItems <= nCtrl.newsItemsPerPage", data-num-pages="numPages", data-previous-text="‹", data-next-text="›", data-first-text="«", data-last-text="»")
         -//.news-paginate
            -//include _paginate
     // Right pannel

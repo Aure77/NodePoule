@@ -12,7 +12,7 @@ block content
                   | {{tournament.status}}
               img(data-ng-src='{{tournament.imageRelPath}}', style='width: 100%;', data-ng-alt='{{tournament.title}}')
           -// ui-bootstrap pagination directive
-          uib-pagination(total-items="tCtrl.tnmtTotalItems", ng-change="tCtrl.pageChanged()", ng-model="tCtrl.tnmtCurrentPage", items-per-page="tCtrl.tnmtItemsPerPage", max-size="tCtrl.maxSize", class="pagination-sm", boundary-links="true", num-pages="numPages", previous-text="‹", next-text="›", first-text="«", last-text="»")
+          uib-pagination(data-total-items="tCtrl.tnmtTotalItems", data-ng-change="tCtrl.pageChanged()", data-ng-model="tCtrl.tnmtCurrentPage", data-items-per-page="tCtrl.tnmtItemsPerPage", data-ng-hide="tCtrl.tnmtTotalItems <= tCtrl.tnmtItemsPerPage", data-max-size="tCtrl.maxSize", class="pagination-sm", data-boundary-links="true", data-num-pages="numPages", data-previous-text="‹", data-next-text="›", data-first-text="«", data-last-text="»")
 
 block js
   script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
