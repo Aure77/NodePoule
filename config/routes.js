@@ -38,6 +38,10 @@ module.exports.routes = {
   '/' : { controller: 'HomeController', action: 'index' },
   'GET /contactez-nous': { controller: 'HomeController', action: 'contact' },
   /*
+  * AuthController routes
+  */
+  'GET /login': { controller: 'AuthController', action: 'login' },
+  /*
   * NewsController routes
   */
   'GET /news/:id': { controller: 'NewsController', action: 'detail' },

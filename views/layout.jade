@@ -42,12 +42,12 @@ html
 							a(href='/game/faq') FAQ
 						- if(user)
 							li
-								a(href='/profile', title='Profil de #{user.userslug}', aria-label='Profil de #{user.userslug}')
-									img(class="nav-avatar", src='#{user.picture}')
+								a(href='/profile', title='Profil de #{user.username}', aria-label='Profil de #{user.username}')
+									img(class="nav-avatar", src='#{user.gravatarUrl}')
 									span !{user.username}
 						- else
 							li
-								a(href='#{sails.config.nodepoule.forumUrl}/login?next=#{sails.config.nodepoule.baseUrl}#{req.path}') Se connecter
+								a(href='/login?next=#{req.path}') Se connecter
 				//- fin de #navbar.nav-collapse
 		// Main jumbotron for a primary marketing message or call to action
 		header.jumbotron
