@@ -41,6 +41,7 @@ module.exports.routes = {
   * AuthController routes
   */
   'GET /login': { controller: 'AuthController', action: 'login' },
+  'GET /register': { controller: 'AuthController', action: 'register' },
   /*
   * NewsController routes
   */

@@ -40,6 +40,11 @@ module.exports.policies = {
     '*': ['passport']
   },
 
+  // Allow registrations using local strategy
+  UserController: {
+    'create': true
+  },
+
   HomeController: {
     '*': ['passport']
   },

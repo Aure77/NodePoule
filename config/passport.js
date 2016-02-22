@@ -15,23 +15,23 @@ module.exports.passport = {
     strategy: require('passport-local').Strategy
   },
 
-  basic: {
+  /*basic: {
     strategy: require('passport-http').BasicStrategy,
     protocol: 'basic'
-  },
+  },*/
 
-  /*
   google: {
     name: 'Google',
     protocol: 'oauth2',
     strategy: require('passport-google-oauth').OAuth2Strategy,
+    callback: '/auth/google/callback?next=/', //TODO remove callback and use ajax call for login ?
     options: {
-      clientID: 'your-client-id',
-      clientSecret: 'your-client-secret',
+      clientID: '<clientID>', //overrided by local or env/* config
+      clientSecret: '<clientSecret>',
       scope: ['profile', 'email']
     }
   }
-
+/*
   twitter: {
     name: 'Twitter',
     protocol: 'oauth',

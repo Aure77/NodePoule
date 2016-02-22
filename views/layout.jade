@@ -11,6 +11,8 @@ html
 		title= title + " | " + sails.config.nodepoule.appName
 		// Bootstrap core CSS
 		link(href='/styles/bootstrap.min.css', rel='stylesheet')
+		link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', rel='stylesheet')
+		link(href='/styles/bootstrap-social.css', rel='stylesheet')
 		// Custom styles for this template
 		link(href='/styles/carousel.css', rel='stylesheet')
 		link(href='/styles/custom.css', rel='stylesheet')
@@ -47,7 +49,7 @@ html
 									span !{user.username}
 						- else
 							li
-								a(href='/login?next=#{req.path}') Se connecter
+								a(href='/login?next=#{req.path !== "/login" ? req.path : req.query.next !== "undefined" ? req.query.next : "/"}') Se connecter
 				//- fin de #navbar.nav-collapse
 		// Main jumbotron for a primary marketing message or call to action
 		header.jumbotron

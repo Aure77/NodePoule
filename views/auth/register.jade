@@ -1,0 +1,77 @@
+extends ../layout
+
+block content
+  - var next = req.query.next !== req.path && req.query.next !== "undefined" ? req.query.next : "/";
+  .container
+    #signupbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style='margin-top:50px', data-ng-controller='authController as aCtrl')
+      .panel.panel-info
+        .panel-heading
+          .panel-title Inscription
+          div(style='float:right; font-size: 85%; position: relative; top:-10px')
+            a#signinlink(href='/login?next=#{next}') Connexion
+        .panel-body
+          form#signupform.form-horizontal(action='/register?next=#{next}', method='post', role='form')
+            #signupalert.alert.alert-danger(style='display:none')
+              p Error:
+              span
+            .form-group
+              label.col-md-3.control-label(for='email') Email
+              .col-md-9
+                input.form-control(type='text', name='email', placeholder='Email Address', ng-model='aCtrl.user.email')
+            .form-group
+              label.col-md-3.control-label(for='username') Username
+              .col-md-9
+                input.form-control(type='text', name='username', placeholder='Username', ng-model='aCtrl.user.username')
+            .form-group
+              label.col-md-3.control-label(for='password') Password
+              .col-md-9
+                input.form-control(type='password', name='password', placeholder='Password', ng-model='aCtrl.user.password')
+            .form-group
+              label.col-md-3.control-label(for='cpassword') Confirm password
+              .col-md-9
+                input.form-control(type='password', name='cpassword', placeholder='Confirm password', ng-model='aCtrl.user.cpassword')
+            .form-group
+              // Button
+              .col-md-offset-3.col-md-9
+                button#btn-signup.btn.btn-info(type='button', ng-click='aCtrl.registerUser()')
+                  i.icon-hand-right
+                  |  &nbsp Inscription
+                span(style='margin-left:8px;') or
+            .form-group(style='border-top: 1px solid #999; padding-top:20px')
+              .col-md-offset-3.col-md-9
+                a#btn-fbsignup.btn.btn-primary(href='/auth/google')
+                  i.fa.fa-google
+                  |  Inscription avec Google
+
+block js
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js')
+  script(type='text/javascript').
+    var app = angular.module('npApp', []);
+    app.controller('authController', function ($http) {
+      var _this = this;
+      this.user = {};
+      this.registerUser = function() {
+        $http.post("/register?next=#{next}", _this.user).success(function(response, status, headers) {
+          if(status == 302) {
+            window.location.href=headers('Location');
+          }
+        }).error(function(data, status, headers) {
+          console.error('Register error', data, status);
+        });
+      };
+    });
+    /*app.service('NewsService', function($http, $q) {
+      this.getNewsByPage = function(page) {
+        var deferred = $q.defer(); // to handle async response
+        $http.get("/json/news/p/"+page).success(function(data, status, headers) {
+          var contentRange = data.contentRange;
+          deferred.resolve({
+            items: data.newsCollection,
+            totalItems: contentRange.total,
+            currentPage: page,
+            itemsPerPage: (contentRange.end - contentRange.start)
+          });
+        }).error(deferred.reject);
+        return deferred.promise;
+      };
+    });*/
