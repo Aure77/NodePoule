@@ -4,28 +4,71 @@ var util = require('util');
 var nconf = require('nconf');
 var escape = require('escape-html');
 var paginate = require('express-paginate');
-var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), User = mongoose.model('User');
+var mongoose = require('mongoose'), Tournament = mongoose.model('Tournament'), User = mongoose.model('User'), News = mongoose.model('News');;
 var router = express.Router();
 
 router.use(paginate.middleware(4, 50));
 
-/* GET tournaments page. */
+/* GET Dashboard page. */
 router.get('/', function(req, res, next) {
+    res.render('admin/index', { 
+      title: 'Dashboard', 
+      htitle: 'Dashboard'
+  });    
+});
+
+/* GET Dashboard page. */
+router.get('/users', function(req, res, next) {
+    res.redirect('forum.nodepoule.eu/users');
+});
+
+/* GET news page. */
+router.get('/news', function(req, res, next) {
   var page = escape(req.query.page);
   var limit = escape(req.query.limit);
-  Tournament.paginate({}, { page: page, limit: limit }, function(err, tournaments, pageCount, itemCount) {
+  News.paginate({}, { page: page, limit: limit }, function(err, newsCollection, pageCount, itemCount) {
     if (err) { return next(err); }
-    res.render('admin/tournament-editor', { 
-      title: 'Tous les tournois', 
-      htitle: 'Tous les tournois',
-      tournaments: tournaments, 
+    res.render('admin/news', { 
+      title: 'News management', 
+      htitle: 'News management', 
+      newsCollection: newsCollection, 
       pageCount: pageCount,
-      itemCount: itemCount 
+      itemCount: itemCount
+    });
+  },
+  {sortBy: '-date'});
+});
+
+/* GET news page. */
+router.get('/news/:id', function(req, res, next) {
+  var newsId = escape(req.params.id);
+  News.findOne({ newsId : newsId }).exec(function(err, news) {
+    if (err) { return next(err); }    
+    if(!news) {
+      return next(new Error("La news '"+newsId+"' est introuvable"));
+    }
+    res.render('admin/news-editor', { title: news.title, news: news });
+  });
+});
+
+/* GET news page. */
+router.get('/tournaments', function(req, res, next) {
+  var page = escape(req.query.page);
+  var limit = escape(req.query.limit);
+  Tournament.paginate({}, { page: page, limit: limit }, function (err, tournaments, pageCount, itemCount) {
+    if (err) { return next(err); }
+    res.render('admin/tournaments', {
+      title: 'Tous les tournois',
+      htitle: 'Tous les tournois',
+      tournaments: tournaments,
+      pageCount: pageCount,
+      itemCount: itemCount
     });
   });
 });
 
-router.get('/:id', function(req, res, next) {
+/* GET tournaments page. */
+router.get('/tournaments/:id', function(req, res, next) {
   var tid = escape(req.params.id);
   Tournament.findOne({ tournamentId : tid }).populate("game").exec(function(err, tournament) {
     if (err) { return next(err); }

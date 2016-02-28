@@ -1,0 +1,32 @@
+extends layout
+block head
+  script(type='text/javascript', src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+
+block content
+        span
+            | #{htitle}
+            |                     
+            .row
+            .col-md-3
+                a(href='admin/news')
+                div
+                    img(src='/')
+                    span News
+            |                         
+            .col-md-3
+                a(href='admin/users')
+                div
+                    img(src='/')
+                    span Users
+            |                         
+            .col-md-3
+                a(href='#')
+                div
+                    img(src='admin/tournaments')
+                    span Tourneys
+            |                         
+            .col-md-3
+                a(href='admin/stats')
+                div
+                    img(src='/')
+                    span Stats

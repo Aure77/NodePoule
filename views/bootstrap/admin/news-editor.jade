@@ -1,0 +1,17 @@
+extends layout
+block head
+  script(type='text/javascript', src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+
+block content
+    .row
+        p.news-editor-title Titre
+        input(type='text', id='title')!{news.title}
+        p.news-editor-title Illustration
+        input(type='file', id='picture')
+        - if(!news.hideThumbnail)
+            img(src='#{news.thumbnailRelPath}')
+        p.news-editor-title Corps
+        input(type='text', id='content')
+        input#content(type='text', value='#{news.content}')
+        a.button-link.validate(href='#') Enregistrer
+        a.button-link.cancel(href='#') Annuler

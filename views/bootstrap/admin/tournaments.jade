@@ -1,0 +1,45 @@
+extends layout
+block head
+  script(type='text/javascript', src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+
+block content
+      span #{htitle}   
+      table
+        tr
+          th Titre
+          th Auteur
+          th Jeu
+          th Status
+          th Date
+          th Editer
+          th Archiver
+          th Supprimer
+        tr
+            - if(tournaments.length===0)
+                td(colspan='8')
+                    p Pas de tournois en cours...
+            - else
+                - each tournament in tournaments
+                    td
+                        span #{tournament.title}
+                    td
+                        span #{tournament.author.username}
+                    td
+                        span #{tournament.game.name}
+                    td
+                        span #{tournament.status}
+                    td
+                        span #{tournament.prettyStartDate} 
+                            | /
+                            | #{tournament.prettyEndDate} 
+                    td
+                        a.action(href='/admin/tournaments/#{tournament.tournamentId}')
+                        img(src='bootstrap/img/edit.png')
+                    td
+                        a.action(href='#')
+                        img(src='bootstrap/img/hide.png')
+                    td
+                        a.action(href='#')
+                        img(src='bootstrap/img/delete.png')
+      div.paginate
+        include _paginate
