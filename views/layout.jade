@@ -10,7 +10,7 @@ html
 		link(rel='icon', type='image/png', href='/images/favicon.png')
 		title= title + " | " + sails.config.nodepoule.appName
 		// Bootstrap core CSS
-		link(href='/styles/bootstrap.min.css', rel='stylesheet')
+		link(href='/styles/bootstrap.css', rel='stylesheet')
 		link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', rel='stylesheet')
 		link(href='/styles/bootstrap-social.css', rel='stylesheet')
 		// Custom styles for this template
@@ -23,7 +23,7 @@ html
 			script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 		block head
 	body(data-ng-app="npApp")
-		nav.navbar.navbar-inverse.navbar-fixed-top
+		nav.navbar.navbar-default.navbar-fixed-top
 			.container
 				.navbar-header
 					button(aria-controls="navbar",aria-expanded="false",data-target="#navbar",data-toggle="collapse",class="navbar-toggle collapsed",type="button")
