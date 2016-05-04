@@ -1,0 +1,50 @@
+.mytourney-tour {
+  float:left;
+}
+.mytourney-block {
+  margin:5px 20px 5px 0px;
+  .mytourney-player-block:first-child {
+    border-bottom:1px solid #000000;
+  }
+  .mytourney-player-block {
+    margin:0px;
+    padding:0px;
+    background:#eeeeee;
+    font-weight:bold;
+    font-size:9px;
+    font-family:'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+    .mytourney-user {
+      width:90px;
+      overflow:hidden;
+      word-wrap:break-word;
+      white-space:nowrap;
+      display:inline-block;
+      text-align:left;
+      padding:5px;
+      vertical-align:center;
+      line-height:14px;
+      a:link {
+        color:#000000;
+        text-decoration:none;
+        text-transform:uppercase;
+      }
+      .mytourney-avatar {
+        width:15px;
+        height:15px;
+        margin-right:4px;
+      }
+    }
+    .mytourney-score {
+      display:inline-block;
+      width:25px;
+      overflow:hidden;
+      text-align:center;
+      background:#dddddd;
+      padding:5px;
+      line-height:14px;
+    }
+    .mytourney-user.selected {
+      background:#88ffaa;
+    }
+  }
+}
